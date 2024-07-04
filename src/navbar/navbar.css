@@ -1,0 +1,15 @@
+.navbar-area{
+    width: 100%;
+    max-width: 500px;
+    height: 5.8rem;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.8rem 2.8rem;
+    background-color: white;
+}
+.navbar-icon{
+    width: 2.4rem;
+}

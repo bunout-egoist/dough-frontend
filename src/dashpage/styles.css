@@ -73,8 +73,20 @@ font-style: normal;
   padding: 0;
 }
 /* 공통 */
+.blue-txt{
+  color: #2B6BCA;
+}
+.orange-txt{
+  color: #FF7A2F;
+}
+.bold-txt{
+  font-family: 'Pretendard-Bold';
+}
 .img-width{
   width: 100%;
+}
+.display-flex{
+  display: flex;
 }
 .flex-row{
   display: flex;
@@ -131,12 +143,7 @@ body, html {
   font-size: 1.75rem;
 }
 
-.dash-page .clear-cnt-1{
-  color: #2B6BCA;
-}
-.dash-page .clear-cnt-2{
-  color: #FDC612;
-}
+
 
 
 /* 캘린더 영역 */
@@ -148,6 +155,17 @@ body, html {
   font-family: 'Pretendard-SemiBold';
   font-size: 1.2rem;
   color:#6D6D6D;
+}
+.dash-calendar .today-month{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap : 1.3rem;
+}
+.dash-calendar .month-txt{
+  font-family: 'Pretendard-Regular';
+  font-size: 1.5rem;
 }
 .dash-calendar .cal-mission{
   margin-top: 2.1rem;
@@ -271,7 +289,111 @@ body, html {
   font-family: 'Pretendard-Medium';
 }
 .dash-bottom .bottom-result{
-  color: #3982EE;
   font-size: 1.5rem;
-  font-family: 'Pretendard-Medium';
+  font-family: 'Pretendard-Bold';
+}
+
+/* 상세페이지 : 주변달성률 */
+.detail-page{
+  width: 100%;
+  max-width: 500px;
+  height: 100dvh;
+  position: relative;
+}
+.detail-page .detail-top{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: 500px;
+  padding: 1.7rem 1.3rem 0.9rem 1.3rem;
+  text-align: center;
+  background-color: white;
+  border-bottom: 8px #EDEEF1 solid;
+}
+.detail-top .top-title{
+  font-family: 'Pretendard-Bold';
+  font-size: 1.8rem;
+
+}
+.detail-top .this-week{
+  margin-top: 3.2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.detail-top .this-week-day{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.67rem;
+  gap: 1.3rem;
+}
+.detail-top .today{
+  border-radius: 20px;
+  background-color: #EDEEF1;
+}
+.detail-top .day-txt{
+  color : #616161;
+  font-family: 'Pretendard-Regular';
+  font-size: 1.1rem;
+}
+.detail-top .day-date{
+  color : #484B52;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Pretendard-Regular';
+  font-size: 1.3rem;
+  width: 1.9rem;
+  height: 1.9rem;
+}
+.detail-top .day-mission-1{
+  background-color: #E2E8F0;
+  border-radius: 999px;
+}
+.detail-top .day-mission-2{
+  color: white !important;
+  background-color: #8FBCFF;
+  border-radius: 999px;
+}
+.detail-top .day-mission-3{
+  color: white !important;
+  background-color: #FF7A2F;
+  border-radius: 999px;
+}
+
+.detail-page .detail-bottom{
+  padding: 17rem 1.3rem 3rem 1.3rem;
+}
+.detail-page .detail-mission{
+  padding: 1.1rem 1.3rem;
+  border-bottom: solid 1px #DCDCDC;
+}
+.detail-mission .mission-type{
+  color: #FF7A2F;
+  font-family: 'Pretendard-medium';
+  font-size: 0.9rem;
+}
+.detail-mission .mission-subtxt{
+  color: #333333;
+  font-family: 'Pretendard-Regular';
+  font-size: 1.2rem;
+  margin-top: 0.3rem;
+}
+.detail-mission .mission-title{
+  color: black;
+  font-family: 'Pretendard-Bold';
+  font-size: 1.5rem;
+  margin-top: 0.3rem;
+}
+.detail-mission .mission-image{
+  margin-top: 1.3rem;
+  width: 100%;
+  height: 12rem;
+}
+.detail-mission .mission-image img{
+  object-fit: cover;
+  height: 100%;
+  border-radius: 10px;
 }
