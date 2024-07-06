@@ -1,8 +1,74 @@
+@font-face {
+    font-family: 'Pretendard-400';
+    src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
+    font-weight: 400;
+    }
+    
+    @font-face {
+    font-family: 'Pretendard-500';
+    src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
+    font-weight: 500;
+    }
+    
+    @font-face {
+    font-family: 'Pretendard-600';
+    src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
+    font-weight: 600;
+    }
+    
+    @font-face {
+    font-family: 'Pretendard-700';
+    src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
+    font-weight: 700;
+    }
+    
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
+    @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+    }
+    @font-face {
+    font-family: 'Pretendard-Bold';
+    src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Bold.otf') format('opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Bold.woff2')
+        format('woff2'),
+      url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Bold.woff') format('woff');
+    font-style: normal;
+    }
+    
+    @font-face {
+    font-family: 'Pretendard-Medium';
+    src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Medium.otf') format('opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Medium.woff2')
+        format('woff2'),
+      url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Medium.woff') format('woff');
+    font-style: normal;
+    }
+    
+    @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Regular.otf') format('opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Regular.woff2')
+        format('woff2'),
+      url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Regular') format('woff');
+    font-style: normal;
+    }
+    
+    @font-face {
+    font-family: 'Pretendard-SemiBold';
+    src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-SemiBold.otf') format('opentype'),
+      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-SemiBold.woff2')
+        format('woff2'),
+      url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-SemiBold') format('woff');
+    font-style: normal;
+    }
+    
 .img-width{
     width: 100%;
     object-fit: fill;
 }
-.typepage{
+.typepage-main{
     width: 100%;
     height: 100dvh;
     padding: 3rem 1.75rem;
@@ -41,4 +107,47 @@
     text-align: center;
     font-size: 1.3rem;
     font-family: 'Pretendard-Bold';
+}
+.aboutpage{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100dvh;
+    background-color: #0000004c;
+}
+.aboutpage-main{
+    position: absolute;
+    bottom: 0;
+    background-color: white !important;
+    border-radius: 15px 15px 0 0;
+    text-align: center;
+    background-color: #C5C5C5;
+    width: 100%;
+    height: 80dvh;
+}
+.aboutpage-detail{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll;
+    padding: 1.55rem;
+}
+.about-icon{
+    width: 9.1rem;
+}
+.aboutpage-btn-area{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 2.3rem 1.55rem 2.1rem 1.55rem;
+}
+.aboutpage-btn{
+    border-radius: 5px;
+    background-color: #798097;
+    color: white;
+    color: white;
+    font-size: 1.3rem;
+    font-family: 'Pretendard-Bold' !important;
+    padding: 1.6rem;
 }
