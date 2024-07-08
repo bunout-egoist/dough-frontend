@@ -70,6 +70,7 @@
 }
 .typepage-main{
     width: 100%;
+    max-width: 500px;
     height: 100dvh;
     padding: 3rem 1.75rem;
 }
@@ -91,7 +92,7 @@
    box-shadow: 0px 2px 6.2px rgba(101, 118, 133, 0.25);
    border-radius: 10px;
 }
-.type-box:active{
+.type-box-1-active, .type-box-2-active,.type-box-3-active,.type-box-4-active,.type-box-5-active{
     background-color: #D0E4FD;
     border: #0059B1 solid 2px;
 }
@@ -109,6 +110,7 @@
     font-family: 'Pretendard-Bold';
 }
 .aboutpage{
+    max-width: 500px;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -118,6 +120,7 @@
 .aboutpage-main{
     position: absolute;
     bottom: 0;
+    overflow: scroll;
     background-color: white !important;
     border-radius: 15px 15px 0 0;
     text-align: center;
@@ -126,19 +129,35 @@
     height: 80dvh;
 }
 .aboutpage-detail{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: scroll;
-    padding: 1.55rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
+  padding: 1.55rem;
+  max-width: 500px;
+  padding-bottom: 10rem;
+}
+.aboutpage .aboutpage-close{
+  position: absolute;
+  top: 3rem;
+  right: 2.2rem;
+  width: 1.3rem;
+}
+.aboutpage .about-title{
+  padding: 3rem 1.5rem;
+}
+.aboutpage .about-txt{
+  margin-top: 4.3rem;
 }
 .about-icon{
     width: 9.1rem;
 }
 .aboutpage-btn-area{
     width: 100%;
-    position: absolute;
+    background-color: white;
+    position: fixed;
+    max-width: 500px;
     bottom: 0;
     padding: 2.3rem 1.55rem 2.1rem 1.55rem;
 }
@@ -150,4 +169,7 @@
     font-size: 1.3rem;
     font-family: 'Pretendard-Bold' !important;
     padding: 1.6rem;
+}
+.aboutpage-btn:active{
+  opacity: 70%;
 }
