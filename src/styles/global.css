@@ -1,4 +1,70 @@
 
+@font-face {
+  font-family: 'Pretendard-400';
+  src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
+  font-weight: 400;
+  }
+  
+  @font-face {
+  font-family: 'Pretendard-500';
+  src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
+  font-weight: 500;
+  }
+  
+  @font-face {
+  font-family: 'Pretendard-600';
+  src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
+  font-weight: 600;
+  }
+  
+  @font-face {
+  font-family: 'Pretendard-700';
+  src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
+  font-weight: 700;
+  }
+  
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
+  @font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-style: normal;
+  }
+  @font-face {
+  font-family: 'Pretendard-Bold';
+  src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Bold.otf') format('opentype'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Bold.woff2')
+      format('woff2'),
+    url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Bold.woff') format('woff');
+  font-style: normal;
+  }
+  
+  @font-face {
+  font-family: 'Pretendard-Medium';
+  src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Medium.otf') format('opentype'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Medium.woff2')
+      format('woff2'),
+    url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Medium.woff') format('woff');
+  font-style: normal;
+  }
+  
+  @font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Regular.otf') format('opentype'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Regular.woff2')
+      format('woff2'),
+    url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Regular') format('woff');
+  font-style: normal;
+  }
+  
+  @font-face {
+  font-family: 'Pretendard-SemiBold';
+  src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-SemiBold.otf') format('opentype'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-SemiBold.woff2')
+      format('woff2'),
+    url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-SemiBold') format('woff');
+  font-style: normal;
+  }
+  
 * {
     margin: 0;
     padding: 0;
@@ -21,6 +87,7 @@
     height: 100dvh;
     width: 100%;
     display: flex;
+    overflow: hidden;
     justify-content: center;
   }
   
@@ -41,4 +108,16 @@
   .body-area {
     width: 100%;
     height: 100%;
+  }
+
+  .img-width{
+    width: 100%;
+  }
+  .flex-row{
+    display: flex;
+    flex-direction: row;
+  }
+  .flex-col{
+    display: flex;
+    flex-direction: column;
   }

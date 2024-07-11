@@ -1,0 +1,128 @@
+.vector-img{
+    width: 0.8rem;
+    height: 1.1rem;
+    display: flex;
+}
+.vector-img img{
+    height: 100%;
+    object-fit: contain;
+}
+/* setting 페이지 스위치 커스텀 */
+.switch {
+    position: relative;
+    display: flex;
+    width: 2.3rem;
+    height: 1.3rem;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #D7DAE0;
+    transition: 0.4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 0.9rem;
+    width: 0.9rem;
+    left: 3px;
+    bottom: 0.2rem;
+    background-color: white;
+    transition: 0.4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #FF9205;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(0.9rem);
+  }
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  /* 페이지 */
+  .setting-page{
+    padding: 1.57rem 0;
+  }
+  .setting-title{
+    font-size: 1.55rem;
+    padding: 0 1.55rem;
+    font-family: 'Pretendard-Regular';
+  }
+  .setting-service{
+    border-bottom: solid #F7F8F8 4px;
+    padding: 0 1.55rem;
+    padding-top: 1.8rem;
+  }
+  .setting-subtitle{
+    font-family: 'Pretendard-Regular';
+    font-size: 1.18rem;
+    color: #667080;
+  }
+  .setting-service-list{
+    padding: 0.92rem 1.3rem 1.23rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.86rem;
+    justify-content: space-between;
+  }
+  .setting-service-li{
+    font-size: 1.3rem;
+    font-family: 'Pretendard-Regular';
+    color:#3E434E;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .setting-alarm{
+    border-bottom: solid #F7F8F8 4px;
+    padding: 0.8rem 1.6rem;
+  }
+  .setting-alarm-box-1{
+    padding: 1rem 0.7rem 0.62rem 1.28rem;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Pretendard-Regular';
+    font-size: 1.3rem;
+  } 
+  .setting-alarm-box-2{
+    padding: 0.5rem 0.7rem 0.5rem 2.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .setting-alarm-li-title{
+    font-family: 'Pretendard-Regular';
+    font-size: 1.15rem;
+    color:#3E434E;
+  }
+  .setting-alarm-li-subtitle{
+    font-family: 'Pretendard-Regular';
+    font-size: 1.05rem;
+    color:#8C96A4;
+  }
+  .setting-alarm-li{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }

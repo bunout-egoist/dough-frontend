@@ -17,7 +17,7 @@ export default function TypePage() {
     };
 
     return (
-        <div className="typepage">
+        <div className={`typepage ${isAboutVisible === true ? "typepage-hidden" : ""}`}>
             {aboutType !== null && (
                 <About
                     onSelect={handleSelect}

@@ -68,6 +68,10 @@
     width: 100%;
     object-fit: fill;
 }
+.typepage-hidden{
+  overflow: hidden;
+}
+
 .typepage-main{
     width: 100%;
     max-width: 500px;
@@ -99,6 +103,7 @@
 .typepage-btn-area{
     margin-top: 1.9rem;
     width: 100%;
+    padding-bottom: 2.6rem;
 }
 .typepage-btn{
     background: #EDEEF1;
@@ -133,7 +138,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
   padding: 1.55rem;
   max-width: 500px;
   padding-bottom: 10rem;
@@ -145,10 +149,10 @@
   width: 1.3rem;
 }
 .aboutpage .about-title{
-  padding: 3rem 1.5rem;
+  padding: 3rem 1.5rem 1rem 1.5rem;
 }
 .aboutpage .about-txt{
-  margin-top: 4.3rem;
+  margin-top: 3rem;
 }
 .about-icon{
     width: 9.1rem;
