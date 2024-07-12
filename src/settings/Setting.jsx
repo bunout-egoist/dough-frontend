@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./setting.css";
-
+import { Link } from "react-router-dom";
 export default function Setting() {
     const [isChecked, setIsChecked] = useState(false);
 
@@ -15,14 +15,19 @@ export default function Setting() {
                 <div className="setting-service">
                     <div className="setting-subtitle">서비스 설정</div>
                     <div className="setting-service-list">
-                        <div className="setting-service-li">
-                            <div>닉네임 수정</div>
-                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                        </div>
-                        <div className="setting-service-li">
-                            <div>사용자 유형 재설정</div>
-                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                        </div>
+                        <Link to="/nickname">
+                            <div className="setting-service-li landing-nickname">
+                                <div>닉네임 수정</div>
+                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                            </div>
+                        </Link>
+                        <Link to="/typepage">
+                            <div className="setting-service-li">
+                                <div>사용자 유형 재설정</div>
+                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                            </div>
+                        </Link>
+                      
                         <div className="setting-service-li">
                             <div>고정퀘스트 재설정</div>
                             <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
@@ -97,6 +102,36 @@ export default function Setting() {
                         </div>
                     </div>
                 </div>
+                <div className="setting-qa">
+                    <div className="setting-subtitle">문의</div>
+                    <div className="setting-service-list">
+                        <div className="setting-service-li">
+                            <div>자주 묻는 질문들</div>
+                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                        </div>
+                        <div className="setting-service-li">
+                            <div>의견 보내기</div>
+                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="setting-agency">
+                    <div className="setting-subtitle">약관 및 방침</div>
+                    <div className="setting-service-list">
+                        <div className="setting-service-li">
+                            <div>서비스 이용약관</div>
+                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                        </div>
+                        <div className="setting-service-li">
+                            <div>개인정보 처리방침</div>
+                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="logout-btn">
+                    로그아웃
+                </div>
+                <div className="exit">탈퇴하기</div>
             </div>
         </div>
     );

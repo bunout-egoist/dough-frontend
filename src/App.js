@@ -6,6 +6,7 @@ import DetailPage from "./dashpage/DetailPage";
 import Navbar from "./navbar/Navbar";
 import TypePage from "./type/Typepage";
 import Setting from "./settings/Setting";
+import Nickname from "./settings/Nickname";
 function App() {
   return (
     <div className="common-layout">
@@ -15,6 +16,7 @@ function App() {
           <Route path="/typepage" element={<TypePage/>}/>
           <Route path="/dashpage"  element={<DashPage/>} />
           <Route path="/detail"  element={<DetailPage/>} />
+          <Route path="/nickname"  element={<Nickname/>} />
         </Routes>
       </div>
     </div>

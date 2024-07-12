@@ -67,9 +67,13 @@
     padding: 0 1.55rem;
     font-family: 'Pretendard-Regular';
   }
-  .setting-service{
+  .setting-service,.setting-qa{
     border-bottom: solid #F7F8F8 4px;
     padding: 0 1.55rem;
+    padding-top: 1.8rem;
+  }
+  .setting-agency{
+    padding: 0 1.55rem 0.55rem 1.55rem;
     padding-top: 1.8rem;
   }
   .setting-subtitle{
@@ -126,3 +130,77 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  .logout-btn{
+    padding: 1.33rem 0;
+    text-align: center;
+    font-family: 'Pretendard-Regular';
+    font-size: 1.3rem;
+    color:#3E434E;
+    border-top: solid #F7F8F8 4px;
+    border-bottom: solid #F7F8F8 4px;
+  }
+  .exit{
+    color: #B4BAC5;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    font-family: 'Pretendard-Regular';
+    padding: 0.92rem 2.3rem;
+  }
+
+  /* 닉네임 page */
+  .back-img{
+    width: 0.91rem;
+    height: 1.3rem;
+    margin: 1.3rem 2.4rem;
+  }
+  .nickname-area{
+    padding: 3.42rem 2.7rem;
+  }
+  .nickname-title{
+    font-family: 'Pretendard-Regular';
+    font-size: 1.2rem;
+    color: #667080;
+  }
+  .nickname-input{
+    padding-top:1.32rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nickname-input input{
+    border: none;
+    width: 85%;
+    border-bottom: 0.4px solid #000000;
+    padding: 0.55rem 0.8rem;
+    color: #24262D;
+    font-size: 1.55rem;
+    font-family: 'Pretendard-Bold';
+  }
+  .edit-img{
+    width: 1.8rem;
+  }
+  .nickname-btn-area{
+    position: absolute;
+    width: 100%;
+    bottom: 2.32rem;
+    padding: 0 1.58rem;
+  }
+  .nickname-btn{
+    border-radius: 10px;
+    color: white;
+    background-color: #FF9205;
+    text-align: center;
+    font-family: 'Pretendard-Bold';
+    font-size: 1.3rem;
+    padding: 1.58rem;
+  }
+  .nickname-btn.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.warning {
+    color: red;
+    margin-top: 10px;
+}
