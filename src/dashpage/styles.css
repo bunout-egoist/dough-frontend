@@ -215,10 +215,15 @@ body, html {
   display: flex;
   justify-content: space-between;
   font-family: 'Pretendard-Regular';
+  margin-bottom: 1rem;
 }
-.week-days li{
+.week-days .week-name{
   color: #616161;
-  padding: 12px;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .days {
@@ -231,35 +236,56 @@ body, html {
   color:black;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 
-.weeks div {
+.weeks .first,
+.weeks .second,.weeks .third,.weeks .fourth,.weeks .fifth {
   display: flex;
   font-size: 1.25em;
   font-family: 'Pretendard-Regular';
   justify-content: space-between;
   width: 100%;
+  gap: 2rem;
 }
 
 .last-month {
   opacity: .3;
 }
 
-.weeks span {
+.weeks .week-date {
   color: #484B52;
-  padding: 10px;
-
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  font-size: 1.15rem;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Pretendard-400';
 }
 
-.weeks span.active {
+.weeks .week-date.active1 {
   background: #8FBCFF;
   border-radius: 50%;
+  color: white;
+}
+.weeks .week-date.active2 {
+  background: #FF7A2F;
+  border-radius: 50%;
+  color: white;
+}
+.weeks .week-date.active3 {
+  background: #E2E8F0;
+  border-radius: 50%;
+  
 }
 
-.weeks span:not(.last-month):hover {
+
+.weeks .week-date:not(.last-month):hover {
   cursor: pointer;
   font-weight: 600;
 }
+
 
 
 .dash-page .whats-color{
