@@ -2,7 +2,20 @@ import React, { useEffect } from "react";
 import styles from './styles.css';
 import $ from "jquery";
 export default function Calendar() {
-   
+  const monthlyMissionList = [1, 3, 3, 0, 2, 0, 3, 1, 0, 2, 0, 0, 0, 0, 1, 3, 3, 3, 2, 3, 2, 1, 1, 1, 3, 0, 3, 3, 2, 3, 1];
+
+  useEffect(() => {
+    const dates = document.querySelectorAll('.week-date');
+    monthlyMissionList.forEach((missions, index) => {
+      if (missions > 0) {
+        const dateElement = Array.from(dates).find(el => el.textContent === String(index + 1).padStart(2, '0'));
+        if (dateElement) {
+          dateElement.classList.add(`active${missions}`);
+        }
+      }
+    });
+  }, []);
+
       return (
         <div className="container">
           <div className="calendar">
@@ -25,10 +38,10 @@ export default function Calendar() {
     
                 <div className="weeks">
                   <div className="first">
-                    <div className="last-month week-date">28</div>
-                    <div className="last-month week-date">29</div>
-                    <div className="last-month week-date">30</div>
-                    <div className="last-month week-date">31</div>
+                    <div className="last-month last-month-week-date">28</div>
+                    <div className="last-month last-month-week-date">29</div>
+                    <div className="last-month last-month-week-date">30</div>
+                    <div className="last-month last-month-week-date">31</div>
                     <div className="week-date">01</div>
                     <div className="week-date">02</div>
                     <div className="week-date">03</div>

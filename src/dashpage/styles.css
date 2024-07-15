@@ -253,7 +253,7 @@ body, html {
   opacity: .3;
 }
 
-.weeks .week-date {
+.weeks .last-month-week-date,.weeks .week-date {
   color: #484B52;
   width: 2.2rem;
   height: 2.2rem;
@@ -265,19 +265,18 @@ body, html {
 }
 
 .weeks .week-date.active1 {
+  background: #E2E8F0;
+  border-radius: 50%;
+}
+.weeks .week-date.active2 {
   background: #8FBCFF;
   border-radius: 50%;
   color: white;
 }
-.weeks .week-date.active2 {
-  background: #FF7A2F;
+.weeks .week-date.active3 { 
+   background: #FF7A2F;
   border-radius: 50%;
   color: white;
-}
-.weeks .week-date.active3 {
-  background: #E2E8F0;
-  border-radius: 50%;
-  
 }
 
 
