@@ -3,7 +3,6 @@ import styles from './styles.css';
 import $ from "jquery";
 export default function Calendar() {
   const monthlyMissionList = [1, 3, 3, 0, 2, 0, 3, 1, 0, 2, 0, 0, 0, 0, 1, 3, 3, 3, 2, 3, 2, 1, 1, 1, 3, 0, 3, 3, 2, 3, 1];
-
   useEffect(() => {
     const dates = document.querySelectorAll('.week-date');
     monthlyMissionList.forEach((missions, index) => {
@@ -89,8 +88,7 @@ export default function Calendar() {
                 </div>
               </div>
             </div>
-  
-          </div>
+           </div>
         </div>
       );
 }

@@ -11,7 +11,11 @@ export default function Mainpage(){
                 </div> 
             </div>
             <div><img src=""/></div>
-            <div></div>
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     );
 }
