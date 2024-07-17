@@ -1,0 +1,43 @@
+.mainpage {
+    padding: 2.9rem 1.42rem;
+}
+.mainpage-title{
+    padding: 0 0.7rem;
+    font-family: 'Pretendard-Bold';
+    font-size: 2rem;
+}
+.mission-tag1,.mission-tag2{
+    font-family: 'Pretendard-Bold';
+    font-size: 2rem;
+    color: #FF9205;
+}
+.mainpage-level{
+    margin-top: 2.61rem;
+    display: flex;
+    gap: 0.92rem;
+    justify-content: center;
+    align-items: center;
+}
+.mainpage-level-title{
+    display: flex;
+    font-family: 'Pretendard-Regular';
+    font-size: 1.3rem;
+}
+.mainpage-level .outer{
+    display: flex;
+    background-color: #E8E5E5;
+    border-radius: 6px;
+    width: 12rem;
+    height: 0.86rem;
+}
+.mainpage-level .inner{
+    background-color: #FF9205;
+    border-radius: 6px;
+    width: 30%;
+    height: 0.86rem;
+}
+.mainpage-img{
+    width: 16.7rem;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+}
