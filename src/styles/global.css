@@ -103,7 +103,9 @@
       width: 100%;
     }
   }
-  
+  .page-area{
+    padding-bottom: 6rem;
+  }
   .body-area {
     width: 100%;
     height: 100%;
