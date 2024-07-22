@@ -1,12 +1,30 @@
 import React, { useState } from "react";
 import styles from "./setting.css";
 import { Link } from "react-router-dom";
-export default function Setting() {
-    const [isChecked, setIsChecked] = useState(false);
 
-    const handleToggle = () => {
-        setIsChecked(!isChecked);
+export default function Setting() {
+    const [isChecked1, setIsChecked1] = useState(false);
+    const [isChecked2, setIsChecked2] = useState(false);
+    const [isChecked3, setIsChecked3] = useState(false);
+    const [isChecked4, setIsChecked4] = useState(false);
+
+    const handleToggle1 = () => {
+        const newChecked = !isChecked1;
+        setIsChecked1(newChecked);
+        if (newChecked) {
+            setIsChecked2(true);
+            setIsChecked3(true);
+            setIsChecked4(true);
+        } else {
+            setIsChecked2(false);
+            setIsChecked3(false);
+            setIsChecked4(false);
+        }
     };
+
+    const handleToggle2 = () => setIsChecked2(!isChecked2);
+    const handleToggle3 = () => setIsChecked3(!isChecked3);
+    const handleToggle4 = () => setIsChecked4(!isChecked4);
 
     return (
         <div className="setting-page">
@@ -27,7 +45,6 @@ export default function Setting() {
                                 <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
                             </div>
                         </Link>
-                      
                         <div className="setting-service-li">
                             <div>고정퀘스트 재설정</div>
                             <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
@@ -43,8 +60,8 @@ export default function Setting() {
                                 <input
                                     type="checkbox"
                                     id="chk1"
-                                    checked={isChecked}
-                                    onChange={handleToggle}
+                                    checked={isChecked1}
+                                    onChange={handleToggle1}
                                 />
                                 <label className="slider round" htmlFor="chk1"></label>
                             </div>
@@ -58,11 +75,11 @@ export default function Setting() {
                                 <div className="switch">
                                     <input
                                         type="checkbox"
-                                        id="chk1"
-                                        checked={isChecked}
-                                        onChange={handleToggle}
+                                        id="chk2"
+                                        checked={isChecked2}
+                                        onChange={handleToggle2}
                                     />
-                                    <label className="slider round" htmlFor="chk1"></label>
+                                    <label className="slider round" htmlFor="chk2"></label>
                                 </div>
                            </div>
                         </div>
@@ -75,11 +92,11 @@ export default function Setting() {
                                 <div className="switch">
                                     <input
                                         type="checkbox"
-                                        id="chk1"
-                                        checked={isChecked}
-                                        onChange={handleToggle}
+                                        id="chk3"
+                                        checked={isChecked3}
+                                        onChange={handleToggle3}
                                     />
-                                    <label className="slider round" htmlFor="chk1"></label>
+                                    <label className="slider round" htmlFor="chk3"></label>
                                 </div>
                            </div>
                         </div>
@@ -92,11 +109,11 @@ export default function Setting() {
                                 <div className="switch">
                                     <input
                                         type="checkbox"
-                                        id="chk1"
-                                        checked={isChecked}
-                                        onChange={handleToggle}
+                                        id="chk4"
+                                        checked={isChecked4}
+                                        onChange={handleToggle4}
                                     />
-                                    <label className="slider round" htmlFor="chk1"></label>
+                                    <label className="slider round" htmlFor="chk4"></label>
                                 </div>
                            </div>
                         </div>
