@@ -1,0 +1,32 @@
+.intropage{
+    position: relative;
+    width: 100vw;
+    padding: 0 1.8rem;
+    text-align: center;
+}
+.intropage-title{
+    margin-top: 6.9rem;
+    font-size: 2.3rem;
+}
+.intropage-kakao{
+    margin: 0 auto;
+    padding: 1.3rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border: 0.5px solid #8C96A4;
+    margin-bottom: 2.75rem;
+    border-radius: 5px;
+}
+.intropage-kakao:active,
+.intropage-kakao:hover{
+    background-color: #FAE84C;
+}
+.intropage-kakao-img{
+    width: 11rem;
+}
+.profile-img{
+    width: 50vw;
+    padding: 2rem;
+    margin: 0 auto;
+}

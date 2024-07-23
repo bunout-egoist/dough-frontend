@@ -28,7 +28,7 @@ export default function TypePage() {
             )}
             <div className="typepage-main">
                 <div className="typepage-title">
-                    <img src="/images/intro/mytypetitle.png" alt="title" className="img-width" />
+                    <img src="/images/type/mytypetitle.png" alt="title" className="img-width" />
                 </div>
                 <div className="type-select-area">
                     <div
@@ -38,7 +38,7 @@ export default function TypePage() {
                             setIsAboutVisible(true);
                         }}
                     >
-                        <img className="img-width" alt="type1" src="/images/intro/type1.png" />
+                        <img className="img-width" alt="type1" src="/images/type/type1.png" />
                     </div>
                     <div
                         className={`type-box type-box-2 ${selectedType === 2 ? "type-box-2-active" : ""}`}
@@ -47,7 +47,7 @@ export default function TypePage() {
                             setIsAboutVisible(true);
                         }}
                     >
-                        <img className="img-width" alt="type2" src="/images/intro/type2.png" />
+                        <img className="img-width" alt="type2" src="/images/type/type2.png" />
                     </div>
                     <div
                         className={`type-box type-box-3 ${selectedType === 3 ? "type-box-3-active" : ""}`}
@@ -56,7 +56,7 @@ export default function TypePage() {
                             setIsAboutVisible(true);
                         }}
                     >
-                        <img className="img-width" alt="type3" src="/images/intro/type3.png" />
+                        <img className="img-width" alt="type3" src="/images/type/type3.png" />
                     </div>
                     <div
                         className={`type-box type-box-4 ${selectedType === 4 ? "type-box-4-active" : ""}`}
@@ -65,7 +65,7 @@ export default function TypePage() {
                             setIsAboutVisible(true);
                         }}
                     >
-                        <img className="img-width" alt="type4" src="/images/intro/type4.png" />
+                        <img className="img-width" alt="type4" src="/images/type/type4.png" />
                     </div>
                     <div
                         className={`type-box type-box-5 ${selectedType === 5 ? "type-box-5-active" : ""}`}
@@ -74,7 +74,7 @@ export default function TypePage() {
                             setIsAboutVisible(true);
                         }}
                     >
-                        <img className="img-width" alt="type5" src="/images/intro/type5.png" />
+                        <img className="img-width" alt="type5" src="/images/type/type5.png" />
                     </div>
                 </div>
                 <div className="typepage-btn-area">

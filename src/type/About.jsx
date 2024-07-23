@@ -22,17 +22,17 @@ export default function About({ onSelect, type, isVisible, setIsVisible }) {
         <div className="aboutpage">
             <div className="aboutpage-main">
                 <div className="aboutpage-close" onClick={handleClose}>
-                    <img src="/images/intro/x.png" alt="close" className="img-width" />
+                    <img src="/images/type/x.png" alt="close" className="img-width" />
                 </div>
                 <div className="aboutpage-detail">
                     <div className="about-title">
-                        <img src={`/images/intro/type${type}_title.png`} className="img-width" alt="title" />
+                        <img src={`/images/type/type${type}_title.png`} className="img-width" alt="title" />
                     </div>
                     <div className="about-icon">
-                        <img src={`/images/intro/type${type}_icon.png`} className="img-width" alt="icon" />
+                        <img src={`/images/type/type${type}_icon.png`} className="img-width" alt="icon" />
                     </div>
                     <div className="about-txt">
-                        <img src={`/images/intro/about_type${type}.png`} className="img-width" alt="description" />
+                        <img src={`/images/type/about_type${type}.png`} className="img-width" alt="description" />
                     </div>
                 </div>
                 <div className="aboutpage-btn-area">
