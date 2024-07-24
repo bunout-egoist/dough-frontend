@@ -9,6 +9,7 @@ import Setting from "./settings/Setting";
 import Nickname from "./settings/Nickname";
 import Mainpage from "./main/Mainpage";
 import Intro from "./intro/Intro";
+import Sign from "./sign/Sign";
 function App() {
   return (
     <div className="common-layout">
@@ -16,6 +17,7 @@ function App() {
         <div className="page-area">
           <Routes>
             <Route path="/intro"  element={<Intro/>} />
+            <Route path="/sign"  element={<Sign/>} />
             <Route path="/"  element={<Mainpage/>} />
             <Route path="/setting"  element={<Setting/>} />
             <Route path="/typepage" element={<TypePage/>}/>

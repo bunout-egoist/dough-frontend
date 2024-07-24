@@ -1,0 +1,43 @@
+.signpage{
+    width: 100vw;
+    padding: 6.9rem 2.1rem;
+}
+.signpage-title{
+    font-family: "Pretendard-Regular";
+    font-size: 1.73rem;
+    margin-bottom: 5.7rem;
+}
+.signpage-check-area{
+    display: flex;
+    padding: 0.92rem 0;
+    align-items: center;
+    font-family: 'Pretendard-Regular';
+    font-size: 1.3rem;
+}
+.sign-checkbox {
+    display: flex;
+    margin-right: 10px;
+    position: relative;
+}
+
+
+.sign-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+.notice-open-btn{
+    width: 0.92rem;
+    display: flex;
+    margin-left: auto;
+}
+.notice-open-btn img{
+    display: flex;
+    width: 100%;
+    object-fit: contain;
+}
+.notice-box{
+
+}
+.show-notice{
+    display: block !important;
+}

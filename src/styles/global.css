@@ -124,3 +124,6 @@
     display: flex;
     flex-direction: column;
   }
+  .bold-txt{
+    font-family: 'Pretendard-Bold';
+  }
