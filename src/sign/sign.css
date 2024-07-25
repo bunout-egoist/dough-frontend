@@ -1,6 +1,10 @@
 .signpage{
     width: 100vw;
+    height: 100dvh;
+    max-width: 500px;
     padding: 6.9rem 2.1rem;
+    display: flex;
+    flex-direction: column;
 }
 .signpage-title{
     font-family: "Pretendard-Regular";
@@ -29,6 +33,7 @@
     width: 0.92rem;
     display: flex;
     margin-left: auto;
+    height: 2rem;
 }
 .notice-open-btn img{
     display: flex;
@@ -36,8 +41,28 @@
     object-fit: contain;
 }
 .notice-box{
-
+    display: none;
 }
 .show-notice{
     display: block !important;
+}
+.signpage-btn-area{
+    width: 100%;
+    position: relative;
+    flex: 1;
+}
+.signpage-btn{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 1.4rem 0 ;
+    background-color: #D9D9D9;
+    color: white;
+    font-family: 'Pretendard-Bold';
+    font-size: 1.3rem;
+    border-radius: 10px;
+}
+.btn-active{
+    background-color: #FF9205;
 }
