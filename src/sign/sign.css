@@ -66,3 +66,27 @@
 .btn-active{
     background-color: #FF9205;
 }
+
+/* nickname-step2 */
+.nickname-step2-input{
+    margin-bottom: 3.2rem;
+}
+.input-label{
+    font-size: 1.1rem;
+    font-family: 'Pretendard-Regular';
+    color: #B4BAC5;
+    margin-bottom: 0.55rem;
+}
+.input-box{
+    display: flex;
+    align-items: center;
+}
+.step2-date-input{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0.92rem;
+    text-align: left;
+    border-bottom: 1px solid #24262D !important;
+    border: none;
+}

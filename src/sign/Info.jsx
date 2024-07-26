@@ -58,10 +58,11 @@ export default function Info() {
                 </div>
             </div>
             <div className="nickname-step2">
-                <div>
-                    <div>생년월일(8자리)</div>
+                <div className="nickname-step2-input">
+                    <div className="input-label">생년월일(8자리)</div>
                     <div className="date_wrap">
                         <input
+                            className="step2-date-input"
                             placeholder="YYYY-MM-DD"
                             id="date"
                             maxLength="10"
@@ -71,17 +72,17 @@ export default function Info() {
                     </div>
                     {isWarning && <span className="warning">유효하지 않은 날짜입니다.</span>}
                 </div>
-                <div>
-                    <div>성별</div>
-                    <div>
-                        <input  className="input-box input-sex" placeholder="성별"/>
+                <div className="nickname-step2-input">
+                    <div className="input-label">성별</div>
+                    <div className="input-box">
+                        <input className="step2-date-input input-sex" placeholder="성별"/>
                         <img src="/images/toggle.png"/>
                     </div>
                 </div>
                 <div>
-                    <div>직종</div>
-                    <div>
-                        <input className="input-box input-job" placeholder="직종"/>
+                    <div className="input-label">직종</div>
+                    <div className="input-box">
+                        <input className="step2-date-input input-job" placeholder="직종"/>
                         <img src="/images/toggle.png"/>
                     </div>
                 </div>
