@@ -1,11 +1,13 @@
 .intropage{
     position: relative;
+    max-width: 500px;
     width: 100vw;
     padding: 0 1.8rem;
     text-align: center;
+    background-color: rgb(235, 202, 202);
 }
 .intropage-title{
-    margin-top: 6.9rem;
+    padding-top: 6.9rem;
     font-size: 2.3rem;
 }
 .intropage-kakao{
@@ -26,7 +28,7 @@
     width: 11rem;
 }
 .profile-img{
-    width: 50vw;
+    width: 20rem;
     padding: 2rem;
     margin: 0 auto;
 }
