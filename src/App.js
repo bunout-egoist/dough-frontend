@@ -11,6 +11,7 @@ import Mainpage from "./main/Mainpage";
 import Intro from "./intro/Intro";
 import Sign from "./sign/Sign";
 import Info from "./sign/Info";
+import Redirection from "./intro/Redirection";
 function App() {
   const location = useLocation();
 
@@ -22,6 +23,7 @@ function App() {
       <div className="app-main">
         <div className="page-area">
           <Routes>
+          <Route exact path="/login/oauth2/code/kakao" element={<Redirection/>}/>
             <Route path="/intro" element={<Intro />} />
             <Route path="/sign" element={<Sign />} />
             <Route path="/sign/info" element={<Info />} />
