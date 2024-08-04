@@ -23,7 +23,7 @@ function App() {
       <div className="app-main">
         <div className="page-area">
           <Routes>
-          <Route exact path="/login/oauth2/code/kakao" element={<Redirection/>}/>
+            <Route path="/oauth2/callback/kakao" element={<Redirection/>}/>
             <Route path="/intro" element={<Intro />} />
             <Route path="/sign" element={<Sign />} />
             <Route path="/sign/info" element={<Info />} />

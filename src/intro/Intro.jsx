@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./intro.css";
 export default function Intro(){
     const REST_API_KEY = '3abc01eba80718573dbc9e7098b54ee1';
-    const REDIRECT_URI = 'http://localhost:3000/login/oauth2/code/kakao';
+    const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
     const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
    
     const loginHandler = () => {
