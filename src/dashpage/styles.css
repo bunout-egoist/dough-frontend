@@ -422,3 +422,54 @@ body, html {
   height: 100%;
   border-radius: 10px;
 }
+
+/* 잠시 */
+/* styles.css */
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.month-display {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.arrow {
+  cursor: pointer;
+}
+
+.day-names, .week {
+  display: flex;
+  justify-content: space-around;
+}
+
+.day {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.today {
+  background-color: yellow;
+}
+
+.selected {
+  background-color: lightblue;
+}
+
+.different-month {
+  color: lightgray;
+}

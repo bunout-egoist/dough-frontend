@@ -1,94 +1,147 @@
-import React, { useEffect } from "react";
+import React, { Component } from 'react';
+import moment from 'moment';
 import styles from './styles.css';
-import $ from "jquery";
-export default function Calendar() {
-  const monthlyMissionList = [1, 3, 3, 0, 2, 0, 3, 1, 0, 2, 0, 0, 0, 0, 1, 3, 3, 3, 2, 3, 2, 1, 1, 1, 3, 0, 3, 3, 2, 3, 1];
-  useEffect(() => {
-    const dates = document.querySelectorAll('.week-date');
-    monthlyMissionList.forEach((missions, index) => {
-      if (missions > 0) {
-        const dateElement = Array.from(dates).find(el => el.textContent === String(index + 1).padStart(2, '0'));
-        if (dateElement) {
-          dateElement.classList.add(`active${missions}`);
-        }
-      }
-    });
-  }, []);
 
-      return (
-        <div className="container">
-          <div className="calendar">
-            <div className="front">
-              {/* <div className="current-date">
-                <h1>Friday 15th</h1>
-                <h1>January 2016</h1> 
-              </div> */}
-    
-              <div className="current-month">
-                <div className="week-days">
-                  <div className="week-name">월</div>
-                  <div className="week-name">화</div>
-                  <div className="week-name">수</div>
-                  <div className="week-name">목</div>
-                  <div className="week-name">금</div>
-                  <div className="week-name">토</div>
-                  <div className="week-name">일</div>
-                </div>
-    
-                <div className="weeks">
-                  <div className="first">
-                    <div className="last-month last-month-week-date">28</div>
-                    <div className="last-month last-month-week-date">29</div>
-                    <div className="last-month last-month-week-date">30</div>
-                    <div className="last-month last-month-week-date">31</div>
-                    <div className="week-date">01</div>
-                    <div className="week-date">02</div>
-                    <div className="week-date">03</div>
-                  </div>
-    
-                  <div className="second">
-                    <div className="week-date">04</div>
-                    <div className="week-date">05</div>
-                    <div className="week-date event">06</div>
-                    <div className="week-date active3">07</div>
-                    <div className="week-date">08</div>
-                    <div className="week-date">09</div>
-                    <div className="week-date">10</div>
-                  </div>
-    
-                  <div className="third">
-                    <div className="week-date">11</div>
-                    <div className="week-date active2">12</div>
-                    <div className="week-date">13</div>
-                    <div className="week-date">14</div>
-                    <div className="week-date active1">15</div>
-                    <div className="week-date">16</div>
-                    <div className="week-date">17</div>
-                  </div>
-    
-                  <div className="fourth">
-                    <div className="week-date">18</div>
-                    <div className="week-date">19</div>
-                    <div className="week-date">20</div>
-                    <div className="week-date">21</div>
-                    <div className="week-date">22</div>
-                    <div className="week-date">23</div>
-                    <div className="week-date">24</div>
-                  </div>
-    
-                  <div className="fifth">
-                    <div className="week-date">25</div>
-                    <div className="week-date">26</div>
-                    <div className="week-date">27</div>
-                    <div className="week-date">28</div>
-                    <div className="week-date">29</div>
-                    <div className="week-date">30</div>
-                    <div className="week-date">31</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-           </div>
-        </div>
+class Calendar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      month: moment(),
+      selected: moment().startOf('day'),
+      monthlyMissionList: [1, 3, 3, 0, 2, 0, 3, 1, 0, 2, 0, 0, 0, 0, 1, 3, 3, 3, 2, 3, 2, 1, 1, 1, 3, 0, 3, 3, 2, 3, 1],
+    };
+    this.previous = this.previous.bind(this);
+    this.next = this.next.bind(this);
+  }
+
+  previous() {
+    this.setState({ month: this.state.month.subtract(1, 'month') });
+  }
+
+  next() {
+    this.setState({ month: this.state.month.add(1, 'month') });
+  }
+
+  select(day) {
+    this.setState({
+      selected: day.date,
+      month: day.date.clone(),
+    });
+  }
+
+  renderWeeks() {
+    let weeks = [];
+    let done = false;
+    let date = this.state.month.clone().startOf('month').add('w' - 1).day('Sunday');
+    let count = 0;
+    let monthIndex = date.month();
+
+    while (!done) {
+      weeks.push(
+        <Week
+          key={date}
+          date={date.clone()}
+          month={this.state.month}
+          select={(day) => this.select(day)}
+          selected={this.state.selected}
+          monthlyMissionList={this.state.monthlyMissionList}
+        />
       );
+
+      date.add(1, 'w');
+      done = count++ > 2 && monthIndex !== date.month();
+      monthIndex = date.month();
+    }
+
+    return weeks;
+  }
+
+  renderMonthLabel() {
+    return <span className="month-label">{this.state.month.format('MMMM YYYY')}</span>;
+  }
+
+  render() {
+    return (
+      <section className="calendar">
+        <header className="header">
+          <div className="month-display row">
+            <i className="arrow fa fa-angle-left" onClick={this.previous} />
+            {this.renderMonthLabel()}
+            <i className="arrow fa fa-angle-right" onClick={this.next} />
+          </div>
+          <DayNames />
+        </header>
+        {this.renderWeeks()}
+      </section>
+    );
+  }
 }
+
+class DayNames extends Component {
+  render() {
+    return (
+      <div className="row day-names">
+        <span className="day">S</span>
+        <span className="day">M</span>
+        <span className="day">T</span>
+        <span className="day">W</span>
+        <span className="day">T</span>
+        <span className="day">F</span>
+        <span className="day">S</span>
+      </div>
+    );
+  }
+}
+
+class Week extends Component {
+  render() {
+    let days = [];
+    let { date } = this.props;
+
+    for (let i = 0; i < 7; i++) {
+      let day = {
+        name: date.format('dd').substring(0, 1),
+        number: date.date(),
+        isCurrentMonth: date.month() === this.props.month.month(),
+        isToday: date.isSame(new Date(), 'day'),
+        date: date,
+        missions: this.props.monthlyMissionList[date.date() - 1] || 0,
+      };
+
+      days.push(
+        <Day
+          key={day.date.toString()}
+          day={day}
+          selected={this.props.selected}
+          select={this.props.select}
+        />
+      );
+
+      date = date.clone();
+      date.add(1, 'day');
+    }
+
+    return <div className="row week">{days}</div>;
+  }
+}
+
+class Day extends Component {
+  render() {
+    const { day, select, selected } = this.props;
+    let className = 'day' + (day.isToday ? ' today' : '') + (day.isCurrentMonth ? '' : ' different-month');
+
+    if (day.date.isSame(selected)) {
+      className += ' selected';
+    }
+
+    className += ` active${day.missions}`;
+
+    return (
+      <span className={className} onClick={() => select(day)}>
+        {day.number}
+      </span>
+    );
+  }
+}
+
+export default Calendar;
