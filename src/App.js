@@ -31,7 +31,7 @@ function App() {
             <Route path="/setting" element={<Setting />} />
             <Route path="/typepage" element={<TypePage />} />
             <Route path="/dashpage" element={<DashPage />} />
-            <Route path="/detail" element={<DetailPage />} />
+            <Route path="/detail/:date" element={<DetailPage />} />
             <Route path="/nickname" element={<Nickname />} />
           </Routes>
         </div>

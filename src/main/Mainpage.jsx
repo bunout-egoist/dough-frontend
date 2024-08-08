@@ -41,8 +41,16 @@ export default function Mainpage() {
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const dataURL = canvas.toDataURL("image/png");
+            const dataURL = canvas.toDataURL("image/jpeg"); // JPG 형식으로 저장
             setPhoto(dataURL);
+
+            // Create a blob from the canvas dataURL
+            canvas.toBlob((blob) => {
+                // Create a file from the blob
+                const file = new File([blob], "captured-photo.jpg", { type: "image/jpeg" });
+                // Automatically send the file to the backend
+                sendPhotoToBackend(file);
+            }, 'image/jpeg');
 
             // Stop all video tracks and hide video element
             const stream = video.srcObject;
@@ -56,6 +64,23 @@ export default function Mainpage() {
             video.style.display = 'none';
             setCameraOn(false); // Stop the camera activation
         }
+    };
+
+    const sendPhotoToBackend = (file) => {
+        const formData = new FormData();
+        formData.append("photo", file);
+
+        fetch('https://your-backend-url.com/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Successfully uploaded", data);
+        })
+        .catch((error) => {
+            console.error("Error uploading photo:", error);
+        });
     };
 
     const deletePhoto = () => {
@@ -75,13 +100,15 @@ export default function Mainpage() {
                 setPhoto(reader.result);
             };
             reader.readAsDataURL(file);
+            // Automatically send the uploaded file to the backend
+            sendPhotoToBackend(file);
         }
     };
 
     return (
         <div className="mainpage">
             <div className="mainpage-title">
-                오늘 퀘스트는<br/><span className="mission-tag1">#밖에서</span><span className="mission-tag2">혼자</span> 할 수 있어요!
+                오늘 퀘스트는<br/><span className="mission-tag1">#밖에서</span><span className="mission-tag2"> #혼자</span> 할 수 있어요!
             </div>
             <div className="mainpage-level">
                 <div className="mainpage-level-title">레벨 5</div>
