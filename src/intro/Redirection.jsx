@@ -9,7 +9,7 @@ export default function Redirection() {
   useEffect(() => {
     if (logincode) {
       console.log("Received code:", logincode);
-
+      
       fetch('http://localhost:8080/api/v1/auth/login/kakao', {
         method: 'POST',
         headers: {

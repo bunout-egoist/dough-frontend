@@ -1,5 +1,5 @@
 .mainpage {
-    padding: 2.9rem 1.42rem;
+    padding: 2.9rem 1.9rem;
 }
 .mainpage-title {
     padding: 0 0.7rem;
@@ -10,8 +10,9 @@
     font-family: 'Pretendard-Bold';
     font-size: 2rem;
     color: #FF9205;
+    margin-right: 0.7rem;
 }
-.mainpage-level{
+/* .mainpage-level{
     margin-top: 2.61rem;
     display: flex;
     gap: 0.92rem;
@@ -35,11 +36,10 @@
     border-radius: 6px;
     width: 30%;
     height: 0.86rem;
-}
+} */
 .mainpage-img{
-    width: 16.7rem;
-    margin: 0 auto;
-    margin-top: 1.5rem;
+    width: 8.5rem;
+    margin:1.6rem 0 1.6rem auto;
 }
 .mainpage-cam-area{
     text-align: center;
@@ -86,4 +86,61 @@ button:hover {
 .camera-img-area{
     margin: 0 auto;
     text-align: center;
+}
+
+/* 미션 박스 style */
+.mainpage-mission-zone{
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.mainpage-mission-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.3rem;
+    background-color: #FF7A2F;
+    border-radius: 8px;
+}
+.mission-tag-flex{
+    display: flex;
+    flex-direction: row;
+    gap: 0.7rem;
+}
+.mission-tag{
+    padding: 0.4rem 0.7rem;
+    background-color: white;
+    margin-bottom: 0.5rem;
+    font-family: 'Pretendard-Bold';
+    font-size: 1.1rem;
+    color: #FF7A2F;
+    border-radius: 5px;
+}
+.mission-title{
+    font-family: 'Pretendard-Bold';
+    font-size: 1.3rem;
+    color: white;
+}
+.mainpage-mission-check{
+    border-color: #FFFFFF;
+    accent-color: #DEE0E4;
+    padding: 12.5px 11px;
+    gap: 5px;
+    width: 1.2rem;
+    height: 1.2rem;
+    background: #FFFFFF;
+    border-radius: 4px;
+}
+.mission-checkbox-checked{
+    background-color: #8F94A2;
+    accent-color: #8F94A2;
+}
+.mission-tag-checked{
+    background-color: #DEE0E4 !important;
+    color: #A5AAB5 !important;
+}
+.mission-checked{
+   background-color:  #F6F7F8 !important;
+   color: #A5AAB5 !important;
 }

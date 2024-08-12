@@ -71,8 +71,8 @@ export default class DetailPage extends React.Component {
                     </div>
                 </div>
                 <div className="detail-bottom">
-                    <MissionCard pictureState={0} text={"10분 산책하기"} />
-                    <MissionCard pictureState={1} text={"5분간 새로운 책 읽기"} />
+                    <MissionCard pictureState={0}  />
+                    <MissionCard pictureState={1}  />
                 </div>
                 <div className="navbar-area">
                     <div className="navbar-icon">
