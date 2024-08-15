@@ -1,73 +1,4 @@
-@font-face {
-    font-family: 'Pretendard-400';
-    src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
-    font-weight: 400;
-    }
-    
-    @font-face {
-    font-family: 'Pretendard-500';
-    src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
-    font-weight: 500;
-    }
-    
-    @font-face {
-    font-family: 'Pretendard-600';
-    src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
-    font-weight: 600;
-    }
-    
-    @font-face {
-    font-family: 'Pretendard-700';
-    src: url('https://cdn.banggooso.com/assets/fonts/PretendardVariable.woff2') format('woff2');
-    font-weight: 700;
-    }
-    
-    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
-    @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-style: normal;
-    }
-    @font-face {
-    font-family: 'Pretendard-Bold';
-    src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Bold.otf') format('opentype'),
-      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Bold.woff2')
-        format('woff2'),
-      url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Bold.woff') format('woff');
-    font-style: normal;
-    }
-    
-    @font-face {
-    font-family: 'Pretendard-Medium';
-    src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Medium.otf') format('opentype'),
-      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Medium.woff2')
-        format('woff2'),
-      url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Medium.woff') format('woff');
-    font-style: normal;
-    }
-    
-    @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Regular.otf') format('opentype'),
-      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Regular.woff2')
-        format('woff2'),
-      url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-Regular') format('woff');
-    font-style: normal;
-    }
-    
-    @font-face {
-    font-family: 'Pretendard-SemiBold';
-    src: url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-SemiBold.otf') format('opentype'),
-      url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Thin.woff2https://cdn.banggooso.com/sr/assets/fonts/Pretendard-SemiBold.woff2')
-        format('woff2'),
-      url('https://cdn.banggooso.com/sr/assets/fonts/Pretendard-SemiBold') format('woff');
-    font-style: normal;
-    }
-    
-.img-width{
-    width: 100%;
-    object-fit: fill;
-}
+
 .typepage-hidden{
   overflow: hidden;
 }
@@ -85,20 +16,23 @@
     padding: 0 0.8rem;
     margin-top: 2.8rem;
     display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1.2rem;
     width: 100%;
 }
 .type-box{
-   width: 100%;
-   padding: 0.7rem 1.9rem;
-   background: #F6F7F8;
-   box-shadow: 0px 2px 6.2px rgba(101, 118, 133, 0.25);
-   border-radius: 10px;
+  width: 47.5%;
+  padding: 1.3rem 0.7rem;
+  background: #F6F7F8;
+  box-shadow: 0px 2px 6.2px rgba(101, 118, 133, 0.25);
+  border-radius: 10px;
 }
-.type-box-1-active, .type-box-2-active,.type-box-3-active,.type-box-4-active,.type-box-5-active{
+.type-box-1-active, .type-box-2-active,.type-box-3-active,.type-box-4-active{
     background-color: #D0E4FD;
     border: #0059B1 solid 2px;
+}
+.typepage-landing-test{
+  font-size: 1rem;
 }
 .typepage-btn-area{
     margin-top: 1.9rem;

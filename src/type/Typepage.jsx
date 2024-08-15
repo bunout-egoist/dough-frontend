@@ -67,16 +67,9 @@ export default function TypePage() {
                     >
                         <img className="img-width" alt="type4" src="/images/type/type4.png" />
                     </div>
-                    <div
-                        className={`type-box type-box-5 ${selectedType === 5 ? "type-box-5-active" : ""}`}
-                        onClick={() => {
-                            setAboutType(5);
-                            setIsAboutVisible(true);
-                        }}
-                    >
-                        <img className="img-width" alt="type5" src="/images/type/type5.png" />
-                    </div>
+                    
                 </div>
+                <div className="typepage-landing-test">잘 모르겠다면? 유형 검사하러 가기</div>
                 <div className="typepage-btn-area">
                     <div className="typepage-btn">다음</div>
                 </div>
