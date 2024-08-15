@@ -12,6 +12,7 @@ import Intro from "./intro/Intro";
 import Sign from "./sign/Sign";
 import Info from "./sign/Info";
 import Redirection from "./intro/Redirection";
+import MainLevel from "./main/MainLevel";
 function App() {
   const location = useLocation();
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/sign" element={<Sign />} />
             <Route path="/sign/info" element={<Info />} />
             <Route path="/" element={<Mainpage />} />
+            <Route path="/level" element={<MainLevel />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/typepage" element={<TypePage />} />
             <Route path="/dashpage" element={<DashPage />} />

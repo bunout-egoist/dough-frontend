@@ -1,7 +1,29 @@
 .mainpage {
-    padding: 2.9rem 1.9rem;
+    padding: 1rem 1.9rem;
+}
+.mainpage-level-landing{
+    background-color: #F6F7F8;
+    color:black;
+    display: flex;
+    border-radius: 22px;
+    gap: 0.7rem;
+    padding: 0.7rem 1.3rem;
+    align-items: center;
+}
+.mainpage-level-landing .mainpage-level-num{
+    background-color: #FFE9D4;
+    color: #FF7A2F;
+    border-radius: 15px;
+    padding: 0.4rem 0.7rem;
+    font-family: 'Pretendard-Medium';
+    font-size: 1rem;
+}
+.mainpage-level-landing .mainpage-level-txt{
+    font-family: 'Pretendard-Medium';
+    font-size: 1rem;
 }
 .mainpage-title {
+    margin-top: 2.42rem;
     padding: 0 0.7rem;
     font-family: 'Pretendard-Bold';
     font-size: 2rem;
@@ -143,4 +165,79 @@ button:hover {
 .mission-checked{
    background-color:  #F6F7F8 !important;
    color: #A5AAB5 !important;
+}
+
+/* 메인 - 레벨 페이지 */
+.main-levelpage{
+    display: flex;
+    flex-direction: column;
+}
+.backbtn{
+    padding: 1rem 1.3rem;
+    background-color: rgba(255, 255, 255, 0.881);
+    width: 100%;
+    position: fixed;
+    top: 0;
+}
+.main-levelpage-top{
+    padding: 0 1.3rem 2rem 1.3rem;
+}
+.main-levelpage-top .level-top-title{
+    margin-top: 5rem;
+}
+.main-levelpage-top .level-top-title-1{
+    font-size: 1.9rem;
+    font-family: 'Pretendard-Bold';
+}
+.main-levelpage-top .level-top-title-2{
+    font-size: 1.41rem;
+    font-family: 'Pretendard-Bold';
+}
+.main-levelpage-top .level-top-img{
+    width: 8.5rem; 
+    margin: 1.7rem auto;
+}
+.main-levelpage-level{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 9px;
+}
+.main-levelpage-level .level-value{
+    font-size: 1rem;
+    font-family: 'Pretendard-Medium';
+    color: #BBBBBB;
+    margin-left: auto;
+}
+.main-levelpage-level .outer{
+    width: 100%;
+    height: 9px;
+    background-color: #DEE0E4;
+    border-radius: 8px;
+}
+.main-levelpage-level .inner{
+    width: 20%;
+    height: 9px;
+    background-color: #FF7A2F;
+    border-radius: 8px;
+}
+.main-levelpage-level .level-change{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0.7rem;
+}
+.main-levelpage-level .level-tag{
+    display: flex;
+    border : solid #FFE9D4 0.75px;
+    text-align: center;
+    color:  #FF7A2F;
+    font-family: 'Pretendard-Medium';
+    font-size: 1.1rem;
+    border-radius: 15px;
+    padding: 0.38rem 0.7rem;
+}
+.main-level-bottom{
+    flex: 1;
+    padding: 2.3rem 2rem 4.1rem 2rem;
+    background-color: #F6F7F8;
 }
