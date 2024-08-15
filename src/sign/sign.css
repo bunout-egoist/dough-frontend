@@ -66,7 +66,20 @@
 .btn-active{
     background-color: #FF9205;
 }
-
+/* nickname-step1 */
+.step1-input-flex{
+    display: flex;
+    align-items: last baseline;
+}
+.step1-date-input{
+    border: none;
+    width: 90%;
+}
+.step1-input-cnt{
+    font-family: 'Pretendard-Medium';
+    font-size: 1.35rem;
+    color: #B4BAC5;
+}
 /* nickname-step2 */
 .nickname-step2-input{
     margin-bottom: 3.2rem;

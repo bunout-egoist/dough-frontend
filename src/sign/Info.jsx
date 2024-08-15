@@ -51,10 +51,10 @@ export default function Info() {
         <div className="signpage sign-nickname-page">
             <div className="signpage-title">반가워요!<br /><span className="bold-txt">어떻게 불러드릴까요?</span></div>
             <div className="nickname-step1">
-                <div>닉네임</div>
-                <div>
-                    <input placeholder="닉네임 입력하시오" />
-                    <span>0/5</span>
+                <div  className="input-label">닉네임</div>
+                <div className="step1-input-flex step2-date-input">
+                    <input className="step1-date-input" placeholder="닉네임 입력하시오" />
+                    <span className="step1-input-cnt">0/5</span>
                 </div>
             </div>
             <div className="nickname-step2">
