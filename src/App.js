@@ -13,19 +13,21 @@ import Sign from "./sign/Sign";
 import Info from "./sign/Info";
 import Redirection from "./intro/Redirection";
 import MainLevel from "./main/MainLevel";
+import Quest from "./type/Quest";
 function App() {
   const location = useLocation();
 
-  const hideNavbarRoutes = ["/intro", "/sign","/sign/info", "/typepage"];
+  const hideNavbarRoutes = ["/intro", "/sign","/sign/info", "/typepage","/typepage/quest"];
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
 
   return (
     <div className="common-layout">
       <div className="app-main">
-        <div className="page-area">
+        <div>
           <Routes>
             <Route path="/oauth2/callback/kakao" element={<Redirection/>}/>
             <Route path="/intro" element={<Intro />} />
+            <Route path="/typepage/quest" element={<Quest />} />
             <Route path="/sign" element={<Sign />} />
             <Route path="/sign/info" element={<Info />} />
             <Route path="/" element={<Mainpage />} />

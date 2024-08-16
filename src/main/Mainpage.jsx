@@ -29,7 +29,7 @@ export default function Mainpage() {
     };
 
     return (
-        <div className="mainpage">
+        <div className="mainpage page-area">
            <Link to="/level">
             <div className="mainpage-level-landing">
                     <div className="mainpage-level-num">레벨2

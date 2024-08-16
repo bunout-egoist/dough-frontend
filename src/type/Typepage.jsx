@@ -69,9 +69,12 @@ export default function TypePage() {
                     </div>
                     
                 </div>
-                <div className="typepage-landing-test">잘 모르겠다면? 유형 검사하러 가기</div>
+                
                 <div className="typepage-btn-area">
-                    <div className="typepage-btn">다음</div>
+                    <div className="typepage-btn-area-abs">
+                        <div className="typepage-landing-test">잘 모르겠다면? 유형 검사하러 가기</div>
+                        <div className={`typepage-btn ${selectedType >= 1 ? "typepage-btn-active" : ""}`}>다음</div>
+                    </div>
                 </div>
             </div>
         </div>

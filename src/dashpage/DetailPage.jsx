@@ -50,7 +50,7 @@ export default class DetailPage extends React.Component {
     render() {
         const { baseDate } = this.state;
         return (
-            <div className="detail-page">
+            <div className="detail-page page-area">
                 <div className="detail-top">
                     <div className="top-title">주변 달성률</div>
                     <div className="this-week">

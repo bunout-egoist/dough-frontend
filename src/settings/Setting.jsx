@@ -27,7 +27,7 @@ export default function Setting() {
     const handleToggle4 = () => setIsChecked4(!isChecked4);
 
     return (
-        <div className="setting-page">
+        <div className="setting-page page-area">
             <div className="setting-title">설정</div>
             <div className="setting-area">
                 <div className="setting-service">

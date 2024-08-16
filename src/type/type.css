@@ -4,10 +4,13 @@
 }
 
 .typepage-main{
+  /* position: fixed; */
     width: 100%;
     max-width: 500px;
     height: 100dvh;
     padding: 3rem 1.75rem;
+    display: flex;
+    flex-direction: column;
 }
 .typepage-title{
     padding: 0 0.1rem;
@@ -28,26 +31,46 @@
   border-radius: 10px;
 }
 .type-box-1-active, .type-box-2-active,.type-box-3-active,.type-box-4-active{
-    background-color: #D0E4FD;
-    border: #0059B1 solid 2px;
+    background-color: #FFE9D4;
+    border: #FF7A2F solid 2px;
 }
 .typepage-landing-test{
   font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 .typepage-btn-area{
-    margin-top: 1.9rem;
-    width: 100%;
-    padding-bottom: 2.6rem;
+  width: 100%;
+  padding-bottom: 2.6rem;
+  position: relative;
+  flex:1;
+}
+.typepage-btn-area-abs{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 .typepage-btn{
-    background: #EDEEF1;
-    border-radius: 10px;
-    color: #C5C5C5;
-    padding: 1.5rem 1.8rem;
-    text-align: center;
-    font-size: 1.3rem;
-    font-family: 'Pretendard-Bold';
+  background: #EDEEF1;
+  border-radius: 10px;
+  color: #C5C5C5;
+  padding: 1.5rem 1.8rem;
+  text-align: center;
+  font-size: 1.3rem;
+  font-family: 'Pretendard-Bold';
 }
+.typepage-btn-active{
+  background-color: #FF7A2F;
+  color: white;
+}
+.typepage-landing-test{
+  color: #717484;
+  font-family: 'Pretendard-Regular';
+  font-size: 1.2rem;
+  text-decoration: underline;
+}
+
+/* about페이지 부분 */
 .aboutpage{
     max-width: 500px;
     position: absolute;
@@ -55,6 +78,7 @@
     width: 100%;
     height: 100dvh;
     background-color: #0000004c;
+    z-index: 5;
 }
 .aboutpage-main{
     position: absolute;

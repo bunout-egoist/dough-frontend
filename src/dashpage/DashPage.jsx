@@ -5,7 +5,7 @@ import Calendar from "./Calendar";
 import Navbar from "../navbar/Navbar";
 export default function DashPage() {
   return(
-    <div className="dash-page">
+    <div className="dash-page page-area">
       <div className="dash-top">
         <div className="dash-title">
           나의 미션 모아보기
