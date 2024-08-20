@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Actor&display=swap');
+.actor-regular {
+    font-family: "Actor", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+/* 튜토리얼 페이지 */
+.tutorial-page{
+    padding: 0 2rem;
+    width: 100%;
+    height: 100dvh;
+    position: relative;
+    background-size: 100%;
+}
+/* chatbox 스타일 */
+.chatbox-area{
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    z-index: 5;
+}
+.chatbox-area-abs{
+    position: absolute;
+    width: 100%;
+    top: 10%;
+}
+.chatbox{
+    padding: 1.3rem 1.55rem;
+    border-radius: 10px;
+    position: relative;
+    display: block;
+    background: rgb(255, 255, 255);
+}
+
+.chatbox-area .pointer-up{
+    z-index: -1;
+    height: 40px;
+	width: 40px;
+    background: rgb(255, 255, 255);
+	margin: 0 auto;
+	transform: rotate(45deg);
+	border-radius: 10px 0 0px 0;
+	margin-top: 10px;
+	position: relative;
+	left: calc(0.5vw - 100px);
+}
+.chatbox-area .pointer{
+    z-index: -1;
+    height: 40px;
+	width: 40px;
+    background: rgb(255, 255, 255);
+	margin: 0 auto;
+	transform: rotate(45deg);
+	border-radius: 0 0 10px 0;
+	margin-top: -25px;
+	position: relative;
+	left: calc(0.5vw - 100px);
+}
+/* 
+.chatbox:after { 
+    border-radius: 10px;
+    border-top: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid pink;
+    content: "";
+    width: 31.32px;
+    height: 28.19px;
+    position: absolute;
+    rotate: 180deg;
+    bottom: -1.55rem;
+    left: 26.78px;
+   } */
+.chatbox .chatbox-txt{
+    font-family: 'Pretendard-Medium';
+    font-size: 1.2rem;
+}
+.chatbox .chatbox-orange{
+    color: #FE5D11;
+}
+.chatbox .chatbox-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.7rem;
+}
+.chatbox .chatbox-btn{
+    display: flex;
+    font-family: 'Pretendard-Regular';
+    font-size: 1.25rem;
+    background-color: #FF7A2F;
+    border:  solid 1px #FE5D11;
+    color: white;
+    border-radius: 10px;
+    padding: 0.38rem 1.3rem;
+    line-height: 1.8rem;
+}
+.chatbox-seq{
+    color: #FF7A2F;
+    font-size: 1.25rem;
+    display: flex;
+}
