@@ -136,13 +136,17 @@ button:hover {
     background-color: #8F94A2;
     accent-color: #8F94A2;
 }
-.mission-tag-checked{
+.mission-finished .mission-tag-checked{
     background-color: #DEE0E4 !important;
     color: #A5AAB5 !important;
 }
-.mission-checked{
-   background-color:  #F6F7F8 !important;
-   color: #A5AAB5 !important;
+.mission-finished{
+    background-color:  #F6F7F8 !important;
+    color: #A5AAB5 !important;
+    
+ }
+.mission-now-clicked{
+    z-index: 99 !important;
 }
 
 /* 메인 - 레벨 페이지 */
@@ -222,26 +226,29 @@ button:hover {
 
 /* roundslide 영역 */
 .roundslide-area{
+    max-width: 500px;
     width: 100%;
     height: 100dvh;
-    position: absolute;
+    position: fixed;
 }
 .roundslide-area .pos-rel{
     position: relative;
     width: 100%;
     height: 100dvh;
+    background: #5a5a5ab3;
 }
 .roundslide-area .roundslide-area-flex{
     display: flex;
    position: absolute;
    width: 100%;
-   justify-content: space-between;
-   bottom: 15%;
+   justify-content: center;
+   bottom: 25%;
+   gap: 1.2rem;
 }
 
   
   .carousel-container {
-    display: flex;
+    /* display: flex; */
     align-items: center;
     justify-content: center;
     /* padding: 20px; */
@@ -253,33 +260,38 @@ button:hover {
   }
   
   .carousel-item {
-    margin: 0 5px;
+    /* margin: 0 5px;
     transition: transform 0.3s;
-    flex: 0 0 20%;
+    flex: 0 0 20%; */
   }
-  .round-0,.round-4{
+  .round-0-out,.round-4-out{
     margin-top: 5.9rem;
   }
-  .round-1,.round-3{
+  .round-1-out,.round-3-out{
     margin-top: 3.5rem;
   }
-  .round-0,.round-1,.round-3,.round-4{
+  .round-0,.round-1,.round-3,.round-4,.round-2{
     background-color: #DEE0E4;
+    padding: 1rem;
+    border-radius: 999px;
   }
   .roundslide-img {
-   width: 5.3rem;
+   width: 3.5rem;
     cursor: pointer;
-    border-radius: 50%;
+    /* border-radius: 50%; */
   }
   
   .center {
-    transform: scale(1.5);
-    margin: 0;
+    /* transform: scale(1.5); */
+    background-color: white !important;
+    padding: 0.9rem !important;
     opacity: none;
   }
-  
+  .center .roundslide-img {
+    width: 4.3rem;
+  }
   .opacity {
-    opacity: 0.3;
+    /* opacity: 0.3; */
   }
   
   .end {
@@ -288,11 +300,26 @@ button:hover {
   }
   
   .roundslide-button {
-    font-size: 24px;
+    /* font-size: 24px;
     padding: 5px 10px;
-    margin: 10px;
+    margin: 10px; */
   }
-  
-
-
-
+  .roundslide-submit-btn-area{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100dvh;
+    text-align: center;
+  }
+.roundslide-submit-btn{
+    font-family: 'Pretendard-Bold';
+    font-size: 1.3rem;
+    line-height: 1.7rem;
+    position: absolute;
+    bottom: 12%;
+    width: 5.8rem;
+    height: 5.8rem;
+    border-radius: 999px;
+    background-color: #8FBCFF;
+    text-align: center;
+}

@@ -1,53 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "../main.css";
 
-export default function RoundSlide() {
-  // Data
+export default function RoundSlide({ onSubmit }) {
   const initialImages = [
     {
-      img: "https://via.placeholder.com/600/92c952",
+      img: "/images/main/evaluate/3.png",
       name: "Image 1",
-      desc: "Description for Image 1",
+      centerimg: "/images/main/evaluate/center-3.png",
     },
     {
-      img: "https://via.placeholder.com/600/771796",
+      img: "/images/main/evaluate/4.png",
       name: "Image 2",
-      desc: "Description for Image 2",
+      centerimg: "/images/main/evaluate/center-4.png",
     },
     {
-      img: "https://via.placeholder.com/600/24f355",
+      img: "/images/main/evaluate/5.png",
       name: "Image 3",
-      desc: "Description for Image 3",
+      centerimg: "/images/main/evaluate/center-5.png",
     },
     {
-      img: "https://via.placeholder.com/600/ff69b4",
+      img: "/images/main/evaluate/2.png",
       name: "Image 4",
-      desc: "Description for Image 4",
+      centerimg: "/images/main/evaluate/center-2.png",
     },
     {
-      img: "https://via.placeholder.com/600/ffa500",
+      img: "/images/main/evaluate/1.png",
       name: "Image 5",
-      desc: "Description for Image 5",
+      centerimg: "/images/main/evaluate/center-1.png",
     },
   ];
 
-  // Carousel State
   const [images, setImages] = useState(initialImages);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       moveItems();
-//     }, 3000); // Change the interval (in milliseconds) as desired
-
-//     return () => clearInterval(interval);
-//   }, [currentIndex]);
-
   const moveItems = () => {
-    // Get the next index
     const nextIndex = (currentIndex + 1) % images.length;
-
-    // Update the state with the new current index
     setCurrentIndex(nextIndex);
   };
 
@@ -55,39 +42,49 @@ export default function RoundSlide() {
     setCurrentIndex(index);
   };
 
-  // Function to create a circular index based on the current index and array length
   const getCircularIndex = (index, length) => {
     return (index + length) % length;
   };
 
   return (
     <div className="roundslide-area">
-        <div className={styles.carouselContainer}>
+      <div className={styles.carouselContainer}>
         <div className="pos-rel">
-            <div className="roundslide-area-flex">
-        
-          {Array(5)
-            .fill()
-            .map((_, index) => {
-              const imageItem = images[getCircularIndex(currentIndex + index - 2, images.length)];
-              return (
-                <div
-                  key={index}
-                  className={`round-${index} ${index === 2 ? `center` : `opacity`} ${
-                    (index === 0 || index === 4) && `${styles.end} d-none d-md-block d-lg-block`
-                  } ${index === 1 || index === 3 ? "d-none d-md-block d-lg-block" : ""}`}
-                  onClick={() =>
-                    handleItemClick(getCircularIndex(currentIndex + index - 2, images.length))
-                  }
-                >
-                  <img class="roundslide-img" src={imageItem.img} alt="item" />
-                </div>
-              );
-            })}
+          <div className="roundslide-area-flex">
+            {Array(5)
+              .fill()
+              .map((_, index) => {
+                const circularIndex = getCircularIndex(
+                  currentIndex + index - 2,
+                  images.length
+                );
+                const imageItem = images[circularIndex];
+                const isCenter = index === 2; // Check if the item is in the center
+                return (
+                  <div className={`round-${index}-out`} key={index}>
+                    <div
+                      className={`round-${index} ${isCenter ? "center" : "opacity"} ${
+                        (index === 0 || index === 4) && styles.end ? "d-none d-md-block d-lg-block" : ""
+                      } ${index === 1 || index === 3 ? "d-none d-md-block d-lg-block" : ""}`}
+                      onClick={() => handleItemClick(circularIndex)}
+                    >
+                      <img
+                        className="roundslide-img"
+                        src={isCenter ? imageItem.centerimg : imageItem.img}
+                        alt="item"
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+          <div className="roundslide-submit-btn-area">
+            <button className="roundslide-submit-btn" onClick={onSubmit}>
+              완료
+            </button>
+          </div>
         </div>
-        
-        </div>
-        </div>
+      </div>
     </div>
   );
 }
