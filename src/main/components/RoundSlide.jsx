@@ -1,85 +1,92 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import styles from "../main.css";
 
-export default function RoundSlide({ onSubmit }) {
+// Swiper modules
+// import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+
+export default function RoundSlide({ onSubmit, selectedMissionId }) {
   const initialImages = [
     {
+      img: "/images/main/evaluate/1.png",
+      name: "매우어려움",
+      centerimg: "/images/main/evaluate/center-1.png",
+    },
+    {
+      img: "/images/main/evaluate/2.png",
+      name: "어려움",
+      centerimg: "/images/main/evaluate/center-2.png",
+    },
+    {
       img: "/images/main/evaluate/3.png",
-      name: "Image 1",
+      name: "할만함",
       centerimg: "/images/main/evaluate/center-3.png",
     },
     {
       img: "/images/main/evaluate/4.png",
-      name: "Image 2",
+      name: "쉬웠음",
       centerimg: "/images/main/evaluate/center-4.png",
     },
     {
       img: "/images/main/evaluate/5.png",
-      name: "Image 3",
+      name: "매우 쉬웠음",
       centerimg: "/images/main/evaluate/center-5.png",
-    },
-    {
-      img: "/images/main/evaluate/2.png",
-      name: "Image 4",
-      centerimg: "/images/main/evaluate/center-2.png",
-    },
-    {
-      img: "/images/main/evaluate/1.png",
-      name: "Image 5",
-      centerimg: "/images/main/evaluate/center-1.png",
     },
   ];
 
-  const [images, setImages] = useState(initialImages);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(2); // Start with round-2 in the center
 
-  const moveItems = () => {
-    const nextIndex = (currentIndex + 1) % images.length;
-    setCurrentIndex(nextIndex);
+  useEffect(() => {
+    // Log the name of the initial centered item
+    console.log(initialImages[currentIndex].name);
+  }, [currentIndex, initialImages]);
+
+  const handleSlideChange = (swiper) => {
+    const newIndex = swiper.activeIndex;
+    setCurrentIndex(newIndex);
   };
 
-  const handleItemClick = (index) => {
-    setCurrentIndex(index);
-  };
-
-  const getCircularIndex = (index, length) => {
-    return (index + length) % length;
+  const handleSubmit = () => {
+    // Pass the selectedMissionId and the name of the currently centered slide back to the parent
+    const selectedName = initialImages[currentIndex].name;
+    onSubmit({
+      missionId: selectedMissionId,
+      selectedName: selectedName,
+    });
   };
 
   return (
     <div className="roundslide-area">
       <div className={styles.carouselContainer}>
         <div className="pos-rel">
-          <div className="roundslide-area-flex">
-            {Array(5)
-              .fill()
-              .map((_, index) => {
-                const circularIndex = getCircularIndex(
-                  currentIndex + index - 2,
-                  images.length
-                );
-                const imageItem = images[circularIndex];
-                const isCenter = index === 2; // Check if the item is in the center
-                return (
-                  <div className={`round-${index}-out`} key={index}>
-                    <div
-                      className={`round-${index} ${isCenter ? "center" : "opacity"} ${
-                        (index === 0 || index === 4) && styles.end ? "d-none d-md-block d-lg-block" : ""
-                      } ${index === 1 || index === 3 ? "d-none d-md-block d-lg-block" : ""}`}
-                      onClick={() => handleItemClick(circularIndex)}
-                    >
-                      <img
-                        className="roundslide-img"
-                        src={isCenter ? imageItem.centerimg : imageItem.img}
-                        alt="item"
-                      />
-                    </div>
+          <Swiper
+            spaceBetween={0}
+            slidesPerView={5}
+            centeredSlides={true}
+            onSlideChange={handleSlideChange}
+            initialSlide={currentIndex} // Set the initial slide
+            // modules={[Navigation, Pagination, Scrollbar, A11y]}
+            navigation
+            pagination={{ clickable: true }}
+            scrollbar={{ draggable: true }}
+          >
+            {initialImages.map((imageItem, index) => {
+              const isCenter = index === currentIndex;
+              return (
+                <SwiperSlide key={index} className={`round-slide-item ${isCenter ? "center" : "opacity"}`}>
+                  <div className="roundslide-img-container">
+                    <img
+                      className="roundslide-img"
+                      src={isCenter ? imageItem.centerimg : imageItem.img}
+                      alt={imageItem.name}
+                    />
                   </div>
-                );
-              })}
-          </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
           <div className="roundslide-submit-btn-area">
-            <button className="roundslide-submit-btn" onClick={onSubmit}>
+            <button className="roundslide-submit-btn" onClick={handleSubmit}>
               완료
             </button>
           </div>

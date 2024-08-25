@@ -11,7 +11,7 @@ export default function Mainpage() {
       backgroundColor: "#FF7A2F",
       isChecked: false,
       missionText: "노래 들으면서 10분 산책하기",
-      status: "", // New property to manage mission state ("" | "now-clicked" | "finished")
+      status: "",
     },
     {
       id: 2,
@@ -46,12 +46,17 @@ export default function Mainpage() {
     );
   };
 
-  const handleRoundSlideSubmit = () => {
+  const handleRoundSlideSubmit = ({ missionId, selectedName }) => {
+    console.log({
+      missionId,
+      selectedName
+    });
+
     setIsRoundSlideVisible(false);
 
     setMissions((prevMissions) =>
       prevMissions.map((mission) =>
-        mission.id === activeMissionId
+        mission.id === missionId
           ? { ...mission, status: "finished" }
           : mission
       )
@@ -62,17 +67,18 @@ export default function Mainpage() {
 
   const sortedMissions = [...missions].sort((a, b) => {
     if (a.status === "now-clicked" && b.status !== "now-clicked") {
-      return -1;
+      return -1; // Move "now-clicked" missions to the top
     }
     if (a.status !== "now-clicked" && b.status === "now-clicked") {
-      return 1;
+      return 1; // Keep "now-clicked" missions at the top
     }
+    // If both statuses are the same, maintain their original order
     return 0;
   });
 
   return (
     <div className="mainpage page-area">
-      {isRoundSlideVisible && <RoundSlide onSubmit={handleRoundSlideSubmit} />}
+      {isRoundSlideVisible && <RoundSlide onSubmit={handleRoundSlideSubmit} selectedMissionId={activeMissionId} />}
       <div className="mainpage-real">
         <Link to="/level">
           <div className="mainpage-level-landing">
