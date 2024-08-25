@@ -3,6 +3,7 @@ import styles from "./quest.css";
 import { useState } from "react";
 export default function Quest() {
     const [questNum, setQuestNum] = useState(null);
+    
     return(
         <div className="questpage">
             <div className="type-name">호빵형</div>

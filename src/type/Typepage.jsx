@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Correct import of useNavigate
 import styles from "./type.css";
 import About from "./About";
 
@@ -7,12 +8,20 @@ export default function TypePage() {
     const [aboutType, setAboutType] = useState(null);
     const [isAboutVisible, setIsAboutVisible] = useState(false);
 
+    const navigate = useNavigate();  // Correct usage of the useNavigate hook
+
     const handleSelect = (type) => {
         if (type === 0) {
             setAboutType(null);
         } else {
             setSelectedType(type);
             setAboutType(type);
+        }
+    };
+
+    const handleButtonClick = () => {
+        if (selectedType >= 1) {
+            navigate("/typepage/quest"); // Navigate to the /typepage/quest route
         }
     };
 
@@ -73,7 +82,7 @@ export default function TypePage() {
                 <div className="typepage-btn-area">
                     <div className="typepage-btn-area-abs">
                         <div className="typepage-landing-test">잘 모르겠다면? 유형 검사하러 가기</div>
-                        <div className={`typepage-btn ${selectedType >= 1 ? "typepage-btn-active" : ""}`}>다음</div>
+                        <div className={`typepage-btn ${selectedType >= 1 ? "typepage-btn-active" : ""}`}  onClick={handleButtonClick}>다음</div>
                     </div>
                 </div>
             </div>
