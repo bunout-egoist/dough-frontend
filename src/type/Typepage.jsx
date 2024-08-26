@@ -21,7 +21,7 @@ export default function TypePage() {
 
     const handleButtonClick = () => {
         if (selectedType >= 1) {
-            navigate("/typepage/quest"); // Navigate to the /typepage/quest route
+            navigate(`/typepage/quest?select=${selectedType}`); // Navigate with the query parameter
         }
     };
 
