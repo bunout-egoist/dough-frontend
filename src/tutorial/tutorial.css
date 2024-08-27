@@ -1,17 +1,91 @@
 @import url('https://fonts.googleapis.com/css2?family=Actor&display=swap');
+
+@media (max-width: 361px) {
+    .chatbox-area-abs{
+        font-size: 14px !important;
+    }
+  }
+@media (max-width: 400px) and (min-width:362px) {
+    .chatbox-area-abs{
+        font-size: 16px !important;
+    }
+  }
+@media (max-width: 500px) and (min-width:401px) {
+.chatbox-area-abs{
+    font-size: 17px !important;
+}
+}
 .actor-regular {
     font-family: "Actor", sans-serif;
     font-weight: 700;
     font-style: normal;
   }
+  .navbar-area{
+    bottom: 1.2% !important;
+  }
 /* 튜토리얼 페이지 */
+
 .tutorial-page{
-    padding: 0 2rem;
+    /* padding: 0 2rem; */
     width: 100%;
     height: 100dvh;
     position: relative;
     background-repeat: no-repeat;
     background-size: contain;
+}
+.tutorial-bg-area{
+    position: absolute;
+    width: 100%;
+    height: 100dvh;
+}
+.tutorial-cover-area{
+    position: absolute;
+    width: 100%;
+    height: 100dvh;
+    background-color: #1c1e2a85;
+}
+.pos-rel{
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+}
+.tutorial-img{
+    width: 100%;
+    position: absolute;
+    padding: 0 0.7rem;
+}
+.tutorial-img-2{
+    top: 9%;
+}
+.tutorial-img-3{
+    top: 33%;
+}
+.tutorial-img-4{
+    top: 43.8%;
+}
+.tutorial-img-5{
+    top: 43%;
+}
+.tutorial-img-6{
+    padding: 0 !important;
+    top: 63%;
+}
+.tutorial-img-7{
+    top: 45%;
+}
+.tutorial-img-8{
+    top: 55%;
+}
+.tutorial-img-9{
+    top: 55%;
+}
+.tutorial-img-10{
+    padding: 0 !important;
+    width: 25% !important;
+    bottom: 1%;
+}
+.tutorial-img-11{
+    top: 38%;
 }
 /* chatbox 스타일 */
 .chatbox-area{
@@ -21,6 +95,7 @@
     z-index: 5;
 }
 .chatbox-area-abs{
+    padding: 0 2rem;
     position: absolute;
     width: 100%;
     top: 10%;
@@ -47,34 +122,21 @@
 }
 .chatbox-area .pointer{
     z-index: -1;
-    height: 25px;
-	width: 25px;
+    height: 3.7rem;
+	width: 3.7rem;
     background: rgb(255, 255, 255);
 	margin: 0 auto;
 	transform: rotate(45deg);
-	border-radius: 0 0 8px 0;
-	margin-top: -15px;
+	border-radius: 0 0 1px 0;
+	margin-top: -20px;
 	position: relative;
-	left: calc(0.5vw - 125px);
+	left: calc(0.5vw - 8em);
 }
-/* 
-.chatbox:after { 
-    border-radius: 10px;
-    border-top: 10px solid transparent;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid pink;
-    content: "";
-    width: 31.32px;
-    height: 28.19px;
-    position: absolute;
-    rotate: 180deg;
-    bottom: -1.55rem;
-    left: 26.78px;
-   } */
+
 .chatbox .chatbox-txt{
     font-family: 'Pretendard-Medium';
-    font-size: 1.2rem;
+    font-size: 1.25rem;
+    line-height: 1.8rem;
 }
 .chatbox .chatbox-orange{
     color: #FE5D11 !important;
@@ -83,7 +145,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 0.7rem;
+    margin-top: 0.9rem;
 }
 .chatbox .chatbox-btn{
     display: flex;
@@ -107,87 +169,165 @@
     font-family: 'Pretendard-Medium';
     color: white;
     font-size: 1.25rem;
-    padding-right: 10px;
+    padding-right: 5px;
     margin-bottom: 0.7rem;
 }
+.skip-btn img{
+    width: 4.3rem;
+    object-fit: contain;
+}
 /* 단계별 chatbox */
+
 .chatbox-area .chat-0{
     top: 25%;
 }
 .chat-0 .pointer{
-    transform: rotate(45deg);
-	border-radius: 10px 0 0px 0;
-	margin-top: -145px;
-}
-.chatbox-area .chat-0{
-    top: 25%;
-}
-.chat-0 .pointer{
-    transform: rotate(45deg);
-	border-radius: 8px 0 0px 0;
-	margin-top: -140px;
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+	margin-top: -9.5em;
 }
 .chatbox-area .chat-1{
-    top: 27%;
+    top: 25%;
 }
 .chat-1 .pointer{
-    transform: rotate(45deg);
-	border-radius: 8px 0 0px 0;
-	margin-top: -158px;
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+	margin-top: -10.8em;
 }
 .chatbox-area .chat-2{
-    top: 73%;
+    top: 70%;
 }
 .chat-2 .pointer{
-    transform: rotate(45deg);
-	border-radius: 8px 0 0px 0;
-	margin-top: -139px;
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+    margin-top: -9.5em;
 }
 .chatbox-area .chat-3{
-    top: 73%;
+    top: 78%;
 }
 .chat-3 .pointer{
-    transform: rotate(45deg);
-	border-radius: 8px 0 0px 0;
-	margin-top: -123px;
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+    margin-top: -8em;
 }
 .chatbox-area .chat-4{
-    top: 73%;
+    top: 59%;
 }
 .chat-4 .pointer{
-    transform: rotate(45deg);
-	border-radius: 8px 0 0px 0;
-	margin-top: -123px;
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+    margin-top: -8em;
 }
 .chatbox-area .chat-5{
-    top: 35%;
+    top: 25%;
 }
 .chat-5 .pointer{
-    transform: rotate(45deg);
-	border-radius: 8px 0 0px 0;
-	margin-top: -120px;
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+    margin-top: -9em;
 }
 .chatbox-area .chat-6{
-    top: 65%;
+    top: 60%;
 }
 .chat-6 .pointer{
-    transform: rotate(45deg);
-	border-radius: 8px 0 0px 0;
-	margin-top: -120px;
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+    margin-top: -9.5em;
 }
 
 .chatbox-area .chat-7{
-    top: 38%;
+    top: 32%;
 }
 
+.chat-7 .pointer{
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+    margin-top: -2.5em;
+}
 .chatbox-area .chat-8{
-    top: 38%;
+    top: 25%;
 }
-
+.chat-8 .pointer{
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+    margin-top: -2.5em;
+}
 .chatbox-area .chat-9{
-    top: 70%;
+    top: 63%;
+}
+.chat-9 .pointer{
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+    margin-top: -2.3em;
+}
+.chatbox-area .chat-10{
+    top: 15%;
+}
+.chat-10 .pointer{
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+    margin-top: -2.5em;
+}
+.chatbox-area .chat-11{
+    top: 10%;
+}
+.chat-11 .pointer{
+    transform: rotate(45deg) skew(15deg, 15deg);
+    border-radius: 8px;
+    margin-top: -2.5em;
 }
 
-.chatbox-area .chat-10{
-    top: 29%;
+/* 튜토리얼 끝 */
+.finish-area{
+    padding: 50% 2.7rem 0 2.7rem;
+}
+.finish-area .gif-area{
+    position: absolute;
+    width: 100%;
+}
+.finish-gif-1{
+    position: absolute;
+    top: -8%;
+    width: 8rem;
+}
+.finish-gif-2{
+    position: absolute;
+    transform: scaleX(-1) rotate(-1deg);
+    top: 10%;
+    left: 55%;
+    width: 10rem;
+}
+.finish-box{
+    background-color: white;
+    padding: 2.8rem 1.3rem;
+    border-radius: 20px;
+}
+.finish-title{
+    font-family: 'Pretendard-Bold';
+    font-size: 1.7rem;
+}
+.finish-txt{
+    margin-top: 1rem;
+    font-family: 'Pretendard-Medium';
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+}
+.finish-btn{
+    margin-top: 2.3rem;
+    position: relative;
+    z-index: 10;
+}
+.finish-btn:hover{
+    opacity: 50%;
+}
+.finish-btn button{
+    width: 100%;
+    background-color: #FF7A2F;
+    border: 1px solid #FE5D11;
+    color: white;
+    font-family: 'Pretendard-Medium';
+    font-size: 1.28rem;
+    line-height: 1.75rem;
+    border-radius: 10px;
+    padding: 0.7rem 0;
 }

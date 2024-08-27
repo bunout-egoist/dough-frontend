@@ -5,7 +5,7 @@ export default function Chatbox({ currentKey, text, btnTxt, onNextChat }) {
     return (
         <div className="chatbox-area">
             <div className={`chatbox-area-abs chat-${currentKey}`}>
-                <div className="skip-btn">skip</div>
+                <div className="skip-btn"><img src="/images/tutorial/skip.png"/></div>
                 <div className="chatbox">
                     <div className="chatbox-txt" dangerouslySetInnerHTML={{ __html: text }} />
                     <div className="chatbox-flex">

@@ -1,0 +1,163 @@
+.mainpage {
+    /* padding: 1rem 1.9rem; */
+}
+.mainpage-real{
+    padding: 1.5rem 1.9rem;
+}
+.mainpage-level-landing{
+    background-color: #F6F7F8;
+    color:black;
+    display: flex;
+    border-radius: 22px;
+    gap: 0.7rem;
+    padding: 0.7rem 1.3rem;
+    align-items: center;
+}
+.mainpage-level-landing .mainpage-level-num{
+    background-color: #FFE9D4;
+    color: #FF7A2F;
+    border-radius: 15px;
+    padding: 0.4rem 0.7rem;
+    font-family: 'Pretendard-Medium';
+    font-size: 1rem;
+}
+.mainpage-level-landing .mainpage-level-txt{
+    font-family: 'Pretendard-Medium';
+    font-size: 1rem;
+}
+.mainpage-title {
+    margin-top: 2.42rem;
+    padding: 0 0.7rem;
+    font-family: 'Pretendard-Bold';
+    font-size: 2rem;
+}
+.mission-tag1,.mission-tag2 {
+    font-family: 'Pretendard-Bold';
+    font-size: 2rem;
+    color: #FF9205;
+    margin-right: 0.7rem;
+}
+.mainpage-img{
+    width: 8.5rem;
+    margin:1.6rem 0 1.6rem auto;
+}
+.mainpage-cam-area{
+    text-align: center;
+}
+#container {
+    margin: 0 auto;
+    width: 500px;
+    height: 375px;
+    border: 10px #333 solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#videoElement {
+    width: 500px;
+    height: 375px;
+    background-color: #666;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #FF6347;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff4500;
+}
+
+.captured-photo {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+    margin: 20px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+}
+.camera-img-area{
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* 미션 박스 style */
+.mainpage-mission-zone{
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.mainpage-mission-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.3rem;
+    background-color: #FF7A2F;
+    border-radius: 8px;
+}
+.mission-tag-flex{
+    display: flex;
+    flex-direction: row;
+    gap: 0.7rem;
+}
+.mission-tag{
+    padding: 0.4rem 0.7rem;
+    background-color: white;
+    margin-bottom: 0.5rem;
+    font-family: 'Pretendard-Bold';
+    font-size: 1.1rem;
+    color: #FF7A2F;
+    border-radius: 5px;
+}
+.mission-title{
+    font-family: 'Pretendard-Bold';
+    font-size: 1.3rem;
+    color: white;
+}
+.mission-finished .mission-title{
+    color: #A5AAB5 !important;
+}
+.mainpage-mission-check{
+    border-color: #FFFFFF;
+    accent-color: #DEE0E4;
+    padding: 12.5px 11px;
+    gap: 5px;
+    width: 1.2rem;
+    height: 1.2rem;
+    background: #FFFFFF;
+    border-radius: 4px;
+}
+.mission-checkbox-checked{
+    background-color: #8F94A2;
+    accent-color: #8F94A2;
+}
+.mission-finished .mission-tag-checked{
+    background-color: #DEE0E4 !important;
+    color: #A5AAB5 !important;
+}
+.mission-finished{
+    background-color:  #F6F7F8 !important;
+    color: #A5AAB5 !important;
+    
+ }
+.mission-now-clicked{
+    z-index: 99 !important;
+}
+
+.mission-img-box{
+    /* width: 3.9rem; */
+    height: 3.9rem;
+    border-radius: 10px;
+}
+.mission-img-box img{
+    border-radius: 10px;
+    height: 100%;
+}
