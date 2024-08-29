@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./main.css";
 import MissionBox from "./components/Missionbox";
 import { Link } from "react-router-dom";
 import RoundSlide from "./components/RoundSlide";
-
+import { useRef } from "react";
 export default function Mainpage() {
   const initialMissions = [
     {
@@ -33,6 +33,18 @@ export default function Mainpage() {
   const [activeMissionId, setActiveMissionId] = useState(null);
   const [isRoundSlideVisible, setIsRoundSlideVisible] = useState(false);
 
+
+  useEffect(() => {
+    if (isRoundSlideVisible) {
+      // Scroll to the bottom of the page when RoundSlide is visible
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      document.body.style.overflowY = "hidden"; // Prevent scrolling
+  
+    } else {
+      document.body.style.overflowY = "auto"; // Allow scrolling again
+    }
+  }, [isRoundSlideVisible]);
+
   const handleMissionCheck = (id) => {
     setActiveMissionId(id);
     setIsRoundSlideVisible(true);
@@ -41,7 +53,10 @@ export default function Mainpage() {
       prevMissions.map((mission) =>
         mission.id === id
           ? { ...mission, isChecked: !mission.isChecked, status: "now-clicked" }
-          : { ...mission, status: mission.status === "now-clicked" ? "" : mission.status }
+          : {
+              ...mission,
+              status: mission.status === "now-clicked" ? "" : mission.status,
+            }
       )
     );
   };
@@ -49,7 +64,7 @@ export default function Mainpage() {
   const handleRoundSlideSubmit = ({ missionId, selectedName }) => {
     console.log({
       missionId,
-      selectedName
+      selectedName,
     });
 
     setIsRoundSlideVisible(false);
@@ -77,8 +92,13 @@ export default function Mainpage() {
   });
 
   return (
-    <div className="mainpage page-area">
-      {isRoundSlideVisible && <RoundSlide onSubmit={handleRoundSlideSubmit} selectedMissionId={activeMissionId} />}
+    <div className={`mainpage page-area ${isRoundSlideVisible ? 'mainpage-padding' :'' }`}>
+      {isRoundSlideVisible && (
+        <RoundSlide
+          onSubmit={handleRoundSlideSubmit}
+          selectedMissionId={activeMissionId}
+        />
+      )}
       <div className="mainpage-real">
         <Link to="/level">
           <div className="mainpage-level-landing">
