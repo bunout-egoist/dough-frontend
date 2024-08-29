@@ -39,16 +39,19 @@ export default function Setting() {
                                 <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
                             </div>
                         </Link>
-                        <Link to="/typepage">
+                        <Link to="/typepage/quest/1">
                             <div className="setting-service-li">
                                 <div>사용자 유형 재설정</div>
                                 <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
                             </div>
                         </Link>
-                        <div className="setting-service-li">
-                            <div>고정퀘스트 재설정</div>
-                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                        </div>
+                        <Link to='/typepage/quest?select=1'>
+                            <div className="setting-service-li">
+                                <div>고정퀘스트 재설정</div>
+                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                            </div>
+                        </Link>
+                      
                     </div>
                 </div>
                 <div className="setting-alarm">
@@ -145,9 +148,11 @@ export default function Setting() {
                         </div>
                     </div>
                 </div>
-                <div className="logout-btn">
-                    로그아웃
-                </div>
+               <Link to="/intro">
+                    <div className="logout-btn">
+                        로그아웃
+                    </div>
+               </Link>
                 <div className="exit">탈퇴하기</div>
             </div>
         </div>

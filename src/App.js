@@ -15,10 +15,11 @@ import Redirection from "./intro/Redirection";
 import MainLevel from "./main/MainLevel";
 import Quest from "./type/Quest";
 import Tutorial from "./tutorial/Tutorial";
+import EditType from "./settings/page/EditType";
 function App() {
   const location = useLocation();
 
-  const hideNavbarRoutes = ["/intro", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial"];
+  const hideNavbarRoutes = ["/intro", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial","/setting/edit-type"];
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
 
   return (
@@ -28,6 +29,7 @@ function App() {
           <Routes>
             <Route path="/oauth2/callback/kakao" element={<Redirection/>}/>
             <Route path="/intro" element={<Intro />} />
+            <Route path="/setting/edit-type" element={<EditType/>}/>
             <Route path="/typepage/quest" element={<Quest />} />
             <Route path="/tutorial" element={<Tutorial />} />
             <Route path="/sign" element={<Sign />} />

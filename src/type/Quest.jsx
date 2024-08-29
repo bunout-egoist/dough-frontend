@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"; // Import useLocation to get query parameters
+import { useLocation, useNavigate } from "react-router-dom"; // Import useLocation and useNavigate
 import styles from "./quest.css";
 
 export default function Quest() {
     const [questNum, setQuestNum] = useState(null);
+    const [selectedType, setSelectedType] = useState(null); // State for selectedType
     const location = useLocation(); // Use useLocation hook to access the URL
+    const navigate = useNavigate(); // Use useNavigate hook for navigation
+
+    // Parse query parameters
     const searchParams = new URLSearchParams(location.search);
-    const selectedType = parseInt(searchParams.get("select"), 10); // Get the 'select' query parameter and parse it as an integer
+    const initialSelectedType = parseInt(searchParams.get("select"), 10); // Get the 'select' query parameter and parse it as an integer
 
     const typeMissions = [
         {
@@ -31,8 +35,27 @@ export default function Quest() {
         },
     ];
 
+    // Effect to handle initialization logic
+    useEffect(() => {
+        if (initialSelectedType === 0) {
+            // Simulate fetching a random type from the server
+            const randomType = Math.floor(Math.random() * 4) + 1;
+            setSelectedType(randomType);
+        } else {
+            setSelectedType(initialSelectedType);
+        }
+    }, [initialSelectedType]);
+
     // Find the type object corresponding to the selectedType
     const selectedMission = typeMissions.find(mission => mission.type === selectedType);
+
+    const handleButtonClick = () => {
+        if (initialSelectedType === 0) {
+            navigate('/setting'); // Navigate to /setting if initialSelectedType is 0
+        } else if (selectedType >= 1) {
+            navigate('/'); // Navigate to home if selectedType is 1 or greater
+        }
+    };
 
     return (
         <div className="questpage">
@@ -55,7 +78,7 @@ export default function Quest() {
                 </>
             )}
             <div className="questpage-btn-area">
-                <div className={`questpage-btn ${questNum >= 1 ? "questpage-btn-active" : ""}`}>완료하기</div>
+                <div className={`questpage-btn ${questNum >= 1 ? "questpage-btn-active" : ""}`} onClick={handleButtonClick}>완료하기</div>
             </div>
         </div>
     );
