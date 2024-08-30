@@ -11,6 +11,7 @@ export default function Setting() {
     const handleToggle1 = () => {
         const newChecked = !isChecked1;
         setIsChecked1(newChecked);
+        console.log('1',!isChecked2)
         if (newChecked) {
             setIsChecked2(true);
             setIsChecked3(true);
@@ -22,9 +23,19 @@ export default function Setting() {
         }
     };
 
-    const handleToggle2 = () => setIsChecked2(!isChecked2);
-    const handleToggle3 = () => setIsChecked3(!isChecked3);
-    const handleToggle4 = () => setIsChecked4(!isChecked4);
+    const handleToggle2 = () => {
+        console.log('2',!isChecked2);
+        setIsChecked2(!isChecked2);
+    }
+    const handleToggle3 = () => {
+        console.log('3',!isChecked3);
+        setIsChecked3(!isChecked3);
+    }        
+        
+    const handleToggle4 = () => {
+        console.log('4',!isChecked4);
+        setIsChecked4(!isChecked4);
+    }
 
     return (
         <div className="setting-page page-area">
@@ -39,7 +50,7 @@ export default function Setting() {
                                 <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
                             </div>
                         </Link>
-                        <Link to="/typepage/quest/1">
+                        <Link to="/setting/edit-type">
                             <div className="setting-service-li">
                                 <div>사용자 유형 재설정</div>
                                 <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>

@@ -38,7 +38,7 @@ export default function Nickname() {
                 )}
             </div>
             <div className="nickname-btn-area">
-                <Link to="/">
+                <Link to="/setting">
                     <div className={`nickname-btn ${isButtonDisabled ? "disabled" : ""}`} >
                         수정하기
                     </div>

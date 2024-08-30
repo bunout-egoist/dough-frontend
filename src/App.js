@@ -19,7 +19,7 @@ import EditType from "./settings/page/EditType";
 function App() {
   const location = useLocation();
 
-  const hideNavbarRoutes = ["/intro", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial","/setting/edit-type"];
+  const hideNavbarRoutes = ["/intro", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial","/setting/edit-type","/nickname"];
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
 
   return (

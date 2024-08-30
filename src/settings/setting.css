@@ -170,7 +170,7 @@
   }
   .nickname-input input{
     border: none;
-    width: 85%;
+    width: 90%;
     border-bottom: 0.4px solid #000000;
     padding: 0.55rem 0.8rem;
     color: #24262D;
@@ -183,7 +183,7 @@
   .nickname-btn-area{
     position: absolute;
     width: 100%;
-    bottom: 2.32rem;
+    bottom: 3rem;
     padding: 0 1.58rem;
   }
   .nickname-btn{
