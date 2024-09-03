@@ -146,16 +146,80 @@ class Week extends Component {
   }
 }
 
+// class Day extends Component {
+ 
+//   render() {
+//     const { day, select, selected } = this.props;
+//     const {contents} = 
+//       {
+//       "countDetails" : [ {
+//         "completedDate" : "2024-09-05",
+//         "dailyCount" : 3
+//       }, {
+//         "completedDate" : "2024-09-07",
+//         "dailyCount" : 2
+//       } ],
+//       "completedAllQuestsDateCount" : 0,
+//       "highestAverageCompletionDay" : [ "화" ],
+//       "averageCompletion" : 19
+//     }
+//     // 기본 클래스네임 설정
+//     let className = 'day' + (day.isToday ? ' today' : '') + (day.isCurrentMonth ? '' : ' different-month');
+    
+//     // 선택된 날짜인지 확인
+//     if (day.date.isSame(selected)) {
+//       className += ' selected';
+//     }
+
+//     // 활성화된 미션 수에 따른 클래스 설정
+//     className += ` active${day.missions}`;
+
+//     // 날짜를 클래스네임에 추가
+//     const dateClassName = day.date.format('YYYY-MM-DD');
+//     className += ` ${dateClassName}`;
+
+//     return (
+//       <div className={className} onClick={() => select(day)}>
+//         {day.number}
+//       </div>
+//     );
+//   }
+// }
 class Day extends Component {
   render() {
     const { day, select, selected } = this.props;
-    let className = 'day' + (day.isToday ? ' today' : '') + (day.isCurrentMonth ? '' : ' different-month');
 
+    // 컨텐츠 객체와 countDetails 데이터
+    const contents = {
+      "countDetails" : [ 
+        { "completedDate" : "2024-09-05", "dailyCount" : 3 },
+        { "completedDate" : "2024-09-07", "dailyCount" : 2 }
+      ],
+      "completedAllQuestsDateCount" : 0,
+      "highestAverageCompletionDay" : [ "화" ],
+      "averageCompletion" : 19
+    };
+
+    // 기본 클래스네임 설정
+    let className = 'day' + (day.isToday ? ' today' : '') + (day.isCurrentMonth ? '' : ' different-month');
+    
+    // 선택된 날짜인지 확인
     if (day.date.isSame(selected)) {
       className += ' selected';
     }
 
-    className += ` active${day.missions}`;
+    // 날짜를 클래스네임에 추가
+    const dateClassName = day.date.format('YYYY-MM-DD');
+    className += ` ${dateClassName}`;
+
+    // countDetails에서 해당 날짜의 dailyCount를 찾기
+    const dateToMatch = day.date.format('YYYY-MM-DD');
+    const matchingDetail = contents.countDetails.find(detail => detail.completedDate === dateToMatch);
+
+    // 만약 해당 날짜에 맞는 dailyCount가 존재하면 active 클래스 추가
+    if (matchingDetail) {
+      className += ` active${matchingDetail.dailyCount}`;
+    }
 
     return (
       <div className={className} onClick={() => select(day)}>
@@ -164,6 +228,7 @@ class Day extends Component {
     );
   }
 }
+
 
 // React Router v6의 useNavigate를 사용할 수 있도록 Calendar를 감싸는 함수형 컴포넌트
 const CalendarWithNavigate = (props) => {

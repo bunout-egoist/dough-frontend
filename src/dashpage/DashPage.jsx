@@ -3,47 +3,50 @@ import styles from './dash.css';
 import $ from "jquery";
 import Calendar from "./Calendar";
 import Navbar from "../navbar/Navbar";
-function connectMonth(){
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+// function connectMonth(){
+//   const [data, setData] = useState(null);
+//   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // 사용할 URL과 토큰
-    const yearMonth = "2024-09";
-    const url = `/api/v1/dashboard/monthly/${yearMonth}`;
-    const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1MTAzMzA5LCJleHAiOjE5ODQzMDMzMDksInN1YiI6ImdvZXVuQG1haWwuY29tIiwiaWQiOjF9.1Kjm4YlHI8gvkvQsJFxkT5LIGaVgTLVo7z97CfF_0mE";
+//   useEffect(() => {
+//     // 사용할 URL과 토큰
+//     const yearMonth = "2024-09";
+//     const url = `/api/v1/dashboard/monthly/${yearMonth}`;
+//     const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1MTAzMzA5LCJleHAiOjE5ODQzMDMzMDksInN1YiI6ImdvZXVuQG1haWwuY29tIiwiaWQiOjF9.1Kjm4YlHI8gvkvQsJFxkT5LIGaVgTLVo7z97CfF_0mE";
 
-    fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => setData(data))
-      .catch((error) => setError(error));
-       console.log(data);
-  }, []);
+//     fetch(url, {
+//       method: "GET",
+//       headers: {
+//         Authorization: token,
+//         "Content-Type": "application/json",
+//       },
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error("Network response was not ok");
+//         }
+//         return response.json();
+//       })
+//       .then((data) => setData(data))
+//       .catch((error) => setError(error));
+//        console.log(data);
+//   }, []);
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+//   if (error) {
+//     return <div>Error: {error.message}</div>;
+//   }
 
-  if (!data) {
-    return <div>Loading...</div>;
-  }
-}
+//   if (!data) {
+//     return <div>Loading...</div>;
+//   }
+// }
+
+
 export default function DashPage() {
   const dailyTotal = 50;
   const specialTotal = 30;
+  const monthAverage = 0;
+  const monthPassion = 0;
  
-  
   return(
     <div className="dash-page page-area">
       <div className="dash-top">
@@ -78,11 +81,11 @@ export default function DashPage() {
         <div className="mini-title">통계</div>
         <div className="flex-row">
           <div className="bottom-txt">이번 달 가장 열정적인 요일은</div>
-          <div className="bottom-result orange-txt">#요일</div>
+          <div className="bottom-result orange-txt">{monthPassion}요일</div>
         </div>
         <div className="flex-row">
           <div className="bottom-txt">이번달 평균 달성률은</div>
-          <div className="bottom-result orange-txt">##%</div>
+          <div className="bottom-result orange-txt">{monthAverage}%</div>
         </div>
       </div>
       
