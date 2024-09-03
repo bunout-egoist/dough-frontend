@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import styles from './styles.css';
+import styles from './dash.css';
 import { useNavigate } from 'react-router-dom';
 
 class Calendar extends Component {

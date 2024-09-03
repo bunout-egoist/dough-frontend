@@ -1,6 +1,11 @@
 .mainpage {
     /* padding: 1rem 1.9rem; */
     padding-bottom:8rem !important;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .mainpage-padding{
     padding-bottom:15rem !important;
