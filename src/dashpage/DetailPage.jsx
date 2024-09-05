@@ -47,6 +47,28 @@ export default class DetailPage extends React.Component {
         return `${day}`;
     }
 
+    // api 연결
+    fetchMonthlyData() {
+        const searchDate = this.state.month.format('YYYY-MM-dd');
+        fetch(`http://13.124.151.164:8080/api/v1/dashboard/weekly/${searchDate}`, {
+          method: 'GET',
+          mode: 'no-cors',
+          credentials: 'include',
+          headers: {
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1NDczMjY1LCJleHAiOjE5ODQ2NzMyNjUsInN1YiI6ImdvZXVuQGdtYWlsLmNvbSIsImlkIjoxfQ.YGjMrp0ECN0CGlTATVtGffnr6lf8fiodQ698_AmY9HE', 
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(data => {
+            this.setState({ contents: data });
+            console.log(data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }
+
     render() {
         const { baseDate } = this.state;
         return (

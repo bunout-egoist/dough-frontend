@@ -10,18 +10,58 @@ class Calendar extends Component {
       month: moment(),
       selected: moment().startOf('day'),
       monthlyMissionList: [1, 3, 3, 0, 2, 0, 3, 1, 0, 2, 0, 0, 0, 0, 1, 3, 3, 3, 2, 3, 2, 1, 1, 1, 3, 0, 3, 3, 2, 3, 1],
+      contents: null, // 초기 상태 설정
+      averageCompletion :0,
+      completedAllQuestsDateCount : 0,
+      countDetails : []
     };
     this.previous = this.previous.bind(this);
     this.next = this.next.bind(this);
     this.select = this.select.bind(this);
   }
 
+  componentDidMount() {
+    this.fetchMonthlyData();
+  }
+
+  fetchMonthlyData() {
+    const yearMonth = this.state.month.format('YYYY-MM');
+    fetch('/api/v1/dashboard/monthly/2024-08', {
+      method: 'GET',
+      // mode: 'no-cors',
+      credentials: 'include',
+      headers: {
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1NDczMjY1LCJleHAiOjE5ODQ2NzMyNjUsInN1YiI6ImdvZXVuQGdtYWlsLmNvbSIsImlkIjoxfQ.YGjMrp0ECN0CGlTATVtGffnr6lf8fiodQ698_AmY9HE', 
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ 
+          contents: data,
+          
+         });
+        console.log(data);
+        this.state.averageCompletion = data.averageCompletion;
+         this.state.countDetails = data.countDetails
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
+
   previous() {
-    this.setState({ month: this.state.month.subtract(1, 'month') });
+    this.setState(
+      prevState => ({ month: prevState.month.subtract(1, 'month') }),
+      () => this.fetchMonthlyData() // 이전 달 데이터 가져오기
+    );
   }
 
   next() {
-    this.setState({ month: this.state.month.add(1, 'month') });
+    this.setState(
+      prevState => ({ month: prevState.month.add(1, 'month') }),
+      () => this.fetchMonthlyData() // 다음 달 데이터 가져오기
+    );
   }
 
   select(day) {
@@ -31,9 +71,8 @@ class Calendar extends Component {
     });
 
     const formattedDate = day.date.format('YYMMDDddd');
-    console.log("Navigating to: ", `/detail/${formattedDate}`); // Debugging output
+    console.log("Navigating to: ", `/detail/${formattedDate}`); // 디버깅 출력
 
-    // 날짜를 인자로 넘기면서 페이지 이동
     this.props.navigate(`/detail/${formattedDate}`);
   }
 
@@ -53,6 +92,8 @@ class Calendar extends Component {
           select={(day) => this.select(day)}
           selected={this.state.selected}
           monthlyMissionList={this.state.monthlyMissionList}
+          contents={this.state.contents} // contents 전달
+          countDetails={this.state.countDetails} // pass countDetails here
         />
       );
 
@@ -81,7 +122,7 @@ class Calendar extends Component {
           </div>
         </div>
         <div className="cal-mission">
-          {this.state.month.format('M')}월, 모든 미션을 완료한 날은 <span className="bold-txt orange-txt">7번</span>
+          {this.state.averageCompletion}월, 모든 미션을 완료한 날은 <span className="bold-txt orange-txt">{this.state.completedAllQuestsDateCount}번</span>
           이에요!
           <br />
           조금만 더 힘내세요!
@@ -122,7 +163,7 @@ class DayNames extends Component {
 class Week extends Component {
   render() {
     let days = [];
-    let { date } = this.props;
+    let { date, contents, countDetails } = this.props;
 
     for (let i = 0; i < 7; i++) {
       let day = {
@@ -131,11 +172,19 @@ class Week extends Component {
         isCurrentMonth: date.month() === this.props.month.month(),
         isToday: date.isSame(new Date(), 'day'),
         date: date,
-        missions: this.props.monthlyMissionList[date.date() - 1] || 0,
       };
 
+      let missionCount = contents && contents[date.format('YYYY-MM-DD')] ? contents[date.format('YYYY-MM-DD')].length : 0;
+
       days.push(
-        <Day key={day.date.toString()} day={day} selected={this.props.selected} select={this.props.select} />
+        <Day
+          key={day.date.toString()}
+          day={day}
+          select={this.props.select}
+          selected={this.props.selected}
+          missionCount={missionCount}
+          countDetails={countDetails}
+        />
       );
 
       date = date.clone();
@@ -146,79 +195,29 @@ class Week extends Component {
   }
 }
 
-// class Day extends Component {
- 
-//   render() {
-//     const { day, select, selected } = this.props;
-//     const {contents} = 
-//       {
-//       "countDetails" : [ {
-//         "completedDate" : "2024-09-05",
-//         "dailyCount" : 3
-//       }, {
-//         "completedDate" : "2024-09-07",
-//         "dailyCount" : 2
-//       } ],
-//       "completedAllQuestsDateCount" : 0,
-//       "highestAverageCompletionDay" : [ "화" ],
-//       "averageCompletion" : 19
-//     }
-//     // 기본 클래스네임 설정
-//     let className = 'day' + (day.isToday ? ' today' : '') + (day.isCurrentMonth ? '' : ' different-month');
-    
-//     // 선택된 날짜인지 확인
-//     if (day.date.isSame(selected)) {
-//       className += ' selected';
-//     }
-
-//     // 활성화된 미션 수에 따른 클래스 설정
-//     className += ` active${day.missions}`;
-
-//     // 날짜를 클래스네임에 추가
-//     const dateClassName = day.date.format('YYYY-MM-DD');
-//     className += ` ${dateClassName}`;
-
-//     return (
-//       <div className={className} onClick={() => select(day)}>
-//         {day.number}
-//       </div>
-//     );
-//   }
-// }
 class Day extends Component {
   render() {
-    const { day, select, selected } = this.props;
-
-    // 컨텐츠 객체와 countDetails 데이터
-    const contents = {
-      "countDetails" : [ 
-        { "completedDate" : "2024-09-05", "dailyCount" : 3 },
-        { "completedDate" : "2024-09-07", "dailyCount" : 2 }
-      ],
-      "completedAllQuestsDateCount" : 0,
-      "highestAverageCompletionDay" : [ "화" ],
-      "averageCompletion" : 19
-    };
+    let { day, select, selected, missionCount, countDetails } = this.props;
 
     // 기본 클래스네임 설정
     let className = 'day' + (day.isToday ? ' today' : '') + (day.isCurrentMonth ? '' : ' different-month');
-    
+
     // 선택된 날짜인지 확인
     if (day.date.isSame(selected)) {
       className += ' selected';
     }
 
-    // 날짜를 클래스네임에 추가
+    // 날짜를 클래스네임에 추가 (날짜에 따른 클래스 이름 추가)
     const dateClassName = day.date.format('YYYY-MM-DD');
     className += ` ${dateClassName}`;
 
     // countDetails에서 해당 날짜의 dailyCount를 찾기
     const dateToMatch = day.date.format('YYYY-MM-DD');
-    const matchingDetail = contents.countDetails.find(detail => detail.completedDate === dateToMatch);
+    const matchingDetail = countDetails.find(detail => detail.completedDate === dateToMatch);
 
-    // 만약 해당 날짜에 맞는 dailyCount가 존재하면 active 클래스 추가
+    // 만약 해당 날짜에 맞는 dailyCount가 존재하면 active 클래스와 dailyCount 추가
     if (matchingDetail) {
-      className += ` active${matchingDetail.dailyCount}`;
+      className += ` active dailyCount${matchingDetail.dailyCount}`;
     }
 
     return (
@@ -230,10 +229,7 @@ class Day extends Component {
 }
 
 
-// React Router v6의 useNavigate를 사용할 수 있도록 Calendar를 감싸는 함수형 컴포넌트
-const CalendarWithNavigate = (props) => {
+export default function CalendarWithNavigate(props) {
   const navigate = useNavigate();
   return <Calendar {...props} navigate={navigate} />;
-};
-
-export default CalendarWithNavigate;
+}

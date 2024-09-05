@@ -35,10 +35,10 @@ export default function Quest() {
         },
     ];
 
-    // Effect to handle initialization logic
+
     useEffect(() => {
         if (initialSelectedType === 0) {
-            // Simulate fetching a random type from the server
+           
             const randomType = Math.floor(Math.random() * 4) + 1;
             setSelectedType(randomType);
         } else {

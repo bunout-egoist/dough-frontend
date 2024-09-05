@@ -3,42 +3,6 @@ import styles from './dash.css';
 import $ from "jquery";
 import Calendar from "./Calendar";
 import Navbar from "../navbar/Navbar";
-// function connectMonth(){
-//   const [data, setData] = useState(null);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     // 사용할 URL과 토큰
-//     const yearMonth = "2024-09";
-//     const url = `/api/v1/dashboard/monthly/${yearMonth}`;
-//     const token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1MTAzMzA5LCJleHAiOjE5ODQzMDMzMDksInN1YiI6ImdvZXVuQG1haWwuY29tIiwiaWQiOjF9.1Kjm4YlHI8gvkvQsJFxkT5LIGaVgTLVo7z97CfF_0mE";
-
-//     fetch(url, {
-//       method: "GET",
-//       headers: {
-//         Authorization: token,
-//         "Content-Type": "application/json",
-//       },
-//     })
-//       .then((response) => {
-//         if (!response.ok) {
-//           throw new Error("Network response was not ok");
-//         }
-//         return response.json();
-//       })
-//       .then((data) => setData(data))
-//       .catch((error) => setError(error));
-//        console.log(data);
-//   }, []);
-
-//   if (error) {
-//     return <div>Error: {error.message}</div>;
-//   }
-
-//   if (!data) {
-//     return <div>Loading...</div>;
-//   }
-// }
 
 
 export default function DashPage() {
