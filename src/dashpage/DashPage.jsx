@@ -6,11 +6,28 @@ import Navbar from "../navbar/Navbar";
 
 
 export default function DashPage() {
-  const dailyTotal = 50;
-  const specialTotal = 30;
   const monthAverage = 0;
   const monthPassion = 0;
- 
+  const [dailyTotal, setDailyTotal] = useState(0);
+  const [specialTotal, setSpecialTotal] = useState(0);
+
+  fetch(`/api/v1/dashboard/total`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1NDczMjY1LCJleHAiOjE5ODQ2NzMyNjUsInN1YiI6ImdvZXVuQGdtYWlsLmNvbSIsImlkIjoxfQ.YGjMrp0ECN0CGlTATVtGffnr6lf8fiodQ698_AmY9HE', 
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    setDailyTotal(data.dailyTotal);
+    setSpecialTotal(data.specialTotal);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+
   return(
     <div className="dash-page page-area">
       <div className="dash-top">

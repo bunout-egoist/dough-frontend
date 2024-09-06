@@ -9,7 +9,6 @@ class Calendar extends Component {
     this.state = {
       month: moment(),
       selected: moment().startOf('day'),
-      monthlyMissionList: [1, 3, 3, 0, 2, 0, 3, 1, 0, 2, 0, 0, 0, 0, 1, 3, 3, 3, 2, 3, 2, 1, 1, 1, 3, 0, 3, 3, 2, 3, 1],
       contents: null, // 초기 상태 설정
       averageCompletion :0,
       completedAllQuestsDateCount : 0,
@@ -26,7 +25,7 @@ class Calendar extends Component {
 
   fetchMonthlyData() {
     const yearMonth = this.state.month.format('YYYY-MM');
-    fetch('/api/v1/dashboard/monthly/2024-08', {
+    fetch(`/api/v1/dashboard/monthly/${yearMonth}`, {
       method: 'GET',
       // mode: 'no-cors',
       credentials: 'include',
@@ -43,7 +42,9 @@ class Calendar extends Component {
          });
         console.log(data);
         this.state.averageCompletion = data.averageCompletion;
-         this.state.countDetails = data.countDetails
+        this.state.completedAllQuestsDateCount = data.completedAllQuestsDateCount;
+        this.state.countDetails = data.countDetails
+
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -91,7 +92,6 @@ class Calendar extends Component {
           month={this.state.month}
           select={(day) => this.select(day)}
           selected={this.state.selected}
-          monthlyMissionList={this.state.monthlyMissionList}
           contents={this.state.contents} // contents 전달
           countDetails={this.state.countDetails} // pass countDetails here
         />
@@ -122,7 +122,7 @@ class Calendar extends Component {
           </div>
         </div>
         <div className="cal-mission">
-          {this.state.averageCompletion}월, 모든 미션을 완료한 날은 <span className="bold-txt orange-txt">{this.state.completedAllQuestsDateCount}번</span>
+          {this.state.month.format('M')}월, 모든 미션을 완료한 날은 <span className="bold-txt orange-txt">{this.state.completedAllQuestsDateCount}번</span>
           이에요!
           <br />
           조금만 더 힘내세요!
@@ -217,7 +217,7 @@ class Day extends Component {
 
     // 만약 해당 날짜에 맞는 dailyCount가 존재하면 active 클래스와 dailyCount 추가
     if (matchingDetail) {
-      className += ` active dailyCount${matchingDetail.dailyCount}`;
+      className += ` active${matchingDetail.dailyCount}`;
     }
 
     return (
