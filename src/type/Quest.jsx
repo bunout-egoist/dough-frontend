@@ -7,11 +7,10 @@ export default function Quest() {
     const [selectedType, setSelectedType] = useState(null); // State for selectedType
     const location = useLocation(); // Use useLocation hook to access the URL
     const navigate = useNavigate(); // Use useNavigate hook for navigation
-
     // Parse query parameters
     const searchParams = new URLSearchParams(location.search);
     const initialSelectedType = parseInt(searchParams.get("select"), 10); // Get the 'select' query parameter and parse it as an integer
-
+    const [selectedMission, setSelectedMission] =useState(null);
     const typeMissions = [
         {
             type: 1,
@@ -47,7 +46,7 @@ export default function Quest() {
     }, [initialSelectedType]);
 
     // Find the type object corresponding to the selectedType
-    const selectedMission = typeMissions.find(mission => mission.type === selectedType);
+    
 
     const handleButtonClick = () => {
         if (initialSelectedType === 0) {
@@ -57,21 +56,49 @@ export default function Quest() {
         }
     };
 
+    useEffect(() => {
+        if (initialSelectedType === 0) {
+            const randomType = Math.floor(Math.random() * 4) + 1;
+            setSelectedType(randomType);
+        } else {
+            setSelectedType(initialSelectedType);
+        }
+
+        // Fetch data only once when component mounts
+        fetch(`/api/v1/quests/fixed`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1NDczMjY1LCJleHAiOjE5ODQ2NzMyNjUsInN1YiI6ImdvZXVuQGdtYWlsLmNvbSIsImlkIjoxfQ.YGjMrp0ECN0CGlTATVtGffnr6lf8fiodQ698_AmY9HE', 
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.fixedQuests);
+            setSelectedType(data.burnoutName);
+            setSelectedMission(data.fixedQuests);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    }, [initialSelectedType]); // Only run when initialSelectedType changes
+
     return (
         <div className="questpage">
             {selectedMission && (
                 <>
-                    <div className="type-name">{selectedMission.name}</div>
+                    <div className="type-name">{selectedType}</div>
                     <div>
                         <div className="questpage-title">이름 같은 분에게 추천하는 행동이에요.</div>
                         <div><img src="/images/type/quest-title.png" className="img-width" /></div>
                     </div>
                     <div className="fixed-quest-area">
-                        {selectedMission.mission.map((quest, index) => (
+                        {selectedMission.map((quest, index) => (
                             <div key={index} className={`fixed-quest-box ${questNum === index + 1 ? `fixed-quest-box-${index + 1}` : ""}`}
                                 onClick={() => setQuestNum(index + 1)}>
-                                <div className="quest-sub-txt">점심시간, 몸과 마음을 건강하게 유지하며</div>
-                                <div className="quest-txt">{quest}</div>
+                                <div className="quest-sub-txt">{quest.description}</div>
+                                <div className="quest-txt">{quest.activity}</div>
                             </div>
                         ))}
                     </div>
