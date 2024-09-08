@@ -1,22 +1,24 @@
 import React from "react";
 import { useState, useEffect } from "react";
-export default function MissionCard({pictureState}){
+export default function MissionCard({pictureImg, missionTitle, missionDetail, missionTag}){
     const [isPicture,setIsPicture]=useState(false);
     useEffect(() => {
-        if (pictureState === 1) {
+        if (pictureImg !== null) {
             setIsPicture(true);
         } else{
             setIsPicture(false);
         }
-    }, [pictureState]);
+    }, [pictureImg]);
     return(
         <div>
             <div className="detail-mission">
-                <div className="mission-type">스페셜퀘스트</div>
-                <div className="mission-subtxt">점심시간, 마음이 편안해지는 노래 들으면서</div>
-                <div className="mission-title">d</div>
+                <div className="mission-txt-flex">
+                    <div className="mission-type">{missionTag}</div>
+                    <div className="mission-subtxt">{missionDetail}</div>
+                    <div className="mission-title">{missionTitle}</div>
+                </div>
                 <div className={`mission-image ${isPicture === false ? "no-mission-img" : ""}`}>
-                    <img src="https://contents.creators.mypetlife.co.kr/content/uploads/2020/08/24174813/202008242Ffd681125c5d376872a8409ef8de6a13a.jpg" alt="" className="img-width"/>
+                    <img src={pictureImg} alt="" className="img-width"/>
                 </div>
             </div>
         </div>

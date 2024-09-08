@@ -10,7 +10,7 @@ export default function Redirection() {
     if (logincode) {
       console.log("Received code:", logincode);
       
-      fetch('http://localhost:8080/api/v1/auth/login/kakao', {
+      fetch('/api/v1/auth/login/kakao', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

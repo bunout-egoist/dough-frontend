@@ -72,6 +72,7 @@ export default class DetailPage extends React.Component {
         .then(response => response.json())
         .then(data => {
             // 데이터 배열을 state에 저장
+            console.log(data);
             this.setState({ data }, () => {
                 this.updateSelectedData(); // 데이터가 업데이트된 후 현재 선택된 날짜의 데이터를 갱신
             });
@@ -123,23 +124,22 @@ export default class DetailPage extends React.Component {
                     {/* 선택된 날짜의 데이터 출력 */}
                     {selectedData ? (
                         <div>
-                            {/* <div>Daily Count: {selectedData.dailyCount}</div> */}
                             <div>
-                                Quest Details:
                                 <ul>
                                     {selectedData.questDetails.map((quest, index) => (
                                         <li key={index}>
-                                             <MissionCard pictureState={0} />
-                                            <div><strong>Activity:</strong> {quest.activity}</div>
-                                            <div><strong>Description:</strong> {quest.description}</div>
-                                            <div><strong>Quest Type:</strong> {quest.questType}</div>
+                                             <MissionCard pictureImg={quest.imageUrl} missionTitle={quest.activity} missionDetail={quest.description} missionTag={quest.questType} />
                                         </li>
                                     ))}
                                 </ul>
                             </div>
                         </div>
                     ) : (
-                        <div>No data available for the selected date.</div>
+                       <div className="no-mission-area">
+                            <div className="no-mission-img">
+                                <img src="/images/dashpage/no-mission.png" className="img-width" />
+                            </div>
+                        </div>
                     )}
                     
 
@@ -148,7 +148,7 @@ export default class DetailPage extends React.Component {
                     <MissionCard pictureState={1} /> */}
                 </div>
     
-                <div className="navbar-area">
+                {/* <div className="navbar-area">
                     <div className="navbar-icon">
                         <img src="/images/navbarImage/chart.png" alt="이미지" className="img-width" />
                     </div>
@@ -158,7 +158,7 @@ export default class DetailPage extends React.Component {
                     <div className="navbar-icon">
                         <img src="/images/navbarImage/setting.png" alt="이미지" className="img-width" />
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }

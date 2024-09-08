@@ -1,4 +1,5 @@
 
+
 .typepage-hidden{
   overflow: hidden;
 }
@@ -134,4 +135,45 @@
 }
 .aboutpage-btn:active{
   opacity: 70%;
+}
+
+/* setting 설정 페이지 */
+.setting-edit-type-area .typepage-main{
+  margin-top: -5rem;
+  padding: 5rem 1.75rem 2rem 1.75rem !important;
+}
+.setting-edit-type-area .typepage-title{
+  width: 23rem;
+  margin-left: 0.8rem;
+  margin-top: 1rem;
+}
+.setting-edit-type-area .type-select-area {
+  margin-top: 2rem;
+} 
+.setting-typepage-header {
+  display: flex;
+  width: 100%;
+  background-color: white;
+  justify-content: space-between;
+  padding: 1.58rem 1.25rem;
+}
+.setting-typepage-header .header-back{
+  width: 1rem;
+}
+.setting-typepage-header .header-title{
+  font-size: 1.5rem;
+  font-family: 'Pretendard-Bold';
+  margin-right: 30%;
+}
+
+@media (min-height: 850px) {
+  .setting-edit-type-area .typepage-main{
+    padding: 5rem 1.75rem 8rem 1.75rem !important ;
+  }
+  .setting-edit-type-area .aboutpage-detail{
+    padding-bottom: 15rem !important;
+  }
+  .setting-edit-type-area .aboutpage-btn-area{
+    padding: 2.3rem 1.55rem 7rem 1.55rem !important;
+  }
 }

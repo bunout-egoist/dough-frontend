@@ -9,13 +9,33 @@ export default function Nickname() {
         const value = e.target.value;
         setNickname(value);
         setIsWarningVisible(value.length > 5);
+        
     };
-
+    const handleNicknameChange = (e)=>{
+        fetch(`/api/v1/members`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1NDczMjY1LCJleHAiOjE5ODQ2NzMyNjUsInN1YiI6ImdvZXVuQGdtYWlsLmNvbSIsImlkIjoxfQ.YGjMrp0ECN0CGlTATVtGffnr6lf8fiodQ698_AmY9HE', 
+              'Content-Type': 'application/json',
+            },
+            body : JSON.stringify({
+                "nickname" :nickname
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data)
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+    }
     const isButtonDisabled = nickname.length > 5;
-
+   
     return (
         <div>
-             <Link to="/">
+             <Link to="/setting">
                 <div className="back-img">
                     <img src="/images/back.png" alt="image" className="img-width" />
                 </div>
@@ -38,11 +58,11 @@ export default function Nickname() {
                 )}
             </div>
             <div className="nickname-btn-area">
-                <Link to="/setting">
-                    <div className={`nickname-btn ${isButtonDisabled ? "disabled" : ""}`} >
+                {/* <Link to="/setting"> */}
+                    <div onClick={handleNicknameChange} className={`nickname-btn ${isButtonDisabled ? "disabled" : ""}`} >
                         수정하기
                     </div>
-                </Link>
+                {/* </Link> */}
             </div>
         </div>
     );

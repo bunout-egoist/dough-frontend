@@ -314,6 +314,7 @@ body, html {
   max-width: 500px;
   height: 100dvh;
   position: relative;
+  overflow: scroll;
 }
 .detail-page .detail-top{
   position: fixed;
@@ -363,27 +364,41 @@ body, html {
   width: 1.9rem;
   height: 1.9rem;
 }
-.detail-top .day-mission-1{
+.detail-top .daily-count-1 .day-date{
   background-color: #E2E8F0;
   border-radius: 999px;
+  padding: 1.2rem;
 }
-.detail-top .day-mission-2{
+.detail-top .daily-count-2 .day-date{
   color: white !important;
   background-color: #8FBCFF;
   border-radius: 999px;
+  padding: 1.2rem;
 }
-.detail-top .day-mission-3{
+.detail-top .daily-count-3 .day-date{
   color: white !important;
   background-color: #FF7A2F;
   border-radius: 999px;
+  padding: 1.2rem;
 }
-
+.detail-page .no-mission-area{
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  margin-top: 50%;
+}
+.detail-page .no-mission-img{
+  width: 11rem;
+}
 .detail-page .detail-bottom{
   padding: 17rem 1.3rem 3rem 1.3rem;
 }
 .detail-page .detail-mission{
   padding: 1.1rem 1.3rem;
   border-bottom: solid 1px #DCDCDC;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .detail-mission .mission-type{
   color: #FF7A2F;
@@ -400,12 +415,17 @@ body, html {
   color: black;
   font-family: 'Pretendard-Bold';
   font-size: 1.5rem;
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
+  flex : 1;
+}
+.mission-txt-flex{
+  display: flex;
+  flex-direction: column;
 }
 .detail-mission .mission-image{
   margin-top: 1.3rem;
   width: 100%;
-  height: 12rem;
+  width: 4.1rem;
 }
 .detail-mission .no-mission-img{
   display: none !important;

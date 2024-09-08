@@ -6,8 +6,8 @@ import Navbar from "../navbar/Navbar";
 
 
 export default function DashPage() {
-  const monthAverage = 0;
-  const monthPassion = 0;
+  const [highest, setHighest] = useState(0);
+  const [average, setAverage] = useState(0);
   const [dailyTotal, setDailyTotal] = useState(0);
   const [specialTotal, setSpecialTotal] = useState(0);
 
@@ -23,6 +23,8 @@ export default function DashPage() {
   .then(data => {
     setDailyTotal(data.dailyTotal);
     setSpecialTotal(data.specialTotal);
+    setHighest(data.highestAverageCompletionDay);
+    setAverage(data.averageCompletion);
   })
   .catch(error => {
     console.error('Error fetching data:', error);
@@ -62,11 +64,11 @@ export default function DashPage() {
         <div className="mini-title">통계</div>
         <div className="flex-row">
           <div className="bottom-txt">이번 달 가장 열정적인 요일은</div>
-          <div className="bottom-result orange-txt">{monthPassion}요일</div>
+          <div className="bottom-result orange-txt">{highest}요일</div>
         </div>
         <div className="flex-row">
           <div className="bottom-txt">이번달 평균 달성률은</div>
-          <div className="bottom-result orange-txt">{monthAverage}%</div>
+          <div className="bottom-result orange-txt">{average}%</div>
         </div>
       </div>
       
