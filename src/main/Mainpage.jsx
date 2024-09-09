@@ -5,6 +5,28 @@ import { Link } from "react-router-dom";
 import RoundSlide from "./components/RoundSlide";
 import { useRef } from "react";
 export default function Mainpage() {
+
+  useEffect(() => {
+    fetch(`/api/v1/quests/today`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1NDczMjY1LCJleHAiOjE5ODQ2NzMyNjUsInN1YiI6ImdvZXVuQGdtYWlsLmNvbSIsImlkIjoxfQ.YGjMrp0ECN0CGlTATVtGffnr6lf8fiodQ698_AmY9HE',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+             // 상태 업데이트
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+}, []); // 빈 배열로 useEffect가 첫 렌더 시 한 번만 실행됨
+
+
+
   const initialMissions = [
     {
       id: 1,
