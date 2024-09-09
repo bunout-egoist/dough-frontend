@@ -206,9 +206,10 @@ button:hover {
 .main-levelpage{
     display: flex;
     flex-direction: column;
+    height: 100dvh;
 }
 .backbtn{
-    padding: 1rem 1.3rem;
+    padding: 1.8rem 1.3rem 1.4rem 1.3rem;
     background-color: rgba(255, 255, 255, 0.881);
     width: 100%;
     position: fixed;
@@ -251,7 +252,6 @@ button:hover {
     border-radius: 8px;
 }
 .main-levelpage-level .inner{
-    width: 20%;
     height: 9px;
     background-color: #FF7A2F;
     border-radius: 8px;
@@ -273,7 +273,7 @@ button:hover {
 }
 .main-level-bottom{
     flex: 1;
-    padding: 2.3rem 2rem 4.1rem 2rem;
+    padding: 2.3rem 2rem 8rem 2rem;
     background-color: #F6F7F8;
 }
 

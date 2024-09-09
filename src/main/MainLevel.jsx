@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function MainLevel() {
-    const [contents, setContents] = useState(null);
+    const [contents, setContents] = useState({});
 
     useEffect(() => {
         fetch(`/api/v1/members/attendance`, {
@@ -16,13 +16,16 @@ export default function MainLevel() {
             .then(response => response.json())
             .then(data => {
                 setContents(data);  // 상태 업데이트
-                console.log(data);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     }, []); // 빈 배열로 useEffect가 첫 렌더 시 한 번만 실행됨
-
+    useEffect(() => {
+        if (Object.keys(contents).length > 0) {
+            console.log('Updated contents:', contents);
+        }
+    }, [contents]);
     return (
         <div className="main-levelpage">
             <Link to="/">
@@ -39,18 +42,20 @@ export default function MainLevel() {
                 </div>
                 <div className="level-top-img"><img className="img-width" src="/images/main/main_icon.png" /></div>
                 <div className="main-levelpage-level">
-                    <div className="level-value">400/500</div>
+                    <div className="level-value">{contents.currentExp}/{contents.requiredExp}</div>
                     <div className="outer">
-                        <div className="inner"></div>
+                        <div className="inner" style={{
+            width: `${(contents.currentExp / contents.requiredExp) * 100}%`
+        }}></div>
                     </div>
                     <div className="level-change">
-                        <div className="level-tag">레벨2</div>
-                        <div className="level-tag">레벨3</div>
+                        <div className="level-tag">레벨 {contents.currentLevel}</div>
+                        <div className="level-tag">레벨 {contents.nextLevel}</div>
                     </div>
                 </div>
             </div>
             <div className="main-level-bottom">
-                <div><img src="/images/main/level/day1.png" className="img-width" /></div>
+                <div><img src={`/images/main/level/day${contents.attendanceCount}.png`} className="img-width" /></div>
             </div>
         </div>
     );
