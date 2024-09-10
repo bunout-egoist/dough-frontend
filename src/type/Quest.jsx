@@ -7,34 +7,13 @@ export default function Quest() {
     const [selectedType, setSelectedType] = useState(null); // State for selectedType
     const location = useLocation(); // Use useLocation hook to access the URL
     const navigate = useNavigate(); // Use useNavigate hook for navigation
+
+    const infoData = location.state?.infoData;
     // Parse query parameters
     const searchParams = new URLSearchParams(location.search);
     const initialSelectedType = parseInt(searchParams.get("select"), 10); // Get the 'select' query parameter and parse it as an integer
     const [selectedMission, setSelectedMission] =useState(null);
-    const typeMissions = [
-        {
-            type: 1,
-            name: '소보로',
-            mission: ['소보로1', '소보로2', '소보로3', '소보로4']
-        },
-        {
-            type: 2,
-            name: '호빵',
-            mission: ['호빵1', '호빵2', '호빵3', '호빵4']
-        },
-        {
-            type: 3,
-            name: '공갈빵',
-            mission: ['공갈빵1', '공갈빵2', '공갈빵3', '공갈빵4']
-        },
-        {
-            type: 4,
-            name: '크림빵',
-            mission: ['크림빵1', '크림빵2', '크림빵3', '크림빵4']
-        },
-    ];
-
-
+    
     useEffect(() => {
         if (initialSelectedType === 0) {
            
@@ -45,21 +24,29 @@ export default function Quest() {
         }
     }, [initialSelectedType]);
 
-    // Find the type object corresponding to the selectedType
-    
+    const [updatedFinalInfoData, setUpdatedFinalInfoData] = useState(infoData || null);
+    useEffect(() => {
+        if (selectedType) {
+            setUpdatedFinalInfoData(prevInfoData => ({
+                ...prevInfoData,
+                fixedQuestId: questNum 
+            }));
+        }
+    }, [selectedType]); // removed updatedFinalInfoData from dependencies
+
 
     const handleButtonClick = () => {
+        console.log('끝',updatedFinalInfoData);
         // 퀘스트 선택
-        fetch(`/api/v1/members/fixed`, {
+        fetch(`/api/v1/signup/complete`, {
             method: 'PUT',
             credentials: 'include',
             headers: {
                 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                "fixedQuestId": 2
-            })
+            body:JSON.stringify(updatedFinalInfoData)
+         
         })
         .then(response => {
             // 성공적인 응답 처리: 204 No Content인 경우
@@ -109,7 +96,7 @@ export default function Quest() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data.fixedQuests);
+           
             setSelectedType(data.burnoutName);
             setSelectedMission(data.fixedQuests);
         })

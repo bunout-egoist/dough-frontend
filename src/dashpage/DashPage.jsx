@@ -11,6 +11,7 @@ export default function DashPage() {
   const [dailyTotal, setDailyTotal] = useState(0);
   const [specialTotal, setSpecialTotal] = useState(0);
 
+ useEffect(()=>{
   fetch(`/api/v1/dashboard/total`, {
     method: 'GET',
     credentials: 'include',
@@ -29,6 +30,7 @@ export default function DashPage() {
   .catch(error => {
     console.error('Error fetching data:', error);
   });
+ },[])
 
   return(
     <div className="dash-page page-area">

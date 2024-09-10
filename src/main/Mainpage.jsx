@@ -94,7 +94,7 @@ export default function Mainpage() {
       selectedQuestId: missionList.missionId,
       difficulty: missionList.selectedName
     };
-    formData.append("feedback", JSON.stringify(feedbackData));
+    formData.append("feedback", new Blob([JSON.stringify(feedbackData)],{type:'application/json'}),);
     if (selectedFile) {
       formData.append("file",selectedFile );
     }
@@ -104,7 +104,6 @@ export default function Mainpage() {
         method: "POST",
         headers: {
           "Authorization": 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
-          'Content-Type': 'multipart/form-data',
         },
         body: formData,
       });

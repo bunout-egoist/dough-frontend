@@ -7,20 +7,30 @@ export default function TypePage() {
     const [selectedType, setSelectedType] = useState(null);
     const [aboutType, setAboutType] = useState(null);
     const [isAboutVisible, setIsAboutVisible] = useState(false);
+    const [updatedInfoData, setUpdatedInfoData] = useState(null); // To store updated infoData
 
-    const navigate = useNavigate();  // Correct usage of the useNavigate hook
+    const navigate = useNavigate();
     const location = useLocation();
 
     const infoData = location.state?.infoData;
 
     useEffect(() => {
-        // Log the infoData when the component mounts
         if (infoData) {
             console.log("Received infoData:", infoData);
+            setUpdatedInfoData(infoData); // Initialize updatedInfoData with received infoData
         } else {
             console.log("No infoData received");
         }
     }, [infoData]);
+
+    useEffect(() => {
+        if (selectedType && updatedInfoData && selectedType !== updatedInfoData.burnoutId) {
+            setUpdatedInfoData((prevInfoData) => ({
+                ...prevInfoData,
+                burnoutId: selectedType,
+            }));
+        }
+    }, [selectedType, updatedInfoData]);
 
     const handleSelect = (type) => {
         if (type === 0) {
@@ -33,7 +43,7 @@ export default function TypePage() {
 
     const handleButtonClick = () => {
         if (selectedType >= 1) {
-            navigate(`/typepage/quest?select=${selectedType}`); // Navigate with the query parameter
+            navigate(`/typepage/quest?select=${selectedType}`, { state: { infoData: updatedInfoData } }); // Navigate with the query parameter
         }
     };
 
