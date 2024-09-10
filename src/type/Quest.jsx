@@ -26,13 +26,13 @@ export default function Quest() {
 
     const [updatedFinalInfoData, setUpdatedFinalInfoData] = useState(infoData || null);
     useEffect(() => {
-        if (selectedType) {
+        if (questNum) {
             setUpdatedFinalInfoData(prevInfoData => ({
                 ...prevInfoData,
                 fixedQuestId: questNum 
             }));
         }
-    }, [selectedType]); // removed updatedFinalInfoData from dependencies
+    }, [questNum]); // removed updatedFinalInfoData from dependencies
 
 
     const handleButtonClick = () => {
@@ -59,11 +59,7 @@ export default function Quest() {
             return response.json();
         })
         .then(data => {
-            // 204 No Content 응답의 경우는 데이터가 없기 때문에 data는 undefined
-            if (data) {
-                console.error('오류 발생:', data.message);
-                alert(data.message)
-            }
+          console.log(data);
         })
         .catch(error => {
             console.error('통신 오류:', error);

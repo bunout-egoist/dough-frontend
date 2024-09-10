@@ -89,7 +89,7 @@ export default function Info() {
             const infoData = {
                 "nickname" :  nickname,
                 "gender" : gender,
-                "birthYear" : date,
+                "birthYear" : new Date(date).getFullYear(),
                 "occupation" : job,
                 "fixedQuestId" : 1,
                 "burnoutId" : 1
@@ -137,8 +137,8 @@ export default function Info() {
                         <div className="input-box">
                             <select name="select-sex" className="step2-date-input" value={gender} onChange={handleGenderChange}>
                                 <option value="select">성별 선택</option>
-                                <option value="male">남성</option>
-                                <option value="female">여성</option>
+                                <option value="남성">남성</option>
+                                <option value="여성">여성</option>
                                 <option value="none-sex">선택안함</option>
                             </select>
                         </div>
@@ -148,11 +148,11 @@ export default function Info() {
                         <div className="input-box">
                             <select name="select-job" className="step2-date-input" value={job} onChange={handleJobChange}>
                                 <option value="select">직종 선택</option>
-                                <option value="job1">학생(초/중/고)</option>
-                                <option value="job2">대학생</option>
-                                <option value="job3">직장인 2년차 이하</option>
-                                <option value="job4">직장인 3년차 이상</option>
-                                <option value="job5">선택안함</option>
+                                <option value="학생(초/중/고)">학생(초/중/고)</option>
+                                <option value="대학생">대학생</option>
+                                <option value="직장인">직장인 2년차 이하</option>
+                                <option value="자영업">직장인 3년차 이상</option>
+                                <option value="기타">선택안함</option>
                             </select>
                         </div>
                     </div>
