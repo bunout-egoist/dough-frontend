@@ -10,12 +10,12 @@ export default function Redirection() {
     if (logincode) {
       console.log("Received code:", logincode);
       
-      fetch('/api/v1/auth/login/kakao', {
+      fetch(`/api/v1/auth/login/kakao?code=${logincode}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code: logincode }),
+        }
+
       })
       .then((response) => {
         console.log("Response status:", response.status);
