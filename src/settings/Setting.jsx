@@ -1,8 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./setting.css";
 import { Link } from "react-router-dom";
 
 export default function Setting() {
+
+    useEffect(()=>{
+        fetch(`/api/v1/notifications`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+              'Content-Type': 'application/json',
+            },
+            
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            setCheckAlarm(data);
+
+             // 데이터 기반 체크박스 상태 업데이트
+            const isChecked1 = data.every(item => item.isChecked);
+            setIsChecked1(isChecked1);
+
+            const alarmMap = data.reduce((acc, item) => {
+            acc[item.id] = item.isChecked;
+            return acc;
+            }, {});
+
+            setIsChecked2(alarmMap[1] || false);
+            setIsChecked3(alarmMap[2] || false);
+            setIsChecked4(alarmMap[3] || false);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+    },[])
+    const [checkAlarm, setCheckAlarm] = useState([]);
     const [isChecked1, setIsChecked1] = useState(false);
     const [isChecked2, setIsChecked2] = useState(false);
     const [isChecked3, setIsChecked3] = useState(false);
@@ -36,6 +70,48 @@ export default function Setting() {
         console.log('4',!isChecked4);
         setIsChecked4(!isChecked4);
     }
+    const alarmData = JSON.stringify({
+        "notifications" : [ {
+          "id" : 1,
+          "isChecked" : isChecked2
+        }, {
+          "id" : 2,
+          "isChecked" : isChecked3
+        }, {
+          "id" : 3,
+          "isChecked" : isChecked4
+        } ]
+      });
+    useEffect(()=>{
+
+            fetch(`/api/v1/notifications`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                  'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+                  'Content-Type': 'application/json',
+                },
+                body : alarmData
+              })
+              .then(response => response.json())
+              .then(data => {
+                console.log('보낸거',alarmData);
+                console.log('받은거',data);
+              })
+              .catch(error => {
+                console.error('Error fetching data:', error);
+              });
+    },[alarmData])
+    useEffect(() => {
+        const notifySystem = async () => {
+            const messages = [];
+            if (isChecked2) messages.push('데일리 퀘스트 알림을 활성화했습니다.');
+            if (isChecked3) messages.push('남은 퀘스트 알림을 활성화했습니다.');
+            if (isChecked4) messages.push('랜덤 퀘스트 알림을 활성화했습니다.');
+        };
+
+        notifySystem();
+    }, [isChecked2, isChecked3, isChecked4]);
 
     return (
         <div className="setting-page page-area">
