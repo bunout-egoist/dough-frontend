@@ -81,20 +81,21 @@ export default function Info() {
 
     const handleButtonClick = () => {
         if (step === 1) {
-            // Log the nickname
-            console.log("Nickname:", nickname);
-
-            // Transition to step 2 and disable the button
             setStep(2);
             setIsButtonEnabled(false);
         } else if (step === 2) {
             // Log the date, gender, and job
-            console.log("Date:", date);
-            console.log("Gender:", gender);
-            console.log("Job:", job);
-
-            // Redirect to /typepage
-            navigate("/typepage");
+         
+            const infoData = {
+                "nickname" :  nickname,
+                "gender" : gender,
+                "birthYear" : date,
+                "occupation" : job,
+                "fixedQuestId" : 1,
+                "burnoutId" : 1
+          }
+            console.log(infoData);
+            navigate("/typepage", { state: { infoData } });
         }
     };
 

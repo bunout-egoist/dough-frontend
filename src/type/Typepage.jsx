@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Correct import of useNavigate
+import React, { useState,useEffect } from "react";
+import { useNavigate,useLocation } from "react-router-dom"; // Correct import of useNavigate
 import styles from "./type.css";
 import About from "./About";
 
@@ -9,6 +9,18 @@ export default function TypePage() {
     const [isAboutVisible, setIsAboutVisible] = useState(false);
 
     const navigate = useNavigate();  // Correct usage of the useNavigate hook
+    const location = useLocation();
+
+    const infoData = location.state?.infoData;
+
+    useEffect(() => {
+        // Log the infoData when the component mounts
+        if (infoData) {
+            console.log("Received infoData:", infoData);
+        } else {
+            console.log("No infoData received");
+        }
+    }, [infoData]);
 
     const handleSelect = (type) => {
         if (type === 0) {
