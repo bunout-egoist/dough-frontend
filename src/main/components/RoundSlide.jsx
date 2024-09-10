@@ -9,27 +9,27 @@ export default function RoundSlide({ onSubmit, selectedMissionId }) {
   const initialImages = [
     {
       img: "/images/main/evaluate/1.png",
-      name: "매우어려움",
+      name: 1,
       centerimg: "/images/main/evaluate/center-1.png",
     },
     {
       img: "/images/main/evaluate/2.png",
-      name: "어려움",
+      name: 2,
       centerimg: "/images/main/evaluate/center-2.png",
     },
     {
       img: "/images/main/evaluate/3.png",
-      name: "할만함",
+      name: 3,
       centerimg: "/images/main/evaluate/center-3.png",
     },
     {
       img: "/images/main/evaluate/4.png",
-      name: "쉬웠음",
+      name: 4,
       centerimg: "/images/main/evaluate/center-4.png",
     },
     {
       img: "/images/main/evaluate/5.png",
-      name: "매우 쉬웠음",
+      name: 5,
       centerimg: "/images/main/evaluate/center-5.png",
     },
   ];

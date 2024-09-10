@@ -9,7 +9,7 @@ export default function MissionBox({
   backgroundColor,
   tag1, tag2,
   status,
-  onImageUpload, // New prop to pass image file to parent
+  onImageUpload
 }) {
   const [imageSrc, setImageSrc] = useState("/images/main/photo.png");
 
@@ -38,9 +38,10 @@ export default function MissionBox({
       console.error("Error selecting image: ", err);
     }
   };
+  const isFinished = status === 'finished';
 
   return (
-    <div className={`${boxClassName}`} style={{ backgroundColor: `${backgroundColor}` }}>
+    <div className={`${boxClassName}`}  style={{ backgroundColor, pointerEvents: isFinished ? 'none' : 'auto' }}>
       <div>
         <div className="mission-tag-flex">
           <div className={tagClassName} style={{ color: `${backgroundColor}` }}>

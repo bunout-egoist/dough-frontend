@@ -37,7 +37,7 @@ export default function MainLevel() {
             </Link>
             <div className="main-levelpage-top">
                 <div className="level-top-title">
-                    <div className="level-top-title-1">소보로 ##님</div>
+                    <div className="level-top-title-1">{contents.nickname}님</div>
                     <div className="level-top-title-2">멘탈 관리 중...</div>
                 </div>
                 <div className="level-top-img"><img className="img-width" src="/images/main/main_icon.png" /></div>

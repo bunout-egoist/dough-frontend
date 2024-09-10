@@ -9,7 +9,19 @@ export default function Mainpage() {
   const [activeMissionId, setActiveMissionId] = useState(null);
   const [isRoundSlideVisible, setIsRoundSlideVisible] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null); // State to store the selected image file
-
+  useEffect(() => {
+    // 세션 스토리지에서 저장된 데이터 읽기
+    const savedMissions = sessionStorage.getItem('finishedMissions');
+    if (savedMissions) {
+      const parsedMissions = JSON.parse(savedMissions);
+      setMissions((prevMissions) =>
+        prevMissions.map((mission) =>
+          parsedMissions.find(m => m.id === mission.id) || mission
+        )
+      );
+    }
+  }, []);
+  
   useEffect(() => {
     // Fetching missions data
     fetch('/api/v1/quests/today', {
@@ -23,9 +35,10 @@ export default function Mainpage() {
     .then(response => response.json())
     .then(data => {
       setMainContents(data);
+      console.log(data);
       const colors = ["#FF7A2F", "#8FBCFF", "#FFC13A"];
       const updatedMissions = data.todayQuests.map((quest, index) => ({
-        id: quest.selectedQuestId, // selectedQuestId를 id로 사용
+        id: quest.selectedQuestId, 
         backgroundColor: colors[index % colors.length], // 색상 순환 할당
         isChecked: false, // 기본적으로 체크되지 않음
         missionText: quest.activity, // activity를 missionText로 사용
@@ -50,6 +63,7 @@ export default function Mainpage() {
 
   // Update image file when a new image is selected in MissionBox
   const handleImageUpload = (file) => {
+    console.log("Uploaded image file: ", file); 
     setSelectedFile(file);
   };
 
@@ -68,36 +82,60 @@ export default function Mainpage() {
     );
   };
 
-  const handleRoundSlideSubmit = async ({ missionId, selectedName }) => {
-    console.log({ missionId, selectedName });
-    
-    if (selectedFile) {
-      // Prepare form data and send the image file to the backend
-      const formData = new FormData();
-      formData.append("img", selectedFile, "selected-image.png");
-      try {
-        const response = await fetch("/videos/upload-from-recorder", {
-          method: "POST",
-          body: formData,
-        });
-        if (response.ok) {
-          console.log("Image uploaded successfully");
-        } else {
-          console.error("Image upload failed");
-        }
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      }
-    }
+  const handleRoundSlideSubmit = async (missionList, selectedName) => {
+    // 파일이 선택되지 않은 경우 경고 메시지 출력 및 중단
+    console.log(selectedFile);
 
+    const formData = new FormData();
+  
+    // Append feedback JSON data as a string
+    const feedbackData = {
+      selectedQuestId: missionList.missionId,
+      difficulty: missionList.selectedName
+    };
+    formData.append("feedback", JSON.stringify(feedbackData));
+    if (selectedFile) {
+      formData.append("file",selectedFile);
+    }
+    console.log(formData)
+    try {
+      const response = await fetch("/api/v1/feedbacks", {
+        method: "POST",
+        headers: {
+          "Authorization": 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+          'Content-Type': 'application/json',
+        },
+        body: formData,
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Feedback submitted successfully", data);
+
+         // Save status and count of finished missions in session
+         const finishedMissions = missions.filter(mission => mission.status === 'finished');
+         sessionStorage.setItem('finishedMissions', JSON.stringify(finishedMissions));
+         sessionStorage.setItem('finishedMissionCount', finishedMissions.length);
+        // 성공 처리
+      } else {
+        const errorData = await response.json();
+        console.error("Error submitting feedback:", errorData);
+        // 에러 처리
+      }
+    } catch (error) {
+      console.error("Error during submission:", error);
+    }
+  
+    // Reset 상태
     setIsRoundSlideVisible(false);
     setMissions((prevMissions) =>
       prevMissions.map((mission) =>
-        mission.id === missionId ? { ...mission, status: "finished" } : mission
+        mission.id === missionList.missionId ? { ...mission, status: "finished" } : mission
       )
     );
     setActiveMissionId(null);
   };
+  
   const sortedMissions = [...missions].sort((a, b) => {
     if (a.status === "now-clicked" && b.status !== "now-clicked") {
       return -1;

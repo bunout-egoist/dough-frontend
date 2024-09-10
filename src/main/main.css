@@ -29,6 +29,10 @@
     padding: 0.4rem 0.7rem;
     font-family: 'Pretendard-Medium';
     font-size: 1rem;
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .mainpage-level-landing .mainpage-level-txt{
     font-family: 'Pretendard-Medium';
@@ -252,6 +256,7 @@ button:hover {
     background-color: #DEE0E4;
     border-radius: 8px;
 }
+
 .main-levelpage-level .inner{
     height: 9px;
     background-color: #FF7A2F;
