@@ -162,11 +162,12 @@ button:hover {
 }
 
 .mission-img-box{
-    /* width: 3.9rem; */
+    width: 3.9rem;
     height: 3.9rem;
     border-radius: 10px;
 }
 .mission-img-box img{
+    object-fit: cover;
     border-radius: 10px;
     height: 100%;
 }

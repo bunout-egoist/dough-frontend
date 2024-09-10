@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Camera, CameraSource, CameraResultType } from "@capacitor/camera";
 
 export default function MissionBox({
-  backgroundColor,
   isChecked,
   onCheck,
   missionText,
+  backgroundColor,
+  tag1, tag2,
   status,
+  onImageUpload, // New prop to pass image file to parent
 }) {
-  const [cameraActive, setCameraActive] = useState(false);
-  const [imageSrc, setImageSrc] = useState("/images/main/photo.png"); // Default image
+  const [imageSrc, setImageSrc] = useState("/images/main/photo.png");
 
   const boxClassName = `mainpage-mission-box ${
     status === "now-clicked" ? "mission-now-clicked" : ""
@@ -19,66 +21,33 @@ export default function MissionBox({
 
   const tagClassName = `mission-tag ${isChecked ? "mission-tag-checked" : ""}`;
 
-  const handleOpenCamera = () => {
-    setCameraActive(true);
-  };
+  // Function to open the gallery and select an image
+  const handleOpenGallery = async () => {
+    try {
+      const image = await Camera.getPhoto({
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Photos,
+        quality: 90,
+      });
 
-  const handleCapturePhoto = () => {
-    const video = document.querySelector("video");
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const context = canvas.getContext("2d");
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const dataUrl = canvas.toDataURL("image/png");
-    setImageSrc(dataUrl); // Set the captured image as the src
-
-    // Stop the camera stream
-    if (video.srcObject) {
-      const stream = video.srcObject;
-      const tracks = stream.getTracks();
-      tracks.forEach((track) => track.stop());
-      video.srcObject = null; // Clear the video source
+      setImageSrc(image.webPath); // Set the selected image as the src
+      const response = await fetch(image.webPath);
+      const blob = await response.blob(); // Convert the image URI to a blob
+      onImageUpload(blob); // Pass the blob to Mainpage
+    } catch (err) {
+      console.error("Error selecting image: ", err);
     }
-
-    setCameraActive(false); // Close the camera overlay
   };
-
-  useEffect(() => {
-    const video = document.querySelector("video");
-
-    if (cameraActive && video) {
-      // Request access to the camera
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then((stream) => {
-          video.srcObject = stream;
-          video.play(); // Ensure video plays
-        })
-        .catch((err) => {
-          console.error("Error accessing the camera: ", err);
-          setCameraActive(false);
-        });
-    } else if (video) {
-      // Stop the camera stream when not active
-      if (video.srcObject) {
-        const stream = video.srcObject;
-        const tracks = stream.getTracks();
-        tracks.forEach((track) => track.stop());
-        video.srcObject = null;
-      }
-    }
-  }, [cameraActive]);
 
   return (
-    <div className={boxClassName} style={{ backgroundColor }}>
+    <div className={`${boxClassName}`} style={{ backgroundColor: `${backgroundColor}` }}>
       <div>
         <div className="mission-tag-flex">
-          <div className={tagClassName} style={{ color: backgroundColor }}>
-            #혼자
+          <div className={tagClassName} style={{ color: `${backgroundColor}` }}>
+            {tag1}
           </div>
-          <div className={tagClassName} style={{ color: backgroundColor }}>
-            #밖에서
+          <div className={tagClassName} style={{ color: `${backgroundColor}` }}>
+            {tag2}
           </div>
         </div>
         <div className={`mission-title ${isChecked ? "mission-checked" : ""}`}>
@@ -88,7 +57,7 @@ export default function MissionBox({
 
       {/* Conditionally render checkbox or image based on isChecked */}
       {isChecked ? (
-        <div className="mission-img-box" onClick={handleOpenCamera}>
+        <div className="mission-img-box" onClick={handleOpenGallery}>
           <img className="img-width" src={imageSrc} alt="Mission completed" />
         </div>
       ) : (
@@ -103,25 +72,15 @@ export default function MissionBox({
           />
         </div>
       )}
-
-      {/* Fullscreen Camera Overlay */}
-      {cameraActive && (
-        <div className="camera-overlay">
-          <video autoPlay playsInline className="camera-video" />
-          <button className="capture-button" onClick={handleCapturePhoto}>
-            사진 찍기
-          </button>
-        </div>
-      )}
     </div>
   );
 }
 
-// Define PropTypes for validation
 MissionBox.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   isChecked: PropTypes.bool.isRequired,
   onCheck: PropTypes.func.isRequired,
   missionText: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
+  onImageUpload: PropTypes.func.isRequired, // New prop type
 };

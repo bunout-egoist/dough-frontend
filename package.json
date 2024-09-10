@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@capacitor/android": "^6.1.1",
+    "@capacitor/camera": "^6.0.2",
     "@capacitor/cli": "^6.1.2",
     "@capacitor/core": "^6.1.2",
     "@capacitor/device": "^6.0.1",
@@ -53,6 +54,5 @@
       "last 1 safari version"
     ]
   },
-    "proxy": "http://13.124.151.164:8080"
-  
+  "proxy": "http://13.124.151.164:8080"
 }
