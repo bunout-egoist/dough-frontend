@@ -136,27 +136,36 @@ export default function Setting() {
                 <div className="setting-qa">
                     <div className="setting-subtitle">문의</div>
                     <div className="setting-service-list">
-                        <div className="setting-service-li">
-                            <div>자주 묻는 질문들</div>
-                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                        </div>
-                        <div className="setting-service-li">
-                            <div>의견 보내기</div>
-                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                        </div>
+                        <Link to="https://bunout.notion.site/FAQ-2e83748986af483cb60f5d42f8ffa8ff?pvs=4"  target="_blank">
+                            <div className="setting-service-li">
+                                <div>자주 묻는 질문들</div>
+                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                            </div>
+                        </Link>
+                        
+                        <Link to="https://open.kakao.com/o/sptOsAMg"  target="_blank">
+                            <div className="setting-service-li">
+                                <div>의견 보내기</div>
+                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                            </div>
+                        </Link>
                     </div>
                 </div>
                 <div className="setting-agency">
                     <div className="setting-subtitle">약관 및 방침</div>
                     <div className="setting-service-list">
-                        <div className="setting-service-li">
-                            <div>서비스 이용약관</div>
-                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                        </div>
-                        <div className="setting-service-li">
-                            <div>개인정보 처리방침</div>
-                            <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                        </div>
+                        <Link to="https://bunout.notion.site/07affd8e5d464cd3ad5dd63e83bd9e38?pvs=4"  target="_blank">
+                            <div className="setting-service-li">
+                                <div>서비스 이용약관</div>
+                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                            </div>
+                        </Link>
+                        <Link to="https://bunout.notion.site/119f84e892f842f5b7b3ee86c97620ce?pvs=4"  target="_blank">
+                            <div className="setting-service-li">
+                                <div>개인정보 처리방침</div>
+                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                            </div>
+                        </Link>
                     </div>
                 </div>
                <Link to="/intro">
