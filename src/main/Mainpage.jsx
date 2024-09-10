@@ -42,6 +42,7 @@ export default function Mainpage() {
         backgroundColor: colors[index % colors.length], // 색상 순환 할당
         isChecked: false, // 기본적으로 체크되지 않음
         missionText: quest.activity, // activity를 missionText로 사용
+        missionSubText :quest.description,
         status: "", // 기본 상태는 빈 문자열로 설정
         placeKeyword: quest.placeKeyword || "장소 없음", // placeKeyword가 없을 경우 기본값 설정
         participationKeyword: quest.participationKeyword || "참여 없음", // participationKeyword가 없을 경우 기본값 설정
@@ -103,7 +104,7 @@ export default function Mainpage() {
       const response = await fetch("/api/v1/feedbacks", {
         method: "POST",
         headers: {
-          "Authorization": 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+          "Authorization": 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ'
         },
         body: formData,
       });
@@ -195,6 +196,7 @@ export default function Mainpage() {
               backgroundColor={mission.backgroundColor}
               isChecked={mission.isChecked}
               missionText={mission.missionText}
+              missionSubText={mission.missionSubText}
               tag1={mission.placeKeyword}
               tag2={mission.participationKeyword}
               status={mission.status}

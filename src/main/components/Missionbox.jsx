@@ -5,7 +5,7 @@ import { Camera, CameraSource, CameraResultType } from "@capacitor/camera";
 export default function MissionBox({
   isChecked,
   onCheck,
-  missionText,
+  missionText,missionSubText,
   backgroundColor,
   tag1, tag2,
   status,special,
@@ -43,13 +43,16 @@ export default function MissionBox({
   return (
     <div className={`${boxClassName} `}  style={{ backgroundColor, pointerEvents: isFinished ? 'none' : 'auto' }}>
       <div>
-        <div className="mission-tag-flex">
+        {/* <div className="mission-tag-flex">
           <div className={tagClassName} style={{ color: `${backgroundColor}` }}>
             {tag1}
           </div>
           <div className={tagClassName} style={{ color: `${backgroundColor}` }}>
             {tag2}
           </div>
+        </div> */}
+        <div className="mission-subtitle">
+          {missionSubText}
         </div>
         <div className={`mission-title ${isChecked ? "mission-checked" : ""}`}>
           {missionText}

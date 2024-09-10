@@ -135,9 +135,15 @@ button:hover {
     color: #FF7A2F;
     border-radius: 5px;
 }
+.mission-subtitle{
+    font-family: 'Pretendard-Medium';
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 0.3rem;
+}
 .mission-title{
     font-family: 'Pretendard-Bold';
-    font-size: 1.3rem;
+    font-size: 1.38rem;
     color: white;
 }
 .mission-finished .mission-title{
