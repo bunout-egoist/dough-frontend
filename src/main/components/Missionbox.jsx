@@ -8,16 +8,16 @@ export default function MissionBox({
   missionText,
   backgroundColor,
   tag1, tag2,
-  status,
+  status,special,
   onImageUpload
 }) {
   const [imageSrc, setImageSrc] = useState("/images/main/photo.png");
-
+  console.log(special);
   const boxClassName = `mainpage-mission-box ${
     status === "now-clicked" ? "mission-now-clicked" : ""
   } ${status === "finished" ? "mission-finished" : ""} ${
     isChecked ? "mission-checked" : ""
-  }`;
+  } ${special === '스페셜퀘스트' ? 'special-background' : ''}`;
 
   const tagClassName = `mission-tag ${isChecked ? "mission-tag-checked" : ""}`;
 
@@ -41,7 +41,7 @@ export default function MissionBox({
   const isFinished = status === 'finished';
 
   return (
-    <div className={`${boxClassName}`}  style={{ backgroundColor, pointerEvents: isFinished ? 'none' : 'auto' }}>
+    <div className={`${boxClassName} `}  style={{ backgroundColor, pointerEvents: isFinished ? 'none' : 'auto' }}>
       <div>
         <div className="mission-tag-flex">
           <div className={tagClassName} style={{ color: `${backgroundColor}` }}>

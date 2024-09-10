@@ -116,6 +116,11 @@ button:hover {
     background-color: #FF7A2F;
     border-radius: 8px;
 }
+
+.special-background {
+    background: linear-gradient(90deg, #FC7870 0%, #F1AA7C 20%, #E7D487 45%, #8FE5CA 70%, #9494E3 100%) !important;
+  }
+  
 .mission-tag-flex{
     display: flex;
     flex-direction: row;

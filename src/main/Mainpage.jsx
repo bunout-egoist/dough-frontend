@@ -45,6 +45,7 @@ export default function Mainpage() {
         status: "", // 기본 상태는 빈 문자열로 설정
         placeKeyword: quest.placeKeyword || "장소 없음", // placeKeyword가 없을 경우 기본값 설정
         participationKeyword: quest.participationKeyword || "참여 없음", // participationKeyword가 없을 경우 기본값 설정
+        special:quest.questType
       }));
 
 
@@ -198,6 +199,7 @@ export default function Mainpage() {
               tag1={mission.placeKeyword}
               tag2={mission.participationKeyword}
               status={mission.status}
+              special={mission.special}
               onCheck={() => handleMissionCheck(mission.id)}
               onImageUpload={handleImageUpload} // Pass handler to MissionBox
             />
