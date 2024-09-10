@@ -95,15 +95,15 @@ export default function Mainpage() {
     };
     formData.append("feedback", JSON.stringify(feedbackData));
     if (selectedFile) {
-      formData.append("file",selectedFile);
+      formData.append("file",selectedFile );
     }
-    console.log(formData)
+
     try {
       const response = await fetch("/api/v1/feedbacks", {
         method: "POST",
         headers: {
           "Authorization": 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
         body: formData,
       });
