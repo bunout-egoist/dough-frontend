@@ -28,11 +28,10 @@ export default function Intro() {
         checkPlatform();
     }, []);
 
-    const REST_API_KEY = '3abc01eba80718573dbc9e7098b54ee1';
     const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
     const APPLE_REDIRECT_URI = 'http://localhost:3000/oauth2/callback/apple';
-    
-    const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    const KEY = process.env.REACT_APP_K_REST_API;
+    const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
    
     const loginHandler = () => {
         window.location.href = link;

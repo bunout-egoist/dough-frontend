@@ -1,8 +1,20 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./sign.css";
 export default function Sign(){
+
+    const [accessToken, setAccessToken] = useState(null);
+     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
+    useEffect(() => {
+        const token = localStorage.getItem("accessToken");
+        if (token) {
+        setAccessToken(token);
+        console.log('받음',token)
+        } else {
+        console.error("Access token is not available");
+        }
+    }, []);
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
     const [isToggle, setIsToggle] = useState(false)

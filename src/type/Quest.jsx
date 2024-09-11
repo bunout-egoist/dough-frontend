@@ -3,6 +3,22 @@ import { useLocation, useNavigate } from "react-router-dom"; // Import useLocati
 import styles from "./quest.css";
 
 export default function Quest() {
+        // 토큰 발급받기
+
+        const [accessToken, setAccessToken] = useState(null);
+        // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
+       useEffect(() => {
+           const token = localStorage.getItem("accessToken");
+           if (token) {
+           setAccessToken(token);
+           console.log('받음',token)
+           } else {
+           console.error("Access token is not available");
+           }
+       }, []);
+
+
+
     const [questNum, setQuestNum] = useState(null);
     const [selectedType, setSelectedType] = useState(null); // State for selectedType
     const location = useLocation(); // Use useLocation hook to access the URL
@@ -60,6 +76,7 @@ export default function Quest() {
         })
         .then(data => {
           console.log(data);
+          navigate('/')
         })
         .catch(error => {
             console.error('통신 오류:', error);

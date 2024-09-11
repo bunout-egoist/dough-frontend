@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Sign from "../sign/Sign";
 export default function Redirection() {
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const navigate = useNavigate();
   const logincode = new URL(window.location.href).searchParams.get('code');
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (logincode) {
       console.log("Received code:", logincode);
@@ -29,28 +28,35 @@ export default function Redirection() {
       })
       .then((data) => {
         console.log("Received data:", data);
-        if (data.success) {
-          const jwtToken = data.data.jwtToken;
-          const refreshToken = data.data.refreshToken;
+
+          const accessToken = data.accessToken;
+          const refreshToken = data.refreshToken;
           // Store tokens in local storage
-          localStorage.setItem('jwtToken', jwtToken);
+          console.log('출력',accessToken, refreshToken);
+          localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
-          setTimeout(() => {
-            navigate('/');
-          }, 2000); // Navigate to home page after 2 seconds
-        } else {
-          console.error('로그인 중 오류 발생:', data.message);
-        }
+          console.log(localStorage.getItem('accessToken', accessToken));
+          setLoginSuccess(true); // 토큰 저장 후에 상태 업데이트
+   
+        // else {
+        //   console.error('로그인 중 오류 발생:', data.message);
+        // }
       })
       .catch((error) => {
         console.error('로그인 중 오류 발생:', error);
       });
     }
-  }, [logincode, navigate]);
+  }, [logincode]);
 
+
+  useEffect(() => {
+    if (loginSuccess) {
+      navigate("/sign");
+    }
+  }, [loginSuccess, navigate]);
   return (
     <div>
-      {loginSuccess ? "로그인 성공!" : "로그인 중..."}
+      {loginSuccess ? "로그인 성공": "로그인 중..."}
     </div>
   );
 }

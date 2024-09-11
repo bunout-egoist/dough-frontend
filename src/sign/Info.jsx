@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for programmatic navigation
 import styles from "./sign.css";
-
 export default function Info() {
+
     const [date, setDate] = useState("");
     const [nickname, setNickname] = useState("");
     const [gender, setGender] = useState("select");
