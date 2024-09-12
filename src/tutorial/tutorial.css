@@ -1,27 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Actor&display=swap');
 
-@media (max-width: 361px) {
-    .chatbox-area-abs{
-        font-size: 14px !important;
-    }
-  }
-@media (max-width: 400px) and (min-width:362px) {
-    .chatbox-area-abs{
-        font-size: 16px !important;
-    }
-  }
-@media (max-width: 500px) and (min-width:401px) {
-.chatbox-area-abs{
-    font-size: 17px !important;
-}
-}
 .actor-regular {
     font-family: "Actor", sans-serif;
     font-weight: 700;
     font-style: normal;
   }
   .tutorial-page .navbar-area{
-    bottom: 1.2% !important;
+    bottom: 0% !important;
   }
 /* 튜토리얼 페이지 */
 
@@ -179,12 +164,10 @@
 /* 단계별 chatbox */
 
 .chatbox-area .chat-0{
-    top: 25%;
+    top: 35%;
 }
 .chat-0 .pointer{
-    transform: rotate(45deg) skew(15deg, 15deg);
-    border-radius: 8px;
-	margin-top: -9.5em;
+    display: none !important;
 }
 .chatbox-area .chat-1{
     top: 25%;
@@ -330,4 +313,22 @@
     line-height: 1.75rem;
     border-radius: 10px;
     padding: 0.7rem 0;
+}
+
+/* 폰 기종 별 위치 조정 */
+
+@media (max-width: 361px) {
+    .chatbox-area-abs{
+        font-size: 14px !important;
+    }
+  }
+@media (max-width: 400px) and (min-width:362px) {
+    .chatbox-area-abs{
+        font-size: 16px !important;
+    }
+  }
+@media (max-width: 500px) and (min-width:401px) {
+.chatbox-area-abs{
+    font-size: 17px !important;
+}
 }
