@@ -8,7 +8,8 @@ export default function Mainpage() {
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
-  useEffect(()=>{
+    const today = new Date().toISOString().split('T')[0];
+    useEffect(()=>{
     const token = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     if (token) {
@@ -16,9 +17,27 @@ export default function Mainpage() {
     } else {
     console.error("Access token is not available");
     }
+
+    const savedDate = localStorage.getItem("missionDate");
+    if (savedDate !== today) {
+      localStorage.removeItem("finishedMissions");
+      localStorage.removeItem("missionDate");
+      localStorage.setItem("missionDate", today); // 새 날짜 저장
+    }
   },[])
 
-
+// 완료된 미션을 localStorage에서 불러옴
+useEffect(() => {
+  const savedMissions = localStorage.getItem('finishedMissions');
+  if (savedMissions) {
+    const parsedMissions = JSON.parse(savedMissions);
+    setMissions((prevMissions) =>
+      prevMissions.map((mission) =>
+        parsedMissions.find(m => m.id === mission.id) || mission
+      )
+    );
+  }
+}, []);
   
   useEffect(() => {
     if (accessToken) {
@@ -93,6 +112,16 @@ export default function Mainpage() {
 
         // Fetch today's quests with the current token
         fetchTodayQuests(accessToken);
+    }
+
+    const savedMissions = localStorage.getItem('finishedMissions');
+    if (savedMissions) {
+      const parsedMissions = JSON.parse(savedMissions);
+      setMissions((prevMissions) =>
+        prevMissions.map((mission) =>
+          parsedMissions.find(m => m.id === mission.id) || mission
+        )
+      );
     }
 }, [accessToken]);
 
@@ -175,9 +204,14 @@ export default function Mainpage() {
         console.log("Feedback submitted successfully", data);
 
          // Save status and count of finished missions in session
-         const finishedMissions = missions.filter(mission => mission.status === 'finished');
-         sessionStorage.setItem('finishedMissions', JSON.stringify(finishedMissions));
-         sessionStorage.setItem('finishedMissionCount', finishedMissions.length);
+         const finishedMissions = missions.map((mission) =>
+          mission.id === missionList.missionId ? { ...mission, status: "finished" } : mission
+        );
+
+        setMissions(finishedMissions);
+
+        // localStorage에 상태와 완료된 미션 저장
+        localStorage.setItem('finishedMissions', JSON.stringify(finishedMissions));
         // 성공 처리
       } else {
         const errorData = await response.json();
@@ -243,13 +277,17 @@ export default function Mainpage() {
           <span className="mission-tag1">#{mainContents.placeKeyword}</span>
           <span className="mission-tag2">#{mainContents.participationKeyword}</span> 할 수 있어요!
         </div>
-        <div className="mainpage-img">
-          <img
-            src="/images/main/main_icon.png"
-            className="img-width"
-            alt="Main icon"
-          />
-        </div>
+        
+
+        {mainContents && mainContents.burnoutId !== undefined && (
+            <div className="mainpage-img">
+            <img
+              src={`/images/main/type/${mainContents.burnoutId}/1.png`}
+              className="img-width"
+              alt="Main icon"
+            />
+          </div>
+          )}
         <div className="mainpage-mission-zone">
           {sortedMissions.map((mission) => (
             <MissionBox
