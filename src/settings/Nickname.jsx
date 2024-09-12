@@ -1,7 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./setting.css";
 import { Link } from "react-router-dom";
 export default function Nickname() {
+    // 토큰 받기
+  const [accessToken, setAccessToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
+    // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
+    useEffect(()=>{
+        const token = localStorage.getItem("accessToken");
+        const refreshToken = localStorage.getItem("refreshToken");
+        if (token) {
+        setAccessToken(token);
+        } else {
+        console.error("Access token is not available");
+        }
+    },[])
+
+
     const [nickname, setNickname] = useState("");
     const [isWarningVisible, setIsWarningVisible] = useState(false);
 
@@ -11,19 +26,30 @@ export default function Nickname() {
         setIsWarningVisible(value.length > 5);
         
     };
+
     const handleNicknameChange = (e)=>{
+        fetchNickname(accessToken);
+    }
+    const fetchNickname = (token) =>{
         fetch(`/api/v1/members`, {
             method: 'PUT',
             credentials: 'include',
             headers: {
-              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+              'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
             body : JSON.stringify({
                 "nickname" :nickname
             })
           })
-          .then(response => response.json())
+          .then(response => {
+            if (response.status === 401) {
+              console.log('다시 발급');
+                refreshAccessToken();
+            } else {
+                return response.json();
+            }
+        })
           .then(data => {
             console.log(data)
           })
@@ -31,6 +57,31 @@ export default function Nickname() {
             console.error('Error fetching data:', error);
           });
     }
+    const refreshAccessToken = () => {
+        const refreshToken = localStorage.getItem('refreshToken');
+        fetch('/api/v1/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization':`Bearer ${accessToken}`,
+                'RefreshToken' :`Bearer ${refreshToken}`
+              },
+           
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('응답?',data);
+            if (data.accessToken) {
+                // Store new access token and retry fetching today's quests
+                localStorage.setItem('accessToken', data.accessToken);
+                setAccessToken(data.accessToken);
+                fetchNickname(data.accessToken);  // Retry with new token
+            } else {
+                console.error('Failed to refresh access token');
+            }
+        })
+        .catch(error => console.error('Error refreshing access token:', error));
+    };
     const isButtonDisabled = nickname.length > 5;
    
     return (

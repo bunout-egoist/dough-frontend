@@ -229,9 +229,7 @@ body, html {
   font-family: 'Pretendard-400';
 }
 
-.today {
-  border-radius: 0px !important;
-}
+
 
 .selected {
   background-color: lightblue;

@@ -21,12 +21,22 @@ export default class DetailPage extends React.Component {
             baseDate: new Date(year, month, dayOfMonth),
             baseWeekday: weekdayKorIndex,
             data: [], // fetch로 가져올 데이터를 저장할 배열
-            selectedData: null // 현재 선택된 날짜의 데이터를 저장
+            selectedData: null, // 현재 선택된 날짜의 데이터를 저장
+            accessToken: null // 토큰을 저장할 상태 추가
         };
     }
 
     componentDidMount() {
-        this.fetchWeeklyData(); // 첫 렌더링 시 fetch 호출
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            this.setState({ accessToken: token }, () => {
+                console.log('토큰 잘 받음');
+                this.fetchWeeklyData();
+              });
+        } else {
+          console.error("Access token is not available");
+        }
+        
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -59,20 +69,27 @@ export default class DetailPage extends React.Component {
     };
 
     fetchWeeklyData() {
+        const {accessToken} =this.state;
         const formattedDate = this.getFormattedDate(this.state.baseDate);
 
         fetch(`/api/v1/dashboard/weekly/${formattedDate}`, {
           method: 'GET',
           credentials: 'include',
           headers: {
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+            'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
           },
         })
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 401) {
+              console.log('다시 발급2');
+                this.refreshAccessToken();
+            } else {
+                return response.json();
+            }
+        })
         .then(data => {
-            // 데이터 배열을 state에 저장
-            console.log(data);
+            // 수행 퀘스트 데이터 배열을 state에 저장
             this.setState({ data }, () => {
                 this.updateSelectedData(); // 데이터가 업데이트된 후 현재 선택된 날짜의 데이터를 갱신
             });
@@ -81,12 +98,52 @@ export default class DetailPage extends React.Component {
             console.error('Error fetching data:', error);
         });
     }
-
-    updateSelectedData() {
+    refreshAccessToken () {
+        const {accessToken} =this.state;
+        const refreshToken = localStorage.getItem('refreshToken');
+        fetch('/api/v1/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization':`Bearer ${accessToken}`,
+                'RefreshToken' :`Bearer ${refreshToken}`
+              },
+          
+        })
+        .then(response => {
+            if (response.status === 401) {
+              console.log('다시 발급2');
+                this.refreshAccessToken();
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => {
+            console.log('응답?',data);
+            if (data.accessToken) {
+                // Store new access token and retry fetching today's quests
+                localStorage.setItem('accessToken', data.accessToken);
+                this.setState({ accessToken: data.accessToken });
+                this.fetchWeeklyData(data.accessToken);  // Retry with new token
+            } else {
+                console.error('Failed to refresh access token');
+            }
+        })
+        .catch(error => console.error('Error refreshing access token:', error));
+      };
+    
+      updateSelectedData() {
         const formattedDate = this.getFormattedDate(this.state.baseDate);
-        const selectedData = this.state.data.find(item => item.completedDate === formattedDate);
-        this.setState({ selectedData });
+        
+        // data가 undefined가 아니고, 배열인지 확인
+        if (Array.isArray(this.state.data)) {
+            const selectedData = this.state.data.find(item => item.completedDate === formattedDate);
+            this.setState({ selectedData });
+        } else {
+            console.error("수행한 퀘스트 정보 없음");
+        }
     }
+    
 
     render() {
         const { baseDate, selectedData, data } = this.state;
@@ -102,9 +159,9 @@ export default class DetailPage extends React.Component {
                             const formattedDate = this.getFormattedDate(offsetDate); // 'YYYY-MM-DD' 형식
                             const isToday = i === 3; // today 클래스 부여 조건
     
-                            // data에서 현재 날짜와 일치하는 객체를 찾음
-                            const matchingData = data.find(item => item.completedDate === formattedDate);
-                            const dailyCount = matchingData ? matchingData.dailyCount : null;
+                           // data가 유효한지 확인 후 find 호출
+                        const matchingData = Array.isArray(data) ? data.find(item => item.completedDate === formattedDate) : null;
+                        const dailyCount = matchingData ? matchingData.dailyCount : null;
     
                             return (
                                 <div

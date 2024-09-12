@@ -3,39 +3,85 @@ import styles from "./setting.css";
 import { Link } from "react-router-dom";
 
 export default function Setting() {
+     // 토큰 받기
+  const [accessToken, setAccessToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
+    // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
+    useEffect(()=>{
+        const token = localStorage.getItem("accessToken");
+        const refreshToken = localStorage.getItem("refreshToken");
+        if (token) {
+        setAccessToken(token);
+        } else {
+        console.error("Access token is not available");
+        }
+    },[])
+
 
     useEffect(()=>{
-        fetch(`/api/v1/notifications`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
-              'Content-Type': 'application/json',
-            },
-            
-          })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            setCheckAlarm(data);
+       if(accessToken) {
+         const fetchSetting = (token) =>{
+            fetch(`/api/v1/notifications`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+                },
+                
+              })
+              .then(response => response.json())
+              .then(data => {
+                console.log('1');
+                setCheckAlarm(data);
+    
+                 // 데이터 기반 체크박스 상태 업데이트
+                const isChecked1 = data.every(item => item.isChecked);
+                setIsChecked1(isChecked1);
+    
+                const alarmMap = data.reduce((acc, item) => {
+                acc[item.id] = item.isChecked;
+                return acc;
+                }, {});
+    
+                setIsChecked2(alarmMap[1] || false);
+                setIsChecked3(alarmMap[2] || false);
+                setIsChecked4(alarmMap[3] || false);
+              })
+              .catch(error => {
+                console.error('Error fetching data:', error);
+              });
+         };
 
-             // 데이터 기반 체크박스 상태 업데이트
-            const isChecked1 = data.every(item => item.isChecked);
-            setIsChecked1(isChecked1);
+         const refreshAccessToken = () => {
+            const refreshToken = localStorage.getItem('refreshToken');
+            fetch('/api/v1/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization':`Bearer ${accessToken}`,
+                    'RefreshToken' :`Bearer ${refreshToken}`
+                  },
+               
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('응답?',data);
+                if (data.accessToken) {
+                    // Store new access token and retry fetching today's quests
+                    localStorage.setItem('accessToken', data.accessToken);
+                    setAccessToken(data.accessToken);
+                    fetchSetting(data.accessToken);  // Retry with new token
+                } else {
+                    console.error('Failed to refresh access token');
+                }
+            })
+            .catch(error => console.error('Error refreshing access token:', error));
+        };
 
-            const alarmMap = data.reduce((acc, item) => {
-            acc[item.id] = item.isChecked;
-            return acc;
-            }, {});
-
-            setIsChecked2(alarmMap[1] || false);
-            setIsChecked3(alarmMap[2] || false);
-            setIsChecked4(alarmMap[3] || false);
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-    },[])
+        fetchSetting(accessToken);
+       }
+    },[accessToken])
     const [checkAlarm, setCheckAlarm] = useState([]);
     const [isChecked1, setIsChecked1] = useState(false);
     const [isChecked2, setIsChecked2] = useState(false);
@@ -95,8 +141,8 @@ export default function Setting() {
               })
               .then(response => response.json())
               .then(data => {
+                console.log('2');
                 console.log('보낸거',alarmData);
-                console.log('받은거',data);
               })
               .catch(error => {
                 console.error('Error fetching data:', error);

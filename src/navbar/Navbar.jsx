@@ -9,7 +9,7 @@ export default function Navbar() {
                     <img src="/images/navbarImage/chart.png" alt="이미지" className="img-width"/>
                 </div>
             </Link>
-            <Link to="/">
+            <Link to="/main">
                 <div className="navbar-icon">
                     <img src="/images/navbarImage/home.png" alt="이미지" className="img-width"/>
                 </div>

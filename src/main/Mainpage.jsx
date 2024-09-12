@@ -4,6 +4,99 @@ import { Link } from "react-router-dom";
 import MissionBox from './components/Missionbox';
 
 export default function Mainpage() {
+  // 토큰 받기
+  const [accessToken, setAccessToken] = useState(null);
+  const [refreshToken, setRefreshToken] = useState(null);
+    // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
+  useEffect(()=>{
+    const token = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (token) {
+    setAccessToken(token);
+    } else {
+    console.error("Access token is not available");
+    }
+  },[])
+
+
+  
+  useEffect(() => {
+    if (accessToken) {
+        // Function to fetch today's quests
+        const fetchTodayQuests = (token) => {
+            fetch('/api/v1/quests/today', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (response.status === 401) {
+                  console.log('다시 발급');
+                    refreshAccessToken();
+                } else {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                if (data) {
+                    setMainContents(data);
+                    console.log(data);
+
+                    const colors = ["#FF7A2F", "#8FBCFF", "#FFC13A"];
+                    const updatedMissions = data.todayQuests.map((quest, index) => ({
+                        id: quest.selectedQuestId, 
+                        backgroundColor: colors[index % colors.length],
+                        isChecked: false,
+                        missionText: quest.activity,
+                        missionSubText: quest.description,
+                        status: "",
+                        placeKeyword: quest.placeKeyword || "장소 없음",
+                        participationKeyword: quest.participationKeyword || "참여 없음",
+                        special: quest.questType,
+                    }));
+
+                    setMissions(updatedMissions);
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        };
+
+        // access token 재발급
+        const refreshAccessToken = () => {
+            const refreshToken = localStorage.getItem('refreshToken');
+            fetch('/api/v1/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization':`Bearer ${accessToken}`,
+                    'RefreshToken' :`Bearer ${refreshToken}`
+                  },
+               
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('응답?',data);
+                if (data.accessToken) {
+                    // Store new access token and retry fetching today's quests
+                    localStorage.setItem('accessToken', data.accessToken);
+                    setAccessToken(data.accessToken);
+                    fetchTodayQuests(data.accessToken);  // Retry with new token
+                } else {
+                    console.error('Failed to refresh access token');
+                }
+            })
+            .catch(error => console.error('Error refreshing access token:', error));
+        };
+
+        // Fetch today's quests with the current token
+        fetchTodayQuests(accessToken);
+    }
+}, [accessToken]);
+
+
   const [mainContents, setMainContents] = useState({});
   const [missions, setMissions] = useState([]);
   const [activeMissionId, setActiveMissionId] = useState(null);
@@ -22,38 +115,6 @@ export default function Mainpage() {
     }
   }, []);
   
-  useEffect(() => {
-    // Fetching missions data
-    fetch('/api/v1/quests/today', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => response.json())
-    .then(data => {
-      setMainContents(data);
-      console.log(data);
-      const colors = ["#FF7A2F", "#8FBCFF", "#FFC13A"];
-      const updatedMissions = data.todayQuests.map((quest, index) => ({
-        id: quest.selectedQuestId, 
-        backgroundColor: colors[index % colors.length], // 색상 순환 할당
-        isChecked: false, // 기본적으로 체크되지 않음
-        missionText: quest.activity, // activity를 missionText로 사용
-        missionSubText :quest.description,
-        status: "", // 기본 상태는 빈 문자열로 설정
-        placeKeyword: quest.placeKeyword || "장소 없음", // placeKeyword가 없을 경우 기본값 설정
-        participationKeyword: quest.participationKeyword || "참여 없음", // participationKeyword가 없을 경우 기본값 설정
-        special:quest.questType
-      }));
-
-
-      setMissions(updatedMissions);
-    })
-    .catch(error => console.error('Error fetching data:', error));
-  }, []);
   useEffect(() => {
     if (isRoundSlideVisible) {
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
@@ -104,7 +165,7 @@ export default function Mainpage() {
       const response = await fetch("/api/v1/feedbacks", {
         method: "POST",
         headers: {
-          "Authorization": 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ'
+          "Authorization": `Bearer ${accessToken}`
         },
         body: formData,
       });

@@ -27,7 +27,7 @@ export default function Quest() {
     const infoData = location.state?.infoData;
     // Parse query parameters
     const searchParams = new URLSearchParams(location.search);
-    const initialSelectedType = parseInt(searchParams.get("select"), 10); // Get the 'select' query parameter and parse it as an integer
+    const initialSelectedType = parseInt(searchParams.get("select"), 10); 
     const [selectedMission, setSelectedMission] =useState(null);
     
     useEffect(() => {
@@ -58,7 +58,7 @@ export default function Quest() {
             method: 'PUT',
             credentials: 'include',
             headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+                'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify(updatedFinalInfoData)
@@ -76,7 +76,7 @@ export default function Quest() {
         })
         .then(data => {
           console.log(data);
-          navigate('/')
+          navigate('/main')
         })
         .catch(error => {
             console.error('통신 오류:', error);
@@ -86,10 +86,9 @@ export default function Quest() {
         if (initialSelectedType === 0) {
             navigate('/setting'); // Navigate to /setting if initialSelectedType is 0
         } else if (selectedType >= 1) {
-            navigate('/'); // Navigate to home if selectedType is 1 or greater
+            navigate('/main'); // Navigate to home if selectedType is 1 or greater
         }
     };
-
     useEffect(() => {
         if (initialSelectedType === 0) {
             const randomType = Math.floor(Math.random() * 4) + 1;
@@ -99,17 +98,17 @@ export default function Quest() {
         }
 
         // Fetch data only once when component mounts
-        fetch(`/api/v1/quests/fixed`, {
+        fetch(`/api/v1/quests/fixed/${initialSelectedType}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
-                'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+                'Authorization':`Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
         })
         .then(response => response.json())
         .then(data => {
-           
+           console.log(data)
             setSelectedType(data.burnoutName);
             setSelectedMission(data.fixedQuests);
         })

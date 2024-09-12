@@ -6,31 +6,91 @@ import Navbar from "../navbar/Navbar";
 
 
 export default function DashPage() {
+    // 토큰 받기
+    const [accessToken, setAccessToken] = useState(null);
+    // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
+  useEffect(()=>{
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+    setAccessToken(token);
+    } else {
+    console.error("Access token is not available");
+    }
+  },[])
+
+  
+
   const [highest, setHighest] = useState(0);
   const [average, setAverage] = useState(0);
   const [dailyTotal, setDailyTotal] = useState(0);
   const [specialTotal, setSpecialTotal] = useState(0);
 
  useEffect(()=>{
-  fetch(`/api/v1/dashboard/total`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
-      'Content-Type': 'application/json',
-    },
-  })
-  .then(response => response.json())
-  .then(data => {
-    setDailyTotal(data.dailyTotal);
-    setSpecialTotal(data.specialTotal);
-    setHighest(data.highestAverageCompletionDay);
-    setAverage(data.averageCompletion);
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
- },[])
+ if (accessToken){
+    const fetchDashpage =(token)=>{
+      fetch(`/api/v1/dashboard/total`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Authorization':`Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        if (response.status === 401) {
+          console.log('다시 발급');
+            refreshAccessToken();
+        } else {
+            return response.json();
+        }
+    })
+      .then(data => {
+        setDailyTotal(data.dailyTotal);
+        setSpecialTotal(data.specialTotal);
+        setHighest(data.highestAverageCompletionDay);
+        setAverage(data.averageCompletion);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    }
+
+    const refreshAccessToken = () => {
+      const refreshToken = localStorage.getItem('refreshToken');
+        fetch('/api/v1/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization':`Bearer ${accessToken}`,
+                'RefreshToken' :`Bearer ${refreshToken}`
+              },
+          
+        })
+        .then(response => {
+            if (response.status === 401) {
+              console.log('다시 발급2');
+                refreshAccessToken();
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => {
+            console.log('응답?',data);
+            if (data.accessToken) {
+                // Store new access token and retry fetching today's quests
+                localStorage.setItem('accessToken', data.accessToken);
+                setAccessToken(data.accessToken);
+                fetchDashpage(data.accessToken);  // Retry with new token
+            } else {
+                console.error('Failed to refresh access token');
+            }
+        })
+        .catch(error => console.error('Error refreshing access token:', error));
+      };
+      fetchDashpage(accessToken);
+ }
+
+ },[accessToken])
 
   return(
     <div className="dash-page page-area">

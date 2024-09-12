@@ -4,6 +4,8 @@ import styles from './dash.css';
 import { useNavigate } from 'react-router-dom';
 
 class Calendar extends Component {
+
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +14,8 @@ class Calendar extends Component {
       contents: null, // 초기 상태 설정
       averageCompletion :0,
       completedAllQuestsDateCount : 0,
-      countDetails : []
+      countDetails : [],
+      accessToken: null // 토큰을 저장할 상태 추가
     };
     this.previous = this.previous.bind(this);
     this.next = this.next.bind(this);
@@ -20,17 +23,24 @@ class Calendar extends Component {
   }
 
   componentDidMount() {
-    this.fetchMonthlyData();
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      this.setState({ accessToken: token }, this.fetchMonthlyData); // 토큰을 상태에 저장하고 fetch 호출
+      console.log('받음2', token);
+    } else {
+      console.error("Access token is not available");
+    }
   }
 
   fetchMonthlyData() {
+    const {accessToken} =this.state;
     const yearMonth = this.state.month.format('YYYY-MM');
     fetch(`/api/v1/dashboard/monthly/${yearMonth}`, {
       method: 'GET',
       // mode: 'no-cors',
       credentials: 'include',
       headers: {
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+        'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
     })
