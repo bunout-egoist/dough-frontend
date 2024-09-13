@@ -89,6 +89,7 @@ export default class DetailPage extends React.Component {
             }
         })
         .then(data => {
+            console.log(data);
             // 수행 퀘스트 데이터 배열을 state에 저장
             this.setState({ data }, () => {
                 this.updateSelectedData(); // 데이터가 업데이트된 후 현재 선택된 날짜의 데이터를 갱신
