@@ -63,11 +63,36 @@ useEffect(() => {
                 if (data) {
                     setMainContents(data);
                     console.log(data);
-
-                    const colors = ["#FF7A2F", "#8FBCFF", "#FFC13A"];
-                    const updatedMissions = data.todayQuests.map((quest, index) => ({
+                    const fixedColor = ["#5D9AFD","#41B3A2","#FFBE16","#FF7F42"];
+                    const colorSet = [
+                      ['#FDBD5D', '#8FBCFF'],
+                      ['#FF8C64', '#2AC9A3'],
+                      ['#FEE36E', '#2A8EFD'],
+                      ['#52ADD4', '#FF878D'],
+                      ['#6DCED4', '#FF9960']
+                    ];
+                    
+                    const colors = colorSet[Math.floor(Math.random() * colorSet.length)];
+                    
+                    let colorIndex = 0; // colors 배열에서 사용할 색상 인덱스
+                    
+                    const updatedMissions = data.todayQuests.map((quest) => {
+                      let backgroundColor = '';
+                      // 스페셜 퀘스트는 linear써야해서 그냥 따로 css 적용을 missionBox안에서!
+                      // questType이 '유형퀘스트'인 경우 colors 배열에서 순차적으로 색상을 지정
+                      if (quest.questType === '유형퀘스트') {
+                        backgroundColor = colors[colorIndex % colors.length];
+                        colorIndex++; 
+                      } else if (quest.questType === '고정퀘스트'){
+                        backgroundColor = fixedColor[data.burnoutId-1]; // 기본 배경색 (원하는 색상으로 변경 가능)
+                      } else {
+                        // 혹시 다른경우에,(에러) 우선 그냥 고정퀘스트 색에 
+                        backgroundColor = fixedColor[data.burnoutId-1]; // 기본 배경색 (원하는 색상으로 변경 가능)
+                      }
+                    
+                      return {
                         id: quest.selectedQuestId, 
-                        backgroundColor: colors[index % colors.length],
+                        backgroundColor, // 결정된 배경색 적용
                         isChecked: false,
                         missionText: quest.activity,
                         missionSubText: quest.description,
@@ -75,8 +100,9 @@ useEffect(() => {
                         placeKeyword: quest.placeKeyword || "장소 없음",
                         participationKeyword: quest.participationKeyword || "참여 없음",
                         special: quest.questType,
-                    }));
-
+                      };
+                    });
+                    
                     setMissions(updatedMissions);
                 }
             })
