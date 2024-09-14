@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import styles from "./setting.css";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 export default function Setting() {
      // 토큰 받기
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
+  const [logoutState, setLogoutState] = useState(false);
+  const navigate = useNavigate();
     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
     useEffect(()=>{
         const token = localStorage.getItem("accessToken");
-        const refreshToken = localStorage.getItem("refreshToken");
         if (token) {
         setAccessToken(token);
         } else {
@@ -30,7 +31,14 @@ export default function Setting() {
                 },
                 
               })
-              .then(response => response.json())
+              .then(response => {
+                if (response.status === 401) {
+                  console.log('다시 발급');
+                    refreshAccessToken();
+                } else {
+                    return response.json();
+                }
+            })
               .then(data => {
                 console.log('1');
                 setCheckAlarm(data);
@@ -64,7 +72,14 @@ export default function Setting() {
                   },
                
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 401) {
+                  console.log('다시 발급');
+                    refreshAccessToken();
+                } else {
+                    return response.json();
+                }
+            })
             .then(data => {
                 console.log('응답?',data);
                 if (data.accessToken) {
@@ -101,20 +116,24 @@ export default function Setting() {
             setIsChecked3(false);
             setIsChecked4(false);
         }
+        handleAlarmData();
     };
 
     const handleToggle2 = () => {
         console.log('2',!isChecked2);
         setIsChecked2(!isChecked2);
+        handleAlarmData();
     }
     const handleToggle3 = () => {
         console.log('3',!isChecked3);
         setIsChecked3(!isChecked3);
+        handleAlarmData();
     }        
         
     const handleToggle4 = () => {
         console.log('4',!isChecked4);
         setIsChecked4(!isChecked4);
+        handleAlarmData();
     }
     const alarmData = JSON.stringify({
         "notifications" : [ {
@@ -128,26 +147,49 @@ export default function Setting() {
           "isChecked" : isChecked4
         } ]
       });
-    useEffect(()=>{
+   
+    const handleAlarmData=()=>{
+        fetch(`/api/v1/notifications`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            },
+            body : alarmData
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log('2');
+            console.log('보낸거',alarmData);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+    }
 
-            fetch(`/api/v1/notifications`, {
-                method: 'PUT',
-                credentials: 'include',
-                headers: {
-                  'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
-                  'Content-Type': 'application/json',
-                },
-                body : alarmData
-              })
-              .then(response => response.json())
-              .then(data => {
-                console.log('2');
-                console.log('보낸거',alarmData);
-              })
-              .catch(error => {
-                console.error('Error fetching data:', error);
-              });
-    },[alarmData])
+    const handleLogout=()=>{
+        fetch(`/api/v1/logout`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            }
+          })
+          .then(data => {
+            setLogoutState(true);
+            console.log(data);
+            navigate('/');
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+
+          
+    }
+        
+
     useEffect(() => {
         const notifySystem = async () => {
             const messages = [];
@@ -290,11 +332,9 @@ export default function Setting() {
                         </Link>
                     </div>
                 </div>
-               <Link to="/intro">
-                    <div className="logout-btn">
-                        로그아웃
-                    </div>
-               </Link>
+                <div className="logout-btn" onClick={handleLogout}>
+                    로그아웃
+                </div>
                 <div className="exit">탈퇴하기</div>
             </div>
         </div>
