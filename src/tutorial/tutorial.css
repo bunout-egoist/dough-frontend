@@ -67,7 +67,7 @@
 .tutorial-img-10{
     padding: 0 !important;
     width: 25% !important;
-    bottom: 1%;
+    bottom: -1%;
 }
 .tutorial-img-11{
     top: 38%;
@@ -183,7 +183,7 @@
 .chat-2 .pointer{
     transform: rotate(45deg) skew(15deg, 15deg);
     border-radius: 8px;
-    margin-top: -9.5em;
+    margin-top: -8em;
 }
 .chatbox-area .chat-3{
     top: 70%;
@@ -247,6 +247,7 @@
     top: 15%;
 }
 .chat-10 .pointer{
+    display: none;
     transform: rotate(45deg) skew(15deg, 15deg);
     border-radius: 8px;
     margin-top: -2.5em;
@@ -326,9 +327,43 @@
     .chatbox-area-abs{
         font-size: 16px !important;
     }
+    .tutorial-img-11{
+        top: 48% !important;
+    }
   }
 @media (max-width: 500px) and (min-width:401px) {
 .chatbox-area-abs{
     font-size: 17px !important;
 }
+
+}
+@media  (max-height:670px)  {
+    .tutorial-img-11{
+        top: 45% !important;
+    }
+}
+@media  (min-height:820px) and (max-height : 874px)  {
+    .chatbox-area .chat-10{
+        top: 12% !important;
+    }
+    .tutorial-img-11{
+        top: 35% !important;
+    }
+}
+@media  (min-height:875px)  {
+    .chatbox-area .chat-10{
+        top: 11% !important;
+    }
+    .tutorial-img-11{
+        top: 32% !important;
+    }
+}
+
+@media  (min-width:360px) and (max-width:400px)  {
+    .chatbox-area .chat-10{
+        top: 11% !important;
+    }
+    .tutorial-img-11{
+        top: 38% !important;
+    }
 }

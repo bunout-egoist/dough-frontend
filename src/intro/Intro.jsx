@@ -3,7 +3,7 @@ import styles from "./intro.css";
 import { isPlatform } from '@ionic/react';  // Import Capacitor's isPlatform utility
 import { Device } from '@capacitor/device'; // Import Capacitor Device API
 import AppleLogin from 'react-apple-login';
-
+import { Link } from "react-router-dom";
 export default function Intro() {
     const [isIos, setIsIos] = useState(false); // State to determine if the device is iOS
 
@@ -85,12 +85,10 @@ export default function Intro() {
         }
     }, []);
 
-
+    const [gifSrc, setGifSrc] = useState('/images/intro/onboard.gif');
     return (
         <div className="intropage">
-            <div className="intropage-title">DOUGH</div>
-            <div>블라블라</div>
-            <div className="profile-img"><img src="/images/type/type1_icon.png" className="img-width"/></div>
+            <div className="profile-img"> <img src={`${gifSrc}?${new Date().getTime()}`} alt="gif" className="img-width"/></div>
             <div className="into-bottom">
                 <div className="intro-bottom-abs">
                     {/* Conditionally render Kakao and Apple buttons based on the platform */}
@@ -113,7 +111,9 @@ export default function Intro() {
 
                       </span> 
                     )}
+                    <Link to="/tutorial">
                     <div>서비스 둘러보기</div>
+                    </Link>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ import styles from "../tutorial.css";
 export default function Finish() {
     const navigate = useNavigate();
     const clickSign=() =>{
-        navigate('/sign');
+        navigate('/');
     }
     return (
         <div className="finish-area">
@@ -22,13 +22,13 @@ export default function Finish() {
                     튜토리얼을 완수했어요
                     <br/><br/>
                     켜켜이 모인 퀘스트들은<br/>
-                    ###님이 힘이 될 거예요.<br/>
+                    번아웃을 극복하는 힘이 될 거예요.<br/>
                     <br/>
                     나만의 번아웃 유형선택을 하고<br/>
                     맞춤 퀘스트를 받아보아요.<br/>
                 </div>
             </div>
-            <div className="finish-btn"><button onClick={clickSign}>회원가입하고 유형 선택하기</button></div>
+            <div className="finish-btn"><button onClick={clickSign}>회원가입 하러가기</button></div>
         </div>
         </div>
     );
