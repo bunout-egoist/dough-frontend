@@ -60,7 +60,7 @@ export default function MissionBox({
       </div>
 
       {/* Conditionally render checkbox or image based on isChecked */}
-      {isChecked ? (
+      {isChecked || isFinished ? (
         <div className="mission-img-box" onClick={handleOpenGallery}>
           <img className="img-width" src={imageSrc} alt="Mission completed" />
         </div>

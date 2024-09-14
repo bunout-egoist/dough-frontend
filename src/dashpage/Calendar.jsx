@@ -227,7 +227,12 @@ class Day extends Component {
 
     // 만약 해당 날짜에 맞는 dailyCount가 존재하면 active 클래스와 dailyCount 추가
     if (matchingDetail) {
-      className += ` active${matchingDetail.dailyCount}`;
+      console.log(matchingDetail.dailyCount);
+      let dailyCnt =matchingDetail.dailyCount;
+      if (dailyCnt >=3){
+        dailyCnt=3;
+      }
+      className += ` active${dailyCnt}`;
     }
 
     return (

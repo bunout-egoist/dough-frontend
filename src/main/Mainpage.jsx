@@ -80,23 +80,25 @@ useEffect(() => {
                       let backgroundColor = '';
                       // 스페셜 퀘스트는 linear써야해서 그냥 따로 css 적용을 missionBox안에서!
                       // questType이 '유형퀘스트'인 경우 colors 배열에서 순차적으로 색상을 지정
-                      if (quest.questType === '유형퀘스트') {
+                      if (quest.questType === '유형별퀘스트') {
                         backgroundColor = colors[colorIndex % colors.length];
                         colorIndex++; 
+                        console.log(colorIndex);
                       } else if (quest.questType === '고정퀘스트'){
                         backgroundColor = fixedColor[data.burnoutId-1]; // 기본 배경색 (원하는 색상으로 변경 가능)
                       } else {
                         // 혹시 다른경우에,(에러) 우선 그냥 고정퀘스트 색에 
                         backgroundColor = fixedColor[data.burnoutId-1]; // 기본 배경색 (원하는 색상으로 변경 가능)
                       }
-                    
+                      const missionStatus = quest.questStatus === "COMPLETED" ? 'finished' : '';
+
                       return {
                         id: quest.selectedQuestId, 
                         backgroundColor, // 결정된 배경색 적용
                         isChecked: false,
                         missionText: quest.activity,
                         missionSubText: quest.description,
-                        status: "",
+                        status: missionStatus,
                         placeKeyword: quest.placeKeyword || "장소 없음",
                         participationKeyword: quest.participationKeyword || "참여 없음",
                         special: quest.questType,
@@ -257,13 +259,18 @@ useEffect(() => {
     );
     setActiveMissionId(null);
   };
-  
   const sortedMissions = [...missions].sort((a, b) => {
     if (a.status === "now-clicked" && b.status !== "now-clicked") {
       return -1;
     }
     if (a.status !== "now-clicked" && b.status === "now-clicked") {
       return 1;
+    }
+    if (a.status === "finished" && b.status !== "finished") {
+      return 1;
+    }
+    if (a.status !== "finished" && b.status === "finished") {
+      return -1;
     }
     return 0;
   });
