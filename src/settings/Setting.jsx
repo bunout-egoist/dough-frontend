@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import styles from "./setting.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Signout from "./page/Signout";
 export default function Setting() {
      // 토큰 받기
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
   const [logoutState, setLogoutState] = useState(false);
+  const [signOutState, setSignOutState] = useState(false);
   const navigate = useNavigate();
     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
     useEffect(()=>{
@@ -179,9 +181,34 @@ export default function Setting() {
           })
           .then(data => {
             setLogoutState(true);
-            console.log(data);
             navigate('/');
           })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+
+          
+    }
+    const showSignout= () =>{
+        setSignOutState(true);
+    }
+    const exitSignout=() =>{
+        setSignOutState(false)
+    }
+    const handleSignout=()=>{
+        fetch(`/api/v1/signout`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI2MTAyMjk4LCJleHAiOjE3Mjg2OTQyOTgsInN1YiI6IjMifQ.r0bRb2sUbzlueerlXQteJsIkaGKKOIwbI3adUXE5Yvw',
+              'Content-Type': 'application/json',
+            }
+          })
+          .then(response => {
+            if (response.status == 204){
+                navigate('/');
+            }
+        })
           .catch(error => {
             console.error('Error fetching data:', error);
           });
@@ -202,140 +229,152 @@ export default function Setting() {
     }, [isChecked2, isChecked3, isChecked4]);
 
     return (
-        <div className="setting-page page-area">
-            <div className="setting-title">설정</div>
-            <div className="setting-area">
-                <div className="setting-service">
-                    <div className="setting-subtitle">서비스 설정</div>
-                    <div className="setting-service-list">
-                        <Link to="/nickname">
+        <div>
+            <div className={`signout-page ${signOutState ? '' : 'signout-none'}`} >
+                <div className="signout-pos">
+                    <div className="signout-box">
+                        <div><img src="/images/setting/signout.png" className="img-width"/></div>
+                        <div className="signout-btn" onClick={handleSignout}>탈퇴하기</div>
+                        <div className="signout-exit" onClick={exitSignout}>취소</div>
+                    </div>
+                </div>
+            </div>
+            <div className={`setting-page page-area ${signOutState ? 'signout-fixed' : ''}`}>
+            
+                <div className="setting-title">설정</div>
+                <div className="setting-area">
+                    <div className="setting-service">
+                        <div className="setting-subtitle">서비스 설정</div>
+                        <div className="setting-service-list">
+                            <Link to="/nickname">
                             <div className="setting-service-li landing-nickname">
                                 <div>닉네임 수정</div>
                                 <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
                             </div>
-                        </Link>
-                        <Link to="/setting/edit-type">
-                            <div className="setting-service-li">
-                                <div>사용자 유형 재설정</div>
-                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                            </div>
-                        </Link>
-                        <Link to='/typepage/quest?select=1'>
-                            <div className="setting-service-li">
-                                <div>고정퀘스트 재설정</div>
-                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                            </div>
-                        </Link>
-                      
-                    </div>
-                </div>
-                <div className="setting-alarm">
-                    <div className="setting-subtitle">알림 설정</div>
-                    <div>
-                        <div className="setting-alarm-box-1 flex-row">
-                            <div>알림 허용</div>
-                            <div className="switch">
-                                <input
-                                    type="checkbox"
-                                    id="chk1"
-                                    checked={isChecked1}
-                                    onChange={handleToggle1}
-                                />
-                                <label className="slider round" htmlFor="chk1"></label>
-                            </div>
-                        </div>
-                        <div className="setting-alarm-box-2">
-                           <div className="setting-alarm-li">
-                                <div className="flex-col">
-                                    <div className="setting-alarm-li-title">데일리 퀘스트 알림</div>
-                                    <div className="setting-alarm-li-subtitle">오늘의 퀘스트가 도착했어요!</div>
+                            </Link>
+                            <Link to="/setting/edit-type">
+                                <div className="setting-service-li">
+                                    <div>사용자 유형 재설정</div>
+                                    <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
                                 </div>
-                                <div className="switch">
-                                    <input
-                                        type="checkbox"
-                                        id="chk2"
-                                        checked={isChecked2}
-                                        onChange={handleToggle2}
-                                    />
-                                    <label className="slider round" htmlFor="chk2"></label>
+                            </Link>
+                            <Link to='/typepage/quest?select=1'>
+                                <div className="setting-service-li">
+                                    <div>고정퀘스트 재설정</div>
+                                    <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
                                 </div>
-                           </div>
-                        </div>
-                        <div className="setting-alarm-box-2">
-                           <div className="setting-alarm-li">
-                                <div className="flex-col">
-                                    <div className="setting-alarm-li-title">남은 퀘스트 알림</div>
-                                    <div className="setting-alarm-li-subtitle">###님을 기다리고 있는 퀘스트가 있어요!</div>
-                                </div>
-                                <div className="switch">
-                                    <input
-                                        type="checkbox"
-                                        id="chk3"
-                                        checked={isChecked3}
-                                        onChange={handleToggle3}
-                                    />
-                                    <label className="slider round" htmlFor="chk3"></label>
-                                </div>
-                           </div>
-                        </div>
-                        <div className="setting-alarm-box-2">
-                           <div className="setting-alarm-li">
-                                <div className="flex-col">
-                                    <div className="setting-alarm-li-title">랜덤 퀘스트 알림</div>
-                                    <div className="setting-alarm-li-subtitle">오늘의 랜덤 퀘스트가 남아있어요!</div>
-                                </div>
-                                <div className="switch">
-                                    <input
-                                        type="checkbox"
-                                        id="chk4"
-                                        checked={isChecked4}
-                                        onChange={handleToggle4}
-                                    />
-                                    <label className="slider round" htmlFor="chk4"></label>
-                                </div>
-                           </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="setting-qa">
-                    <div className="setting-subtitle">문의</div>
-                    <div className="setting-service-list">
-                        <Link to="https://bunout.notion.site/FAQ-2e83748986af483cb60f5d42f8ffa8ff?pvs=4"  target="_blank">
-                            <div className="setting-service-li">
-                                <div>자주 묻는 질문들</div>
-                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                            </div>
-                        </Link>
+                            </Link>
                         
-                        <Link to="https://open.kakao.com/o/sptOsAMg"  target="_blank">
-                            <div className="setting-service-li">
-                                <div>의견 보내기</div>
-                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
-                            </div>
-                        </Link>
+                        </div>
                     </div>
-                </div>
-                <div className="setting-agency">
-                    <div className="setting-subtitle">약관 및 방침</div>
-                    <div className="setting-service-list">
-                        <Link to="https://bunout.notion.site/07affd8e5d464cd3ad5dd63e83bd9e38?pvs=4"  target="_blank">
-                            <div className="setting-service-li">
-                                <div>서비스 이용약관</div>
-                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                    <div className="setting-alarm">
+                        <div className="setting-subtitle">알림 설정</div>
+                        <div>
+                            <div className="setting-alarm-box-1 flex-row">
+                                <div>알림 허용</div>
+                                <div className="switch">
+                                    <input
+                                        type="checkbox"
+                                        id="chk1"
+                                        checked={isChecked1}
+                                        onChange={handleToggle1}
+                                    />
+                                    <label className="slider round" htmlFor="chk1"></label>
+                                </div>
                             </div>
-                        </Link>
-                        <Link to="https://bunout.notion.site/119f84e892f842f5b7b3ee86c97620ce?pvs=4"  target="_blank">
-                            <div className="setting-service-li">
-                                <div>개인정보 처리방침</div>
-                                <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                            <div className="setting-alarm-box-2">
+                            <div className="setting-alarm-li">
+                                    <div className="flex-col">
+                                        <div className="setting-alarm-li-title">데일리 퀘스트 알림</div>
+                                        <div className="setting-alarm-li-subtitle">오늘의 퀘스트가 도착했어요!</div>
+                                    </div>
+                                    <div className="switch">
+                                        <input
+                                            type="checkbox"
+                                            id="chk2"
+                                            checked={isChecked2}
+                                            onChange={handleToggle2}
+                                        />
+                                        <label className="slider round" htmlFor="chk2"></label>
+                                    </div>
                             </div>
-                        </Link>
+                            </div>
+                            <div className="setting-alarm-box-2">
+                            <div className="setting-alarm-li">
+                                    <div className="flex-col">
+                                        <div className="setting-alarm-li-title">남은 퀘스트 알림</div>
+                                        <div className="setting-alarm-li-subtitle">###님을 기다리고 있는 퀘스트가 있어요!</div>
+                                    </div>
+                                    <div className="switch">
+                                        <input
+                                            type="checkbox"
+                                            id="chk3"
+                                            checked={isChecked3}
+                                            onChange={handleToggle3}
+                                        />
+                                        <label className="slider round" htmlFor="chk3"></label>
+                                    </div>
+                            </div>
+                            </div>
+                            <div className="setting-alarm-box-2">
+                            <div className="setting-alarm-li">
+                                    <div className="flex-col">
+                                        <div className="setting-alarm-li-title">랜덤 퀘스트 알림</div>
+                                        <div className="setting-alarm-li-subtitle">오늘의 랜덤 퀘스트가 남아있어요!</div>
+                                    </div>
+                                    <div className="switch">
+                                        <input
+                                            type="checkbox"
+                                            id="chk4"
+                                            checked={isChecked4}
+                                            onChange={handleToggle4}
+                                        />
+                                        <label className="slider round" htmlFor="chk4"></label>
+                                    </div>
+                            </div>
+                            </div>
+                        </div>
                     </div>
+                    <div className="setting-qa">
+                        <div className="setting-subtitle">문의</div>
+                        <div className="setting-service-list">
+                            <Link to="https://bunout.notion.site/FAQ-2e83748986af483cb60f5d42f8ffa8ff?pvs=4"  target="_blank">
+                                <div className="setting-service-li">
+                                    <div>자주 묻는 질문들</div>
+                                    <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                                </div>
+                            </Link>
+                            
+                            <Link to="https://open.kakao.com/o/sptOsAMg"  target="_blank">
+                                <div className="setting-service-li">
+                                    <div>의견 보내기</div>
+                                    <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="setting-agency">
+                        <div className="setting-subtitle">약관 및 방침</div>
+                        <div className="setting-service-list">
+                            <Link to="https://bunout.notion.site/07affd8e5d464cd3ad5dd63e83bd9e38?pvs=4"  target="_blank">
+                                <div className="setting-service-li">
+                                    <div>서비스 이용약관</div>
+                                    <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                                </div>
+                            </Link>
+                            <Link to="https://bunout.notion.site/119f84e892f842f5b7b3ee86c97620ce?pvs=4"  target="_blank">
+                                <div className="setting-service-li">
+                                    <div>개인정보 처리방침</div>
+                                    <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="logout-btn" onClick={handleLogout}>
+                        로그아웃
+                    </div>
+                    <div className="exit" onClick={showSignout}>탈퇴하기</div>
                 </div>
-                <div className="logout-btn" onClick={handleLogout}>
-                    로그아웃
-                </div>
-                <div className="exit">탈퇴하기</div>
             </div>
         </div>
     );

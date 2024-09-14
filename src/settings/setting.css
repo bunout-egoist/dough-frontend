@@ -205,3 +205,51 @@
     color: red;
     margin-top: 10px;
 }
+
+/* 탈퇴 페이지 */
+.signout-page{
+  z-index: 99;
+  position: fixed;
+  width: 100%;
+  height: 100dvh;
+  touch-action: none;
+  background-color: #00000043;
+}
+.signout-pos{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 2.2rem;
+}
+.signout-box{
+  margin-top: 50%;
+  padding: 3rem 4.5rem;
+  background-color: white;
+  border-radius: 20px;
+}
+.signout-box .signout-btn{
+  margin-top: 3rem;
+  background-color: #EF4207;
+  color: white;
+  padding: 1.38rem 0;
+  text-align: center;
+  font-family: 'Pretendard-Bold';
+  font-size: 1.3rem;
+  border-radius: 10px;
+}
+.signout-box .signout-exit{
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+  color: #434343;
+  font-family: 'Pretendard-Regular';
+  font-size: 1.3rem;
+}
+
+.signout-none {
+  display: none !important;
+}
+.signout-fixed{
+  position: fixed;
+  width: 100%;
+}
