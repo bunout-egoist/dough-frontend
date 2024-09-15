@@ -183,11 +183,19 @@ useEffect(() => {
   }, [isRoundSlideVisible]);
 
   // Update image file when a new image is selected in MissionBox
-  const handleImageUpload = (file) => {
-    console.log("Uploaded image file: ", file); 
-    setSelectedFile(file);
+  const handleImageUpload = (missionId, file) => {
+    console.log("Mission ID:", missionId);
+    console.log("Received file:", file); // Check the file value
+    setMissions(prevMissions =>
+      prevMissions.map(mission =>
+        mission.id === missionId ? { ...mission, imageBlob: file } : mission
+      )
+    );
+    console.log('업뎃',missions,file);
   };
-
+  useEffect(() => {
+    console.log("Missions updated:", missions);
+  }, [missions]);
   const handleMissionCheck = (id) => {
     setActiveMissionId(id);
     setIsRoundSlideVisible(true);
@@ -215,8 +223,12 @@ useEffect(() => {
       difficulty: missionList.selectedName
     };
     formData.append("feedback", new Blob([JSON.stringify(feedbackData)],{type:'application/json'}),);
-    if (selectedFile) {
-      formData.append("file",selectedFile );
+    const mission = missions.find(m => m.id === missionList.missionId);
+    console.log(mission,'미션있는지');
+    console.log(mission.imageBlob,'이미지?')
+    if (mission && mission.imageBlob) {
+      console.log('이미지보내기 전',mission.imageBlob);
+      formData.append("file", mission.imageBlob);
     }
 
     try {
@@ -335,7 +347,7 @@ useEffect(() => {
               status={mission.status}
               special={mission.special}
               onCheck={() => handleMissionCheck(mission.id)}
-              onImageUpload={handleImageUpload} // Pass handler to MissionBox
+              onImageUpload={(id,file) => handleImageUpload(mission.id, file)} // Pass handler to MissionBox
               imageUrl={mission.imageUrl}
             />
           ))}

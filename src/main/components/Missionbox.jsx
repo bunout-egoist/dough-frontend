@@ -10,9 +10,8 @@ export default function MissionBox({
   tag1, tag2,
   status,special,
   onImageUpload,
-  imageUrl
+  imageUrl,id 
 }) {
-  console.log(imageUrl)
   const [imageSrc, setImageSrc] = useState("/images/main/photo.png");
   useEffect(() => {
     if (imageUrl) {
@@ -40,10 +39,14 @@ export default function MissionBox({
         quality: 90,
       });
 
-      setImageSrc(image.webPath); // Set the selected image as the src
+      setImageSrc(image.webPath);
       const response = await fetch(image.webPath);
       const blob = await response.blob(); // Convert the image URI to a blob
-      onImageUpload(blob); // Pass the blob to Mainpage
+
+      console.log("Image blob:", blob);
+      const file = new File([blob], "image.jpg", { type: blob.type });
+
+      onImageUpload(id,file); // Pass the blob to Mainpage
     } catch (err) {
       console.error("Error selecting image: ", err);
     }
@@ -97,5 +100,6 @@ MissionBox.propTypes = {
   onCheck: PropTypes.func.isRequired,
   missionText: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  onImageUpload: PropTypes.func.isRequired, // New prop type
+  onImageUpload: PropTypes.func.isRequired,
+  id: PropTypes.string 
 };
