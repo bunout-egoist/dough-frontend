@@ -162,8 +162,10 @@ export default class DetailPage extends React.Component {
     
                            // data가 유효한지 확인 후 find 호출
                         const matchingData = Array.isArray(data) ? data.find(item => item.completedDate === formattedDate) : null;
-                        const dailyCount = matchingData ? matchingData.dailyCount : null;
-    
+                        let dailyCount = matchingData ? matchingData.dailyCount : null;
+                        if (dailyCount >=3){
+                            dailyCount=3
+                        }
                             return (
                                 <div
                                     key={i}
