@@ -43,7 +43,7 @@ export default function Intro() {
             try {
                 const result = await SignInWithApple.authorize({
                   clientId: 'com.bunout.app', 
-                  redirectURI: 'https://bunout.info/oauth2/callback/apple', // 모바일용 Redirect URI
+                  redirectURI: 'https://bunout.info/api/v1/auth/login/apple', // 모바일용 Redirect URI
                   scopes: 'name email',
                 });
                 // 로그인 성공 처리
@@ -54,9 +54,10 @@ export default function Intro() {
               }
         } else{
             const APPLE_CLIENT_ID = 'com.bunout.appServices';
-            const APPLE_REDIRECT_URI= encodeURIComponent('https://localhost:3000/oauth2/callback/apple');
-            const appleLoginUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=${APPLE_CLIENT_ID}&redirect_uri=${APPLE_REDIRECT_URI}&scope=name email&response_mode=form_post`;
+            const APPLE_REDIRECT_URI= encodeURIComponent('https://bunout.info/api/v1/auth/login/apple');
+            const appleLoginUrl = `https://appleid.apple.com/auth/authorize?client_id=${APPLE_CLIENT_ID}&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code%20id_token&scope=name%20email&response_mode=form_post`;
             window.location.href = appleLoginUrl;
+            
         }
        
     };
