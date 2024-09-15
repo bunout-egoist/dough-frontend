@@ -91,7 +91,7 @@ useEffect(() => {
                         backgroundColor = fixedColor[data.burnoutId-1]; // 기본 배경색 (원하는 색상으로 변경 가능)
                       }
                       const missionStatus = quest.questStatus === "COMPLETED" ? 'finished' : '';
-
+                      console.log(quest.imageUrl)
                       return {
                         id: quest.selectedQuestId, 
                         backgroundColor, // 결정된 배경색 적용
@@ -102,6 +102,7 @@ useEffect(() => {
                         placeKeyword: quest.placeKeyword || "장소 없음",
                         participationKeyword: quest.participationKeyword || "참여 없음",
                         special: quest.questType,
+                        imageUrl:quest.imageUrl
                       };
                     });
                     
@@ -335,6 +336,7 @@ useEffect(() => {
               special={mission.special}
               onCheck={() => handleMissionCheck(mission.id)}
               onImageUpload={handleImageUpload} // Pass handler to MissionBox
+              imageUrl={mission.imageUrl}
             />
           ))}
         </div>

@@ -115,6 +115,8 @@ class Calendar extends Component {
     return weeks;
   }
 
+
+  
   renderMonthLabel() {
     return (
       <div>

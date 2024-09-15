@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Camera, CameraSource, CameraResultType } from "@capacitor/camera";
 
@@ -9,9 +9,19 @@ export default function MissionBox({
   backgroundColor,
   tag1, tag2,
   status,special,
-  onImageUpload
+  onImageUpload,
+  imageUrl
 }) {
+  console.log(imageUrl)
   const [imageSrc, setImageSrc] = useState("/images/main/photo.png");
+  useEffect(() => {
+    if (imageUrl) {
+      console.log('이미지o');
+      setImageSrc(imageUrl);
+    }
+    console.log('이미지x');
+  }, [imageUrl]); // Only run this effect when imageUrl changes
+
   console.log(special);
   const boxClassName = `mainpage-mission-box ${
     status === "now-clicked" ? "mission-now-clicked" : ""
@@ -60,11 +70,12 @@ export default function MissionBox({
       </div>
 
       {/* Conditionally render checkbox or image based on isChecked */}
-      {isChecked || isFinished ? (
+      {isChecked || isFinished ?(
         <div className="mission-img-box" onClick={handleOpenGallery}>
           <img className="img-width" src={imageSrc} alt="Mission completed" />
         </div>
-      ) : (
+      ) : 
+      (
         <div className="mainpage-mission-checkbox">
           <input
             type="checkbox"

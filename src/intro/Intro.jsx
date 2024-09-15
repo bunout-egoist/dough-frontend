@@ -54,7 +54,7 @@ export default function Intro() {
               }
         } else{
             const APPLE_CLIENT_ID = 'com.bunout.appServices';
-            const APPLE_REDIRECT_URI= 'https://bunout.info/oauth2/callback/apple';
+            const APPLE_REDIRECT_URI= encodeURIComponent('https://localhost:3000/oauth2/callback/apple');
             const appleLoginUrl = `https://appleid.apple.com/auth/authorize?response_type=code&client_id=${APPLE_CLIENT_ID}&redirect_uri=${APPLE_REDIRECT_URI}&scope=name email&response_mode=form_post`;
             window.location.href = appleLoginUrl;
         }

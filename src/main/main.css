@@ -138,7 +138,11 @@ button:hover {
 .special-background {
     background: linear-gradient(90deg, #FC7870 0%, #F1AA7C 20%, #E7D487 45%, #8FE5CA 70%, #9494E3 100%) !important;
   }
-  
+  .mission-finished{
+    background:  #F6F7F8 !important;
+    color: #A5AAB5 !important;
+    
+ }
 .mission-tag-flex{
     display: flex;
     flex-direction: row;
@@ -185,11 +189,7 @@ button:hover {
     background-color: #DEE0E4 !important;
     color: #A5AAB5 !important;
 }
-.mission-finished{
-    background-color:  #F6F7F8 !important;
-    color: #A5AAB5 !important;
-    
- }
+
 .mission-now-clicked{
     z-index: 9 !important;
 }
