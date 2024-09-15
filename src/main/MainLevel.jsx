@@ -74,11 +74,21 @@ export default function MainLevel() {
             fetchLevel(accessToken);
         }
     }, [accessToken]); // 빈 배열로 useEffect가 첫 렌더 시 한 번만 실행됨
+    const [progress, setProgress] = useState(0);
+
     useEffect(() => {
         if (Object.keys(contents).length > 0) {
             console.log('Updated contents:', contents);
         }
+
+        const targetProgress = (contents.currentExp / contents.requiredExp) * 100;
+        setTimeout(() => {
+          setProgress(targetProgress); 
+        }, 100); 
     }, [contents]);
+
+   
+    
     return (
         <div className="main-levelpage">
             <Link to="/main">
@@ -98,7 +108,7 @@ export default function MainLevel() {
                     <div className="level-value">{contents.currentExp}/{contents.requiredExp}</div>
                     <div className="outer">
                         <div className="inner" style={{
-            width: `${(contents.currentExp / contents.requiredExp) * 100}%`
+            width: `${progress}%`
         }}></div>
                     </div>
                     <div className="level-change">
