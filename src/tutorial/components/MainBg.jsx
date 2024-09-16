@@ -76,7 +76,7 @@ export default function MainBg() {
   });
 
   return (
-    <div className="mainpage page-area">
+    <div className="mainpage page-area mainBg">
       
       <div className="mainpage-real">
         <Link to="/level">
