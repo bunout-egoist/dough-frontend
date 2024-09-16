@@ -97,8 +97,8 @@ useEffect(() => {
                         }
                       } else { // 스페셜 퀘스트임
                         isSpecial =1;
-                        if ( quest.questType === '고정퀘스트' && quest.questStatus == 'COMPLETED' ){
-                          specialQuest ++;
+                        if ( quest.questType === '스페셜퀘스트' && quest.questStatus == 'COMPLETED' ){
+                          specialQuest=1;
                         }
                         // 혹시 다른경우에,(에러) 우선 그냥 고정퀘스트 색에 
                         backgroundColor = fixedColor[data.burnoutId-1]; // 기본 배경색 (원하는 색상으로 변경 가능)
