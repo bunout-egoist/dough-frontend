@@ -16,6 +16,7 @@ import MainLevel from "./main/MainLevel";
 import Quest from "./type/Quest";
 import Tutorial from "./tutorial/Tutorial";
 import EditType from "./settings/page/EditType";
+import AppleLogin from "react-apple-login";
 function App() {
   const location = useLocation();
 
@@ -28,6 +29,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/oauth2/callback/kakao" element={<Redirection/>}/>
+            <Route path="/api/v1/auth/login/apple" element={<Redirection/>}/>
             <Route path="/" element={<Intro />} />
             <Route path="/setting/edit-type" element={<EditType/>}/>
             <Route path="/typepage/quest" element={<Quest />} />
