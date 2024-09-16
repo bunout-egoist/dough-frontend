@@ -76,33 +76,35 @@ const handleButtonClick = () => {
 
 };
 useEffect(() => {
-    if (initialSelectedType === 0) {
-        const randomType = Math.floor(Math.random() * 4) + 1;
-        setSelectedType(randomType);
-    } else {
-        setSelectedType(initialSelectedType);
+    // Wait until accessToken is set before making fetch request
+    if (accessToken && initialSelectedType !== null) {
+        if (initialSelectedType === 0) {
+            const randomType = Math.floor(Math.random() * 4) + 1;
+            setSelectedType(randomType);
+        } else {
+            setSelectedType(initialSelectedType);
+        }
+
+        // Fetch data when component mounts
+        fetch(`/api/v1/quests/fixed/${initialSelectedType}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            setSelectedType(data.burnoutName);
+            setSelectedMission(data.fixedQuests);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
     }
-
-    // Fetch data only once when component mounts
-    fetch(`/api/v1/quests/fixed/${initialSelectedType}`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-            'Authorization':`Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-       console.log(data)
-        setSelectedType(data.burnoutName);
-        setSelectedMission(data.fixedQuests);
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-    });
-}, [initialSelectedType]); // Only run when initialSelectedType changes
-
+}, [initialSelectedType, accessToken]);
 return (
     <div className="questpage">
         {selectedMission && (

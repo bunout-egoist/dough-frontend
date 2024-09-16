@@ -70,3 +70,8 @@
     background-color: #FF7A2F;
     color: white;
 }
+.edit-questpage .questpage {
+    padding: 0 1.7rem !important;
+    height: 93vh !important;
+    position: fixed !important;
+}

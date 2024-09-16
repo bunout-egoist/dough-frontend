@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom"; // Import useLocation and useNavigate
-import styles from "/src/type/Quest";
-
+import styles from "../../type/type.css";
+import { Link } from "react-router-dom";
 export default function EditQuest() {
+    // 토큰 받기
+    const [accessToken, setAccessToken] = useState(null);
+    // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
+        useEffect(() => {
+        const token = localStorage.getItem("accessToken");
+        if (token) {
+        setAccessToken(token);
+        console.log('받음',token)
+        } else {
+        console.error("Access token is not available");
+        }
+    }, []);
+
     const [questNum, setQuestNum] = useState(null);
     const [selectedType, setSelectedType] = useState(null); // State for selectedType
     const location = useLocation(); // Use useLocation hook to access the URL
@@ -31,11 +44,11 @@ export default function EditQuest() {
             method: 'PUT',
             credentials: 'include',
             headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+                'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                "fixedQuestId": 2
+                "fixedQuestId": questNum
             })
         })
         .then(response => {
@@ -53,6 +66,9 @@ export default function EditQuest() {
             if (data) {
                 console.error('오류 발생:', data.message);
                 alert(data.message)
+                setTimeout(()=>{
+                    navigate('/setting');
+                },1500)
             }
         })
         .catch(error => {
@@ -68,6 +84,7 @@ export default function EditQuest() {
     };
 
     useEffect(() => {
+       if (accessToken){
         if (initialSelectedType === 0) {
             const randomType = Math.floor(Math.random() * 4) + 1;
             setSelectedType(randomType);
@@ -80,7 +97,7 @@ export default function EditQuest() {
             method: 'GET',
             credentials: 'include',
             headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
+                'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
         })
@@ -93,31 +110,38 @@ export default function EditQuest() {
         .catch(error => {
             console.error('Error fetching data:', error);
         });
-    }, [initialSelectedType]); // Only run when initialSelectedType changes
+       }
+    },[accessToken]); // Only run when initialSelectedType changes
 
     return (
-        <div className="questpage">
-            {selectedMission && (
-                <>
-                    <div className="type-name">{selectedType}</div>
-                    <div>
-                        <div className="questpage-title">이름 같은 분에게 추천하는 행동이에요.</div>
-                        <div><img src="/images/type/quest-title.png" className="img-width" /></div>
-                    </div>
-                    <div className="fixed-quest-area">
-                        {selectedMission.map((quest, index) => (
-                            <div key={index} className={`fixed-quest-box ${questNum === index + 1 ? `fixed-quest-box-${index + 1}` : ""}`}
-                                onClick={() => setQuestNum(index + 1)}>
-                                <div className="quest-sub-txt">{quest.description}</div>
-                                <div className="quest-txt">{quest.activity}</div>
-                            </div>
-                        ))}
-                    </div>
-                </>
-            )}
-            <div className="questpage-btn-area">
-                <div className={`questpage-btn ${questNum >= 1 ? "questpage-btn-active" : ""}`} onClick={handleButtonClick}>완료하기</div>
+       <div className="edit-questpage">
+            <div className="setting-typepage-header">
+                <Link to="/setting"><div className="header-back"><img src="/images/back.png" className="img-width"/></div></Link>
+                <div className="header-title">번아웃 유형 재설정</div>
             </div>
-        </div>
+            <div className="questpage">
+                {selectedMission && (
+                    <>
+                        <div className="type-name">{selectedType}</div>
+                        <div>
+                            <div className="questpage-title">이름 같은 분에게 추천하는 행동이에요.</div>
+                            <div><img src="/images/type/quest-title.png" className="img-width" /></div>
+                        </div>
+                        <div className="fixed-quest-area">
+                            {selectedMission.map((quest, index) => (
+                                <div key={index} className={`fixed-quest-box ${questNum === index + 1 ? `fixed-quest-box-${index + 1}` : ""}`}
+                                    onClick={() => setQuestNum(index + 1)}>
+                                    <div className="quest-sub-txt">{quest.description}</div>
+                                    <div className="quest-txt">{quest.activity}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                )}
+                <div className="questpage-btn-area">
+                    <div className={`questpage-btn ${questNum >= 1 ? "questpage-btn-active" : ""}`} onClick={handleButtonClick}>완료하기</div>
+                </div>
+            </div>
+       </div>
     );
 }

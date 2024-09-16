@@ -258,7 +258,7 @@ export default function Setting() {
                                     <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
                                 </div>
                             </Link>
-                            <Link to='/typepage/quest?select=1'>
+                            <Link to="/setting/edit-quest">
                                 <div className="setting-service-li">
                                     <div>고정퀘스트 재설정</div>
                                     <div className="vector-img"><img alt="image" src="/images/vector.png"/></div>
