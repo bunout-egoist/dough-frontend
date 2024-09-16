@@ -54,57 +54,13 @@ export default function Intro() {
               }
         } else{
             const APPLE_CLIENT_ID = 'com.bunout.appServices';
-            const APPLE_REDIRECT_URI= encodeURIComponent('https://bunout.info/api/v1/auth/login/apple');
+            const APPLE_REDIRECT_URI= encodeURIComponent('https://localhost:3000/api/v1/auth/login/apple');
             const appleLoginUrl = `https://appleid.apple.com/auth/authorize?client_id=${APPLE_CLIENT_ID}&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code%20id_token&scope=name%20email&response_mode=form_post`;
             window.location.href = appleLoginUrl;
         }
        
     };
 
-    // useEffect(() => {
-    //     // Handle redirection from Apple login
-    //     const urlParams = new URLSearchParams(window.location.search);
-    //     const code = urlParams.get('code');
-    //     const idToken = urlParams.get('id_token');
-
-    //     if (code && idToken) {
-    //         // Send code and idToken to server
-    //         fetch('/api/v1/auth/login/apple', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({
-    //                 code,
-    //                 id_token: idToken,
-    //             }),
-    //         })
-    //         .then((response) => {
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then((data) => {
-    //             console.log('Apple login response:', data);
-
-    //             if (data.success) {
-    //                 const jwtToken = data.data.jwtToken;
-    //                 const refreshToken = data.data.refreshToken;
-    //                 // Store tokens in local storage
-    //                 localStorage.setItem('jwtToken', jwtToken);
-    //                 localStorage.setItem('refreshToken', refreshToken);
-    //                 // Redirect or handle successful login
-    //                 window.location.href = '/'; // Example: navigate to home page
-    //             } else {
-    //                 console.error('로그인 중 오류 발생:', data.message);
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.error('로그인 중 오류 발생:', error);
-    //         });
-    //     }
-    // }, []);
 
     const [gifSrc, setGifSrc] = useState('/images/intro/onboard.gif');
     return (
