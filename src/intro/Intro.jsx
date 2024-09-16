@@ -65,6 +65,8 @@ export default function Intro() {
     const [gifSrc, setGifSrc] = useState('/images/intro/onboard.gif');
     return (
         <div className="intropage">
+            {/* <div className="intro-title"><img src="/images/intro/intro.png" className="img-width"/></div>
+            */}
             <div className="profile-img"> <img src={`${gifSrc}?${new Date().getTime()}`} alt="gif" className="img-width"/></div>
             <div className="into-bottom">
                 <div className="intro-bottom-abs">
