@@ -15,13 +15,10 @@ export default function MissionBox({
   const [imageSrc, setImageSrc] = useState("/images/main/photo.png");
   useEffect(() => {
     if (imageUrl) {
-      console.log('이미지o');
       setImageSrc(imageUrl);
     }
-    console.log('이미지x');
   }, [imageUrl]); // Only run this effect when imageUrl changes
 
-  console.log(special);
   const boxClassName = `mainpage-mission-box ${
     status === "now-clicked" ? "mission-now-clicked" : ""
   } ${status === "finished" ? "mission-finished" : ""} ${

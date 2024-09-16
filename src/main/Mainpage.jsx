@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import MissionBox from './components/Missionbox';
 
 export default function Mainpage() {
+
   // 토큰 받기
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
@@ -71,9 +72,11 @@ useEffect(() => {
                       ['#52ADD4', '#FF878D'],
                       ['#6DCED4', '#FF9960']
                     ];
-                    
+                   
                     const colors = colorSet[Math.floor(Math.random() * colorSet.length)];
-                    
+                    let isSpecial = 0;
+                    let completeQuest = 0;
+                    let specialQuest = 0;
                     let colorIndex = 0; // colors 배열에서 사용할 색상 인덱스
                     
                     const updatedMissions = data.todayQuests.map((quest) => {
@@ -83,15 +86,25 @@ useEffect(() => {
                       if (quest.questType === '유형별퀘스트') {
                         backgroundColor = colors[colorIndex % colors.length];
                         colorIndex++; 
-                        console.log(colorIndex);
+                        if (quest.questStatus == 'COMPLETED'){
+                          completeQuest ++;
+                          console.log('늘어나');
+                        }
                       } else if (quest.questType === '고정퀘스트'){
                         backgroundColor = fixedColor[data.burnoutId-1]; // 기본 배경색 (원하는 색상으로 변경 가능)
-                      } else {
+                        if (quest.questStatus == 'COMPLETED'){
+                          completeQuest ++;
+                        }
+                      } else { // 스페셜 퀘스트임
+                        isSpecial =1;
+                        if ( quest.questType === '고정퀘스트' && quest.questStatus == 'COMPLETED' ){
+                          specialQuest ++;
+                        }
                         // 혹시 다른경우에,(에러) 우선 그냥 고정퀘스트 색에 
                         backgroundColor = fixedColor[data.burnoutId-1]; // 기본 배경색 (원하는 색상으로 변경 가능)
                       }
                       const missionStatus = quest.questStatus === "COMPLETED" ? 'finished' : '';
-                      console.log(quest.imageUrl)
+                    
                       return {
                         id: quest.selectedQuestId, 
                         backgroundColor, // 결정된 배경색 적용
@@ -105,8 +118,12 @@ useEffect(() => {
                         imageUrl:quest.imageUrl
                       };
                     });
-                    
+                    if (completeQuest >=3){
+                      completeQuest =3;
+                    }
+                    console.log(completeQuest,isSpecial, specialQuest);
                     setMissions(updatedMissions);
+                    setMainContents({ ...data, completeQuest, isSpecial, specialQuest });
                 }
             })
             .catch(error => console.error('Error fetching data:', error));
@@ -224,8 +241,7 @@ useEffect(() => {
     };
     formData.append("feedback", new Blob([JSON.stringify(feedbackData)],{type:'application/json'}),);
     const mission = missions.find(m => m.id === missionList.missionId);
-    console.log(mission,'미션있는지');
-    console.log(mission.imageBlob,'이미지?')
+
     if (mission && mission.imageBlob) {
       console.log('이미지보내기 전',mission.imageBlob);
       formData.append("file", mission.imageBlob);
@@ -317,18 +333,29 @@ useEffect(() => {
               <div className="mainpage-level-txt">출석 포인트 받기</div>
             </div>
         </Link>
-        <div className="mainpage-title">
-          오늘 퀘스트는
-          <br />
-          <span className="mission-tag1">#{mainContents.placeKeyword}</span>
-          <span className="mission-tag2">#{mainContents.participationKeyword}</span> 할 수 있어요!
-        </div>
+        {(mainContents && mainContents.completeQuest>=3 && mainContents.isSpecial==1 && mainContents.specialQuest == 0) ? (
+          <div className="mainpage-title">
+            스페셜 퀘스트까지<br/>완료해봐요!
+          </div>
+        ) : (mainContents && mainContents.completeQuest>=3 && mainContents.isSpecial==1 && mainContents.specialQuest == 1) ?(
+          <div className="mainpage-title">
+            퀘스트 완료!<br/>멋지게 해냈어요.😉
+          </div>
+        ) : (
+          <div className="mainpage-title">
+            오늘 퀘스트는
+            <br />
+            <span className="mission-tag1">#{mainContents.placeKeyword}</span>
+            <span className="mission-tag2">#{mainContents.participationKeyword}</span> 할 수 있어요!
+          </div>
+        )}
+
         
 
         {mainContents && mainContents.burnoutId !== undefined && (
             <div className="mainpage-img">
             <img
-              src={`/images/main/type/${mainContents.burnoutId}/1.png`}
+              src={`/images/main/type/${mainContents.burnoutId}/${mainContents.completeQuest}.png`}
               className="img-width"
               alt="Main icon"
             />
