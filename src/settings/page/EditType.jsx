@@ -21,37 +21,7 @@ export default function EditType() {
    
 
     const handleButtonClick = () => {
-        fetch(`/api/v1/members/burnout`, {
-            method: 'PUT',
-            credentials: 'include',
-            headers: {
-                'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI1OTI5MDU5LCJleHAiOjE3NTcwMzMwNTksInN1YiI6IjEifQ.PIR_AE7VHLoUTU2pJzbIUE3UCabd4O4iDYObPvCPExQ',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "burnoutId": 1
-            })
-        })
-        .then(response => {
-            // 성공적인 응답 처리: 204 No Content인 경우
-            if (response.status === 204) {
-                console.log('성공적으로 수정되었습니다.');
-                return;  // 더 이상 처리할 JSON이 없기 때문에 여기서 끝냄
-            }
-            
-            // 오류 응답이 있는 경우, JSON으로 변환하여 처리
-            return response.json();
-        })
-        .then(data => {
-            // 204 No Content 응답의 경우는 데이터가 없기 때문에 data는 undefined
-            if (data) {
-                console.error('오류 발생:', data.message);
-                alert(data.message)
-            }
-        })
-        .catch(error => {
-            console.error('통신 오류:', error);
-        });
+       navigate('/setting/edit-type/quest', { state: { selectedType }});
     };
     
     return (

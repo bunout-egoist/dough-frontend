@@ -17,10 +17,11 @@ import Quest from "./type/Quest";
 import Tutorial from "./tutorial/Tutorial";
 import EditType from "./settings/page/EditType";
 import AppleLogin from "react-apple-login";
+import QuestType from "./settings/page/QuestType";
 function App() {
   const location = useLocation();
 
-  const hideNavbarRoutes = ["/", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial","/setting/edit-type","/nickname"];
+  const hideNavbarRoutes = ["/", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial","/setting/edit-type","/nickname","/setting/edit-type/quest"];
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
 
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/api/v1/auth/login/apple" element={<Redirection/>}/>
             <Route path="/" element={<Intro />} />
             <Route path="/setting/edit-type" element={<EditType/>}/>
+            <Route path="/setting/edit-type/quest" element={<QuestType/>}/>
             <Route path="/typepage/quest" element={<Quest />} />
             <Route path="/tutorial" element={<Tutorial />} />
             <Route path="/sign" element={<Sign />} />
