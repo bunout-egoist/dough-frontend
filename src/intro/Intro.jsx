@@ -30,7 +30,7 @@ export default function Intro() {
         checkPlatform();
     }, []);
 
-    const REDIRECT_URI = 'https://bunout.info/oauth2/callback/kakao';
+    const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
     const KEY = process.env.REACT_APP_K_REST_API;
     const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
    

@@ -195,27 +195,7 @@ export default function Setting() {
     const exitSignout=() =>{
         setSignOutState(false)
     }
-    const handleSignout=()=>{
-        fetch(`/api/v1/signout`, {
-            method: 'DELETE',
-            credentials: 'include',
-            headers: {
-              'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtYW51bmE1MzBAZ21haWwuY29tIiwiaWF0IjoxNzI2MTAyMjk4LCJleHAiOjE3Mjg2OTQyOTgsInN1YiI6IjMifQ.r0bRb2sUbzlueerlXQteJsIkaGKKOIwbI3adUXE5Yvw',
-              'Content-Type': 'application/json',
-            }
-          })
-          .then(response => {
-            if (response.status == 204){
-                navigate('/');
-            }
-        })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-
-          
-    }
-        
+ 
 
     useEffect(() => {
         const notifySystem = async () => {
@@ -227,14 +207,54 @@ export default function Setting() {
 
         notifySystem();
     }, [isChecked2, isChecked3, isChecked4]);
+    const ButtonSignout =() =>{
+        if(accessToken) {
+               fetch(`/api/v1/signout`, {
+                   method: 'DELETE',
+                   credentials: 'include',
+                   headers: {
+                     'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                    },
+                 })
+                 .then(response => {
+                    // 응답의 상태와 응답 본문을 로그로 출력합니다.
+                    console.log('Response Status:', response.status);
+                    return response.json(); // 응답 본문을 JSON으로 파싱합니다.
+                })
+                .then(data => {
+                    console.log('Response Data:', data);
+                    if (data.code === 3000) {
+                        // 상태 코드가 3000인 경우에만 네비게이션 처리
+                        setTimeout(() => {
+                            navigate('/');
+                        }, 1500);
+                    } else {
+                        // 다른 코드가 포함된 경우 처리 로직 추가
+                        console.error('Unexpected response code:', data.code);
+                    }
+                })
+                 .catch(error => {
+                   console.error('Error fetching data:', error);
+                 })
+                 .finally(() => {
+                    // 응답이나 오류에 관계없이 항상 navigate 호출
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 1500);
+                });
+          
+            }
 
+           
+    }
     return (
         <div>
             <div className={`signout-page ${signOutState ? '' : 'signout-none'}`} >
                 <div className="signout-pos">
                     <div className="signout-box">
                         <div><img src="/images/setting/signout.png" className="img-width"/></div>
-                        <div className="signout-btn" onClick={handleSignout}>탈퇴하기</div>
+                        <div className="signout-btn" onClick={ButtonSignout}>탈퇴하기</div>
                         <div className="signout-exit" onClick={exitSignout}>취소</div>
                     </div>
                 </div>
