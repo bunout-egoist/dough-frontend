@@ -1,0 +1,12 @@
+{
+    "appId": "bunout.app",
+    "appName": "MyApp",
+    "webDir": "build",
+    "server": {
+      "url": "https://bunout.info",
+      "cleartext": true
+    },
+    "android": {
+      "allowMixedContent": true
+    }
+  }

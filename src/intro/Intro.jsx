@@ -30,7 +30,7 @@ export default function Intro() {
         checkPlatform();
     }, []);
 
-    const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
+    const REDIRECT_URI = 'https://bunout.info/oauth2/callback/kakao';
     const KEY = process.env.REACT_APP_K_REST_API;
     const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
    
@@ -54,13 +54,35 @@ export default function Intro() {
               }
         } else{
             const APPLE_CLIENT_ID = 'com.bunout.appServices';
-            const APPLE_REDIRECT_URI= encodeURIComponent('https://localhost:3000/api/v1/auth/login/apple');
-            const appleLoginUrl = `https://appleid.apple.com/auth/authorize?client_id=${APPLE_CLIENT_ID}&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code%20id_token&scope=name%20email&response_mode=form_post`;
+            const APPLE_REDIRECT_URI= encodeURIComponent('https://bunout.info/api/v1/auth/login/apple');
+            const appleLoginUrl = `https://appleid.apple.com/auth/authorize?client_id=${APPLE_CLIENT_ID}&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code&response_mode=post-form`;
             window.location.href = appleLoginUrl;
         }
        
     };
-
+    const loginWithApple = async (e) => {
+        e.preventDefault();
+    
+        console.log('sign in with apple');
+    
+        // AppleID 초기화
+        window.AppleID.auth.init({
+          clientId: 'com.bunout.appServices', // Apple Developer에서 제공하는 clientId
+          scope: '', // 예: 'name email'
+          redirectURI: 'https://bunout.info/api/v1/auth/login/apple', // 리다이렉트될 URI
+          usePopup: true, // 팝업으로 인증할지 여부
+        });
+    
+        try {
+          // Apple 로그인 요청
+          const res = await window.AppleID.auth.signIn();
+          console.log('Apple Login Response:', res);
+          // 로그인 성공 시 처리 로직 추가
+        } catch (error) {
+          console.error('Apple Login Error:', error);
+        }
+      };
+    
 
     const [gifSrc, setGifSrc] = useState('/images/intro/onboard.gif');
     return (
