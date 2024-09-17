@@ -20,6 +20,7 @@ export default function Quest() {
 
 
     const [questNum, setQuestNum] = useState(null);
+    const [qindex, setQIndex] = useState(null);
     const [selectedType, setSelectedType] = useState(null); // State for selectedType
     const location = useLocation(); // Use useLocation hook to access the URL
     const navigate = useNavigate(); // Use useNavigate hook for navigation
@@ -116,7 +117,11 @@ export default function Quest() {
             console.error('Error fetching data:', error);
         });
     }, [initialSelectedType]); // Only run when initialSelectedType changes
-
+    
+    const clickQuest=(qN, qI)=>{
+        setQuestNum(qN);
+        setQIndex(qI);
+    }
     return (
         <div className="questpage">
             {selectedMission && (
@@ -128,8 +133,8 @@ export default function Quest() {
                     </div>
                     <div className="fixed-quest-area">
                         {selectedMission.map((quest, index) => (
-                            <div key={index} className={`fixed-quest-box ${questNum === index + 1 ? `fixed-quest-box-${index + 1}` : ""}`}
-                                onClick={() => setQuestNum(index + 1)}>
+                            <div key={index} className={`fixed-quest-box ${qindex === index + 1 ? `fixed-quest-box-${index + 1}` : ""}`}
+                            onClick={() => clickQuest(quest.questId, index + 1)}>
                                 <div className="quest-sub-txt">{quest.description}</div>
                                 <div className="quest-txt">{quest.activity}</div>
                             </div>
@@ -138,7 +143,7 @@ export default function Quest() {
                 </>
             )}
             <div className="questpage-btn-area">
-                <div className={`questpage-btn ${questNum >= 1 ? "questpage-btn-active" : ""}`} onClick={handleButtonClick}>완료하기</div>
+                <div className={`questpage-btn ${qindex >= 1 ? "questpage-btn-active" : ""}`} onClick={handleButtonClick}>완료하기</div>
             </div>
         </div>
     );

@@ -101,11 +101,11 @@ export default function DashPage() {
         <div className="clear-flex-row">
           <div className="clear-count-box clear-count-box-1">
             <div className="clear-title">완료한 미션</div>
-            <div className="clear-cnt blue-txt">{dailyTotal}개</div>
+            <div className="clear-cnt blue-txt">{dailyTotal || 0}개</div>
           </div>
           <div className="clear-count-box">
             <div className="clear-title">완료한 스페셜 미션</div>
-            <div className="clear-cnt orange-txt">{specialTotal}개</div>
+            <div className="clear-cnt orange-txt">{specialTotal || 0}개</div>
           </div>
         </div>
       </div>
