@@ -6,8 +6,11 @@ import AppleLogin from 'react-apple-login';
 import { SignInWithApple } from '@capacitor-community/apple-sign-in';
 import { Capacitor } from "@capacitor/core";
 import { Link } from "react-router-dom";
+import FirstPage from "./FirstPage";
 export default function Intro() {
     const [isIos, setIsIos] = useState(false); // State to determine if the device is iOS
+    const [showNextPage, setShowNextPage] = useState(false); // State to toggle between FirstPage and NextPage
+
 
     useEffect(() => {
         // Function to check if the current platform is iOS
@@ -28,6 +31,13 @@ export default function Intro() {
         };
 
         checkPlatform();
+    // 페이징 이동
+        const timer = setTimeout(() => {
+            setShowNextPage(true);
+        }, 3000); // 3000ms = 3 seconds
+
+        // Cleanup the timer when the component unmounts
+        return () => clearTimeout(timer);
     }, []);
 
     const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
@@ -83,41 +93,39 @@ export default function Intro() {
           console.error('Apple Login Error:', error);
         }
       };
-    
+
 
     const [gifSrc, setGifSrc] = useState('/images/intro/onboard.gif');
     return (
         <div className="intropage">
-            {/* <div className="intro-title"><img src="/images/intro/intro.png" className="img-width"/></div>
-            */}
-            <div className="profile-img"> <img src={`${gifSrc}?${new Date().getTime()}`} alt="gif" className="img-width"/></div>
-            <div className="into-bottom">
-                <div className="intro-bottom-abs">
-                    {/* Conditionally render Kakao and Apple buttons based on the platform */}
-                    <div className="intropage-sns intropage-kakao">
-                                <div className="intropage-kakao-img" onClick={loginHandler}>
-                                    <img src="/images/intro/kakao.png" className="img-width" alt="Kakao Login"/>
-                                </div>
+             {!showNextPage ? (
+                <FirstPage />
+            ) : (
+                <div className="nextpage">
+                    <div className="profile-img">
+                        <img src={`${gifSrc}?${new Date().getTime()}`} alt="gif" className="img-width" />
                     </div>
-                    {isIos ? (
-                        <>
-                            
-                            <div className="intropage-sns intropage-apple">
-                                <div className="intropage-kakao-img" onClick={handleAppleLogin}>
-                                    <img src="/images/intro/apple.png" className="img-width" alt="Apple Login"/>
+                    <div className="into-bottom">
+                        <div className="intro-bottom-abs">
+                            <div className="intropage-sns intropage-kakao">
+                                <div className="intropage-kakao-img" onClick={loginHandler}>
+                                    <img src="/images/intro/kakao.png" className="img-width" alt="Kakao Login" />
                                 </div>
                             </div>
-                        </>
-                    ) : (
-                      <span>
-
-                      </span> 
-                    )}
-                    <Link to="/tutorial">
-                    <div>서비스 둘러보기</div>
-                    </Link>
+                            {isIos ? (
+                                <div className="intropage-sns intropage-apple">
+                                    <div className="intropage-kakao-img" onClick={handleAppleLogin}>
+                                        <img src="/images/intro/apple.png" className="img-width" alt="Apple Login" />
+                                    </div>
+                                </div>
+                            ) : null}
+                            <Link to="/tutorial">
+                                <div>서비스 둘러보기</div>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
