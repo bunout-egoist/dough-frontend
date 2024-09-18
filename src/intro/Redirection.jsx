@@ -1,51 +1,96 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sign from "../sign/Sign";
+
+import { getMessaging, getToken } from 'firebase/messaging';
+import { initializeApp } from 'firebase/app';
 export default function Redirection() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [isNewMember, setIsNewMember] = useState(null);
   const logincode = new URL(window.location.href).searchParams.get('code');
   const navigate = useNavigate();
+  const firebaseConfig = {
+    apiKey: "AIzaSyDFDeWiSEbnfiZBStTYuIi2rf0Jc45RSQg",
+    authDomain: "bunout-6fab2.firebaseapp.com",
+    projectId: "bunout-6fab2",
+    storageBucket: "bunout-6fab2.appspot.com",
+    messagingSenderId: "111594277875",
+    appId: "1:111594277875:web:dd8f37f8e9d083f144a086",
+    measurementId: "G-87RHEJHXQ1"
+  };
+  
+  // Firebase 앱 초기화
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+  
+
+
   useEffect(() => {
     if (logincode) {
-      console.log("Received code:", logincode);
-      
-      fetch(`/api/v1/auth/login/kakao?code=${logincode}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const getAndSendToken = async () => {
+       
+        try {
+          console.log('들어옴');
+          const permission = await Notification.requestPermission();
+          if (permission === 'granted') {
+            const fcmToken = await getToken(messaging, {
+              vapidKey: 'BNurVqZe4BswlsPVV-GQ9u9HSOcCgDFKbC9ZcFOztppeAT3xVkEGbT-ZDBkTKjUH3EhWgGnQgqqkg9pcAqL0LQk', // 여기서 VAPID 공개 키를 사용합니다.
+            });
+            if (fcmToken) {
+              console.log('FCM Token:', fcmToken);
+              // 서버로 토큰 전송
+              fetch(`/api/v1/auth/login/kakao?code=${logincode}`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                }
+        
+              })
+              .then((response) => {
+                console.log("Response status:", response.status);
+                if (response.status === 200) {
+                  setLoginSuccess(true);
+                }
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then((data) => {
+                console.log("Received data:", data, data.isNewMember);
+        
+                  const accessToken = data.accessToken;
+                  const refreshToken = data.refreshToken;
+                  // Store tokens in local storage
+                  localStorage.setItem('accessToken', accessToken);
+                  localStorage.setItem('refreshToken', refreshToken);
+                  console.log(localStorage.getItem('accessToken', accessToken));
+                  setLoginSuccess(true); // 토큰 저장 후에 상태 업데이트
+                  setIsNewMember(data.isNewMember);
+                  console.log('상태?',data.isNewMember);
+                // else {
+                //   console.error('로그인 중 오류 발생:', data.message);
+                // }
+              })
+              .catch((error) => {
+                console.error('로그인 중 오류 발생:', error);
+              });
+            } else {
+              console.log('No registration token available. Request permission to generate one.');
+            }
+          
+          }
+          else{
+            alert('어플 내 알람 권한 설정을 허용해주세요!');
+          }
+          
+        } catch (error) {
+          console.error('Error getting FCM token:', error);
         }
 
-      })
-      .then((response) => {
-        console.log("Response status:", response.status);
-        if (response.status === 200) {
-          setLoginSuccess(true);
-        }
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Received data:", data, data.isNewMember);
+      };
+      getAndSendToken();
 
-          const accessToken = data.accessToken;
-          const refreshToken = data.refreshToken;
-          // Store tokens in local storage
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
-          console.log(localStorage.getItem('accessToken', accessToken));
-          setLoginSuccess(true); // 토큰 저장 후에 상태 업데이트
-          setIsNewMember(data.isNewMember);
-          console.log('상태?',data.isNewMember);
-        // else {
-        //   console.error('로그인 중 오류 발생:', data.message);
-        // }
-      })
-      .catch((error) => {
-        console.error('로그인 중 오류 발생:', error);
-      });
     }
   }, [logincode]);
 
