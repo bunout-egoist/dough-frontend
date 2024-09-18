@@ -139,7 +139,7 @@ export default function Info() {
                                 <option value="select">성별 선택</option>
                                 <option value="남성">남성</option>
                                 <option value="여성">여성</option>
-                                <option value="none-sex">선택안함</option>
+                                <option value="기타">선택안함</option>
                             </select>
                         </div>
                     </div>
@@ -148,11 +148,12 @@ export default function Info() {
                         <div className="input-box">
                             <select name="select-job" className="step2-date-input" value={job} onChange={handleJobChange}>
                                 <option value="select">직종 선택</option>
-                                <option value="학생(초/중/고)">학생(초/중/고)</option>
-                                <option value="대학생">대학생</option>
-                                <option value="직장인">직장인 2년차 이하</option>
-                                <option value="자영업">직장인 3년차 이상</option>
-                                <option value="기타">선택안함</option>
+                                <option value="학생">학생</option>
+                                <option value="직장인">직장인</option>
+                                <option value="자영업">자영업</option>
+                                <option value="주부">주부</option>
+                                <option value="무직">무직</option>
+                                <option value="기타">기타</option>
                             </select>
                         </div>
                     </div>
