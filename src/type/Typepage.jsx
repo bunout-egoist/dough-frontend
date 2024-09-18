@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate,useLocation } from "react-router-dom"; // Correct import of useNavigate
 import styles from "./type.css";
+import { Link } from "react-router-dom";
 import About from "./About";
 
 export default function TypePage() {
@@ -103,7 +104,7 @@ export default function TypePage() {
                 
                 <div className="typepage-btn-area">
                     <div className="typepage-btn-area-abs">
-                        <div className="typepage-landing-test">잘 모르겠다면? 유형 검사하러 가기</div>
+                        <Link to="https://smore.im/quiz/oQzyuSEDGY" target="_blank"><div className="typepage-landing-test">잘 모르겠다면? 유형 검사하러 가기</div></Link>
                         <div className={`typepage-btn ${selectedType >= 1 ? "typepage-btn-active" : ""}`}  onClick={handleButtonClick}>다음</div>
                     </div>
                 </div>
