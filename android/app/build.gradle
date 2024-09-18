@@ -18,13 +18,16 @@ android {
 
     signingConfigs {
         release {
-            if (project.hasProperty('RELEASE_STORE_FILE') && project.hasProperty('RELEASE_KEY_ALIAS') && project.hasProperty('RELEASE_STORE_PASSWORD') && project.hasProperty('RELEASE_KEY_PASSWORD')) {
-                storeFile file(project.RELEASE_STORE_FILE)
-                keyAlias project.RELEASE_KEY_ALIAS
-                storePassword project.RELEASE_STORE_PASSWORD
-                keyPassword project.RELEASE_KEY_PASSWORD
+            if (project.hasProperty('RELEASE_STORE_FILE') && 
+                project.hasProperty('RELEASE_KEY_ALIAS') && 
+                project.hasProperty('RELEASE_STORE_PASSWORD') && 
+                project.hasProperty('RELEASE_KEY_PASSWORD')) {
+                storeFile file(project.property('RELEASE_STORE_FILE'))
+                keyAlias project.property('RELEASE_KEY_ALIAS')
+                storePassword project.property('RELEASE_STORE_PASSWORD')
+                keyPassword project.property('RELEASE_KEY_PASSWORD')
             } else {
-                storeFile file('C:\\Windows\\System32\\my-release-key.jks')
+                storeFile file('C:\\Users\\user\\my-keys\\my-release-key.jks') // 실제 위치로 수정
                 keyAlias 'my-key-alias'
                 storePassword 'jllee000'
                 keyPassword 'jllee000'
