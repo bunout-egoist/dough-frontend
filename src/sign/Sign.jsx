@@ -43,7 +43,7 @@ export default function Sign(){
                     <label htmlFor="privacy-agreement"></label>
                 </div>
                 <div>[필수] 개인정보 수집 및 이용목적 동의</div>
-                <div className="notice-open-btn"  onClick={handleToggleChange}><img src="/images/toggle.png" /></div>
+                <div className="notice-open-btn"  onClick={handleToggleChange}><img src={`${isToggle ? "/images/toggle-up.png" : "/images/toggle.png"}`} /></div>
             </div>
             <div className={`notice-box ${isToggle ? "show-notice" : ""}`}>
                 <img src="/images/intro/sign-notice.png" className="img-width"/>

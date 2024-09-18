@@ -67,6 +67,9 @@
     font-size: 1.3rem;
     border-radius: 10px;
 }
+.signpage .btn-active{
+    background-color: #FF9205;
+}
 .signpage-btn-area .active{
     background-color: #FF9205;
 }
