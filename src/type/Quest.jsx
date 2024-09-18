@@ -77,7 +77,7 @@ export default function Quest() {
         })
         .then(data => {
           console.log(data);
-          navigate('/main')
+          navigate('/finish');
         })
         .catch(error => {
             console.error('통신 오류:', error);
@@ -87,7 +87,7 @@ export default function Quest() {
         if (initialSelectedType === 0) {
             navigate('/setting'); // Navigate to /setting if initialSelectedType is 0
         } else if (selectedType >= 1) {
-            navigate('/main'); // Navigate to home if selectedType is 1 or greater
+            navigate('/finish');
         }
     };
     useEffect(() => {

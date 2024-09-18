@@ -19,10 +19,11 @@ import EditType from "./settings/page/EditType";
 import AppleLogin from "react-apple-login";
 import QuestType from "./settings/page/QuestType";
 import EditQuest from "./settings/page/EditQuest";
+import FinishSign from "./intro/FinishSign";
 function App() {
   const location = useLocation();
 
-  const hideNavbarRoutes = ["/", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial","/setting/edit-type","/nickname","/setting/edit-type/quest","/setting/edit-quest"];
+  const hideNavbarRoutes = ["/", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial","/setting/edit-type","/nickname","/setting/edit-type/quest","/setting/edit-quest","/finish"];
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
 
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/oauth2/callback/kakao" element={<Redirection/>}/>
             <Route path="/api/v1/auth/login/apple" element={<Redirection/>}/>
             <Route path="/" element={<Intro />} />
+            <Route path="/finish" element={<FinishSign />} />
             <Route path="/setting/edit-type" element={<EditType/>}/>
             <Route path="/setting/edit-type/quest" element={<QuestType/>}/>
             <Route path="/setting/edit-quest" element={<EditQuest/>}/>

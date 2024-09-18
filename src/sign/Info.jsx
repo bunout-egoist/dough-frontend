@@ -85,7 +85,7 @@ export default function Info() {
             setIsButtonEnabled(false);
         } else if (step === 2) {
             // Log the date, gender, and job
-         
+            localStorage.setItem('nickname', nickname);
             const infoData = {
                 "nickname" :  nickname,
                 "gender" : gender,
