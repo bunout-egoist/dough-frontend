@@ -40,7 +40,10 @@ export default function Intro() {
         return () => clearTimeout(timer);
     }, []);
 
-    const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
+    const REDIRECT_URI = Capacitor.isNativePlatform()
+    ? 'myapp://oauth2/callback/kakao' // 모바일 앱에서 사용되는 URI
+    : 'http://localhost:3000/oauth2/callback/kakao'; // 웹 환경에서 사용되는 URI
+  
     // const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
     const KEY = process.env.REACT_APP_K_REST_API;
     const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
@@ -81,7 +84,7 @@ export default function Intro() {
           clientId: 'com.bunout.appServices', // Apple Developer에서 제공하는 clientId
           scope: '', // 예: 'name email'
           redirectURI: 'https://bunout.info/api/v1/auth/login/apple', // 리다이렉트될 URI
-          usePopup: true, // 팝업으로 인증할지 여부
+          usePopup: false, // 팝업으로 인증할지 여부
         });
     
         try {
@@ -93,7 +96,10 @@ export default function Intro() {
           console.error('Apple Login Error:', error);
         }
       };
-
+      const appleResponse = (response) => {
+        console.log("Apple Login Response:", response);
+        // Apple 로그인 후 처리
+    };
 
     const [gifSrc, setGifSrc] = useState('/images/intro/onboard.gif');
     return (
@@ -114,7 +120,31 @@ export default function Intro() {
                             </div>
                             {isIos ? (
                                 <div className="intropage-sns intropage-apple">
-                                    <div className="intropage-kakao-img" onClick={handleAppleLogin}>
+                                    {/* <AppleLogin
+                            clientId="com.bunout.appServices"
+                            redirectURI="https://bunout.info/api/v1/auth/login/apple"
+                            usePopup={false}
+                            callback={appleResponse} // Catch the response
+                            scope="email name"
+                            responseMode="query"
+                            render={renderProps => (  //Custom Apple Sign in Button
+                                    <button
+                                        onClick={renderProps.onClick}
+                                            style={{
+                                                backgroundColor: "white",
+                                                padding: 10,
+                                                border: "1px solid black",
+                                                fontFamily: "none",
+                                                lineHeight: "25px",
+                                                fontSize: "25px"
+                                                }}
+                                        >
+                                        <i className="fa-brands fa-apple px-2 "></i>
+                                        Continue with Apple
+                                    </button>
+                    )}
+                    />        */}
+                    <div className="intropage-kakao-img" onClick={handleAppleLogin}>
                                         <img src="/images/intro/apple.png" className="img-width" alt="Apple Login" />
                                     </div>
                                 </div>
