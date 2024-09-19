@@ -40,14 +40,14 @@ export default function Intro() {
         return () => clearTimeout(timer);
     }, []);
 
-    const REDIRECT_URI = Capacitor.isNativePlatform()
-    ? 'myapp://oauth2/callback/kakao' // 모바일 앱에서 사용되는 URI
-    : 'http://localhost:3000/oauth2/callback/kakao'; // 웹 환경에서 사용되는 URI
+    // const REDIRECT_URI = Capacitor.isNativePlatform()
+    // ? 'myapp://oauth2/callback/kakao' // 모바일 앱에서 사용되는 URI
+    // : 'http://localhost:3000/oauth2/callback/kakao'; // 웹 환경에서 사용되는 URI
   
-    // const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
+    const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
     const KEY = process.env.REACT_APP_K_REST_API;
     const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-   
+    console.log('Kakao Client ID:', KEY);
     const loginHandler = () => {
         window.location.href = link;
     };

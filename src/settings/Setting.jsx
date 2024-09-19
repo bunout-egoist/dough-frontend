@@ -11,6 +11,7 @@ export default function Setting() {
   const [signOutState, setSignOutState] = useState(false);
   const navigate = useNavigate();
     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
+    
     useEffect(()=>{
         const token = localStorage.getItem("accessToken");
         if (token) {
@@ -18,6 +19,7 @@ export default function Setting() {
         } else {
         console.error("Access token is not available");
         }
+    
     },[])
 
 
@@ -83,7 +85,6 @@ export default function Setting() {
                 }
             })
             .then(data => {
-                console.log('응답?',data);
                 if (data.accessToken) {
                     // Store new access token and retry fetching today's quests
                     localStorage.setItem('accessToken', data.accessToken);
@@ -108,7 +109,6 @@ export default function Setting() {
     const handleToggle1 = () => {
         const newChecked = !isChecked1;
         setIsChecked1(newChecked);
-        console.log('1',!isChecked2)
         if (newChecked) {
             setIsChecked2(true);
             setIsChecked3(true);
@@ -122,18 +122,15 @@ export default function Setting() {
     };
 
     const handleToggle2 = () => {
-        console.log('2',!isChecked2);
         setIsChecked2(!isChecked2);
         handleAlarmData();
     }
     const handleToggle3 = () => {
-        console.log('3',!isChecked3);
         setIsChecked3(!isChecked3);
         handleAlarmData();
     }        
         
     const handleToggle4 = () => {
-        console.log('4',!isChecked4);
         setIsChecked4(!isChecked4);
         handleAlarmData();
     }
@@ -323,7 +320,7 @@ export default function Setting() {
                             <div className="setting-alarm-li">
                                     <div className="flex-col">
                                         <div className="setting-alarm-li-title">남은 퀘스트 알림</div>
-                                        <div className="setting-alarm-li-subtitle">###님을 기다리고 있는 퀘스트가 있어요!</div>
+                                        <div className="setting-alarm-li-subtitle">기다리고 있는 퀘스트가 있어요!</div>
                                     </div>
                                     <div className="switch">
                                         <input

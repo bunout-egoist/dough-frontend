@@ -88,7 +88,6 @@ useEffect(() => {
                         colorIndex++; 
                         if (quest.questStatus == 'COMPLETED'){
                           completeQuest ++;
-                          console.log('늘어나');
                         }
                       } else if (quest.questType === '고정퀘스트'){
                         backgroundColor = fixedColor[data.burnoutId-1]; // 기본 배경색 (원하는 색상으로 변경 가능)

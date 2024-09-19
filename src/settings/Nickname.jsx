@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./setting.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 export default function Nickname() {
     // 토큰 받기
   const [accessToken, setAccessToken] = useState(null);
@@ -16,7 +17,7 @@ export default function Nickname() {
         }
     },[])
 
-
+    const navigate = useNavigate();
     const [nickname, setNickname] = useState("");
     const [isWarningVisible, setIsWarningVisible] = useState(false);
 
@@ -24,10 +25,11 @@ export default function Nickname() {
         const value = e.target.value;
         setNickname(value);
         setIsWarningVisible(value.length > 5);
-        
     };
 
     const handleNicknameChange = (e)=>{
+        navigate('/setting');
+        localStorage.setItem('nickname', nickname);
         fetchNickname(accessToken);
     }
     const fetchNickname = (token) =>{
