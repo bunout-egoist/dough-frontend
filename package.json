@@ -60,7 +60,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://bunout.info/",
+  "proxy": "http://13.124.151.164:8080/",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "cross-env": "^7.0.3",
