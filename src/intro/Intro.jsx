@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-import styles from "./intro.css";
+import styles from "./intro.css"; // eslint-disable-next-line
 import { isPlatform } from '@ionic/react';  // Import Capacitor's isPlatform utility
-import { Device } from '@capacitor/device'; // Import Capacitor Device API
-import AppleLogin from 'react-apple-login';
-import { SignInWithApple } from '@capacitor-community/apple-sign-in';
-import { Capacitor } from "@capacitor/core";
 import { Link } from "react-router-dom";
 import FirstPage from "./FirstPage";
 export default function Intro() {
@@ -51,29 +47,29 @@ export default function Intro() {
     const loginHandler = () => {
         window.location.href = link;
     };
-    async function handleAppleLogin() {
-        // window.location.href = `https://appleid.apple.com/auth/authorize?client_id=com.example.app&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email`;
-        if (Capacitor.isNativePlatform()){
-            try {
-                const result = await SignInWithApple.authorize({
-                  clientId: 'com.bunout.app', 
-                  redirectURI: 'https://bunout.info/api/v1/auth/login/apple', // 모바일용 Redirect URI
-                  scopes: 'name email',
-                });
-                // 로그인 성공 처리
-                console.log(result);
-              } catch (error) {
-                // 로그인 실패 처리
-                console.error(error);
-              }
-        } else{
-            const APPLE_CLIENT_ID = 'com.bunout.appServices';
-            const APPLE_REDIRECT_URI= encodeURIComponent('https://bunout.info/api/v1/auth/login/apple');
-            const appleLoginUrl = `https://appleid.apple.com/auth/authorize?client_id=${APPLE_CLIENT_ID}&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code&response_mode=post-form`;
-            window.location.href = appleLoginUrl;
-        }
+    // async function handleAppleLogin() {
+    //     // window.location.href = `https://appleid.apple.com/auth/authorize?client_id=com.example.app&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email`;
+    //     if (Capacitor.isNativePlatform()){
+    //         try {
+    //             const result = await SignInWithApple.authorize({
+    //               clientId: 'com.bunout.app', 
+    //               redirectURI: 'https://bunout.info/api/v1/auth/login/apple', // 모바일용 Redirect URI
+    //               scopes: 'name email',
+    //             });
+    //             // 로그인 성공 처리
+    //             console.log(result);
+    //           } catch (error) {
+    //             // 로그인 실패 처리
+    //             console.error(error);
+    //           }
+    //     } else{
+    //         const APPLE_CLIENT_ID = 'com.bunout.appServices';
+    //         const APPLE_REDIRECT_URI= encodeURIComponent('https://bunout.info/api/v1/auth/login/apple');
+    //         const appleLoginUrl = `https://appleid.apple.com/auth/authorize?client_id=${APPLE_CLIENT_ID}&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code&response_mode=post-form`;
+    //         window.location.href = appleLoginUrl;
+    //     }
        
-    };
+    // };
     const loginWithApple = async (e) => {
         e.preventDefault();
     
@@ -96,10 +92,10 @@ export default function Intro() {
           console.error('Apple Login Error:', error);
         }
       };
-      const appleResponse = (response) => {
-        console.log("Apple Login Response:", response);
-        // Apple 로그인 후 처리
-    };
+    //   const appleResponse = (response) => {
+    //     console.log("Apple Login Response:", response);
+    //     // Apple 로그인 후 처리
+    // };
 
     const [gifSrc, setGifSrc] = useState('/images/intro/onboard.gif');
     return (
@@ -144,7 +140,7 @@ export default function Intro() {
                                     </button>
                     )}
                     />        */}
-                    <div className="intropage-kakao-img" onClick={handleAppleLogin}>
+                    <div className="intropage-kakao-img" onClick={loginWithApple}>
                                         <img src="/images/intro/apple.png" className="img-width" alt="Apple Login" />
                                     </div>
                                 </div>
