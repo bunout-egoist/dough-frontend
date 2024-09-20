@@ -3,7 +3,7 @@
     "rewrites": [
       {
         "source": "/api/:path*",
-        "destination": "http://api.bunout.info/:path*"
+        "destination": "https://api.bunout.info/:path*"
       },
       {
         "source": "/static/(.*)",
