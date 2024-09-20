@@ -34,7 +34,7 @@ export default function Redirection() {
             });
             if (fcmToken) {
               // 서버로 토큰 전송
-              fetch(`https://bunout.info/api/v1/auth/login/kakao?code=${logincode}`, {
+              fetch(`/api/v1/auth/login/kakao?code=${logincode}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
