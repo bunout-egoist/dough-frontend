@@ -3,11 +3,7 @@
     "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://13.124.151.164:8080/:path*"
-    },
-    {
-      "source": "/api/:path*/",
-      "destination": "http://13.124.151.164:8080/:path*/"
+      "destination": "http://api.bunout.info/:path*"
     }
   ],
     "routes": [

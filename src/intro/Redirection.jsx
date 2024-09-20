@@ -79,12 +79,14 @@ export default function Redirection() {
                 console.error('로그인 중 오류 발생:', error);
               });
             } else {
-              console.log('No registration token available. Request permission to generate one.');
+              alert('어플 내 알람 권한 설정을 반드시 허용해주세요!');
+              navigate('/');
             }
           
           }
           else{
-            alert('어플 내 알람 권한 설정을 허용해주세요!');
+            alert('어플 내 알람 권한 설정을 반드시 허용해주세요!');
+            navigate('/');
           }
           
         } catch (error) {

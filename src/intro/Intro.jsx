@@ -36,11 +36,8 @@ export default function Intro() {
         return () => clearTimeout(timer);
     }, []);
 
-    // const REDIRECT_URI = Capacitor.isNativePlatform()
-    // ? 'myapp://oauth2/callback/kakao' // 모바일 앱에서 사용되는 URI
-    // : 'http://localhost:3000/oauth2/callback/kakao'; // 웹 환경에서 사용되는 URI
-  
-    const REDIRECT_URI = 'https://bunout.info/oauth2/callback/kakao';
+    // const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
+    const REDIRECT_URI = 'https://app.bunout.info/oauth2/callback/kakao';  
     const KEY = process.env.REACT_APP_K_REST_API;
     const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     console.log('Kakao Client ID:', KEY);
@@ -48,27 +45,12 @@ export default function Intro() {
         window.location.href = link;
     };
     // async function handleAppleLogin() {
-    //     // window.location.href = `https://appleid.apple.com/auth/authorize?client_id=com.example.app&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code id_token&scope=name email`;
-    //     if (Capacitor.isNativePlatform()){
-    //         try {
-    //             const result = await SignInWithApple.authorize({
-    //               clientId: 'com.bunout.app', 
-    //               redirectURI: 'https://bunout.info/api/v1/auth/login/apple', // 모바일용 Redirect URI
-    //               scopes: 'name email',
-    //             });
-    //             // 로그인 성공 처리
-    //             console.log(result);
-    //           } catch (error) {
-    //             // 로그인 실패 처리
-    //             console.error(error);
-    //           }
-    //     } else{
+    //    
     //         const APPLE_CLIENT_ID = 'com.bunout.appServices';
     //         const APPLE_REDIRECT_URI= encodeURIComponent('https://bunout.info/api/v1/auth/login/apple');
     //         const appleLoginUrl = `https://appleid.apple.com/auth/authorize?client_id=${APPLE_CLIENT_ID}&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code&response_mode=post-form`;
     //         window.location.href = appleLoginUrl;
-    //     }
-       
+    //     
     // };
     const loginWithApple = async (e) => {
         e.preventDefault();
@@ -105,17 +87,17 @@ export default function Intro() {
             ) : (
                 <div className="nextpage">
                     <div className="profile-img">
-                        <img src={`${gifSrc}?${new Date().getTime()}`} alt="gif" className="img-width" />
+                        <img src={`${gifSrc}?${new Date().getTime()}`} alt="gif" />
                     </div>
                     <div className="into-bottom">
                         <div className="intro-bottom-abs">
-                            <div className="intropage-sns intropage-kakao">
-                                <div className="intropage-kakao-img" onClick={loginHandler}>
+                            <div className="intropage-sns intropage-kakao" onClick={loginHandler}>
+                                <div className="intropage-kakao-img" >
                                     <img src="/images/intro/kakao.png" className="img-width" alt="Kakao Login" />
                                 </div>
                             </div>
                             {isIos ? (
-                                <div className="intropage-sns intropage-apple">
+                                <div className="intropage-sns intropage-apple" onClick={loginWithApple}>
                                     {/* <AppleLogin
                             clientId="com.bunout.appServices"
                             redirectURI="https://bunout.info/api/v1/auth/login/apple"
@@ -140,7 +122,7 @@ export default function Intro() {
                                     </button>
                     )}
                     />        */}
-                    <div className="intropage-kakao-img" onClick={loginWithApple}>
+                    <div className="intropage-kakao-img" >
                                         <img src="/images/intro/apple.png" className="img-width" alt="Apple Login" />
                                     </div>
                                 </div>
