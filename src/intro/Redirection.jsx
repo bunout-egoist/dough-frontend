@@ -41,7 +41,8 @@ export default function Redirection() {
                 },
                 body : JSON.stringify({
                   "fcmToken" :fcmToken
-                })
+                }),
+                credentials: 'include'
               })
               .then((response) => {
                 console.log("Response status:", response.status);
