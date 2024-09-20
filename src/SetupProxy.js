@@ -4,7 +4,7 @@ module.exports = (app) => {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "http://api.bunout.info:8080",
+      target: "https://bunout.info/",
       changeOrigin: true,
     })
   );
