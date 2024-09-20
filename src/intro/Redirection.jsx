@@ -22,13 +22,9 @@ export default function Redirection() {
   // Firebase 앱 초기화
   const app = initializeApp(firebaseConfig);
   const messaging = getMessaging(app);
-  
-
-
   useEffect(() => {
     if (logincode) {
       const getAndSendToken = async () => {
-       
         try {
           console.log('들어옴');
           const permission = await Notification.requestPermission();
@@ -37,17 +33,15 @@ export default function Redirection() {
               vapidKey: 'BNurVqZe4BswlsPVV-GQ9u9HSOcCgDFKbC9ZcFOztppeAT3xVkEGbT-ZDBkTKjUH3EhWgGnQgqqkg9pcAqL0LQk', // 여기서 VAPID 공개 키를 사용합니다.
             });
             if (fcmToken) {
-              console.log('FCM Token:', fcmToken);
               // 서버로 토큰 전송
-              fetch(`http://api.bunout.info:8080/api/v1/auth/login/kakao?code=${logincode}`, {
+              fetch(`/api/v1/auth/login/kakao?code=${logincode}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
                 body : JSON.stringify({
                   "fcmToken" :fcmToken
-              })
-        
+                })
               })
               .then((response) => {
                 console.log("Response status:", response.status);
@@ -81,18 +75,15 @@ export default function Redirection() {
             } else {
               alert('어플 내 알람 권한 설정을 반드시 허용해주세요!');
               navigate('/');
-            }
-          
+            } 
           }
           else{
             alert('어플 내 알람 권한 설정을 반드시 허용해주세요!');
             navigate('/');
           }
-          
         } catch (error) {
           console.error('Error getting FCM token:', error);
         }
-
       };
       getAndSendToken();
 
