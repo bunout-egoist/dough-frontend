@@ -1,42 +1,42 @@
 {
     "version": 2,
     "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "http://api.bunout.info/:path*"
-    },
-        {
-            "src": "/static/(.*)",
-            "dest": "/static/$1"
-        },
-        {
-            "src": "/firebase-messaging-sw.js",
-            "dest": "/firebase-messaging-sw.js"
-          },
-
-        {
-            "src": "/favicon.ico",
-            "dest": "/favicon.ico"
-        },
-        {
-            "src": "/manifest.json",
-            "dest": "/manifest.json"
-        },
-        {
-            "src": "/images/(.*)",
-            "dest": "/images/$1"
-         },
-        {
-            "src": "/logo192.png",
-            "dest": "/logo192.png"
-        },
-        {
-            "src": "/logo512.png",
-            "dest": "/logo512.png"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/index.html"
-        }
+      {
+        "source": "/api/:path*",
+        "destination": "http://api.bunout.info/:path*"
+      },
+      {
+        "source": "/static/(.*)",
+        "destination": "/static/$1"
+      },
+      {
+        "source": "/firebase-messaging-sw.js",
+        "destination": "/firebase-messaging-sw.js"
+      },
+      {
+        "source": "/favicon.ico",
+        "destination": "/favicon.ico"
+      },
+      {
+        "source": "/manifest.json",
+        "destination": "/manifest.json"
+      },
+      {
+        "source": "/images/(.*)",
+        "destination": "/images/$1"
+      },
+      {
+        "source": "/logo192.png",
+        "destination": "/logo192.png"
+      },
+      {
+        "source": "/logo512.png",
+        "destination": "/logo512.png"
+      },
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
+      }
     ]
-}
+  }
+  
