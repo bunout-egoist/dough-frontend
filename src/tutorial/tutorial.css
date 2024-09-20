@@ -181,6 +181,7 @@
     top: 70%;
 }
 .chat-2 .pointer{
+    display: none !important;
     transform: rotate(45deg) skew(15deg, 15deg);
     border-radius: 8px;
     margin-top: -8em;
@@ -189,6 +190,7 @@
     top: 70%;
 }
 .chat-3 .pointer{
+    display: none !important;
     transform: rotate(45deg) skew(15deg, 15deg);
     border-radius: 8px;
     margin-top: -8em;
@@ -219,7 +221,7 @@
 }
 
 .chatbox-area .chat-7{
-    top: 32%;
+    top: 27%;
 }
 
 .chat-7 .pointer{
@@ -322,6 +324,9 @@
     .chatbox-area-abs{
         font-size: 14px !important;
     }
+    .tutorial-img-5{
+        top: 37% !important;
+    }
   }
 @media (max-width: 400px) and (min-width:362px) {
     .chatbox-area-abs{
@@ -350,15 +355,29 @@
         top: 35% !important;
     }
 }
-@media  (min-height:875px)  {
+@media  (min-height:875px)  and (max-width : 355px)  {
     .chatbox-area .chat-10{
         top: 11% !important;
     }
     .tutorial-img-11{
         top: 32% !important;
     }
+    .tutorial-img-5{
+        top: 32% !important;
+    }
 }
 
+@media  (min-height:875px) and (min-width : 355px)  {
+    .tutorial-img-5{
+        top: 37% !important;
+    }
+}
+
+@media  (min-height:795px) and (max-height:874px) and (min-width:360px) and (max-width:380px)  {
+    .tutorial-img-5{
+        top: 36% !important;
+    }
+}
 @media  (min-width:360px) and (max-width:400px)  {
     .chatbox-area .chat-10{
         top: 11% !important;

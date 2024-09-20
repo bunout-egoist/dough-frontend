@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./tutorial.css";
 import Chatbox from "./components/Chatbox";
 import MainBg from "./components/MainBg";
@@ -29,6 +29,17 @@ export default function Tutorial() {
 
     const bgImage = `/images/tutorial/${chatKey + 1}.png`;
 
+        // 이미지 프리로드
+    useEffect(() => {
+        const preloadImages = () => {
+            for (let i = 1; i <= chatContents.length; i++) {
+                const img = new Image();
+                img.src = `/images/tutorial/${i}.png`; // 이미지 경로
+            }
+        };
+
+        preloadImages();
+    }, []);
     return (
         <div className="tutorial-page">
             <div className="tutorial-bg-area">
