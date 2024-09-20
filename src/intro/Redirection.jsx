@@ -39,7 +39,7 @@ export default function Redirection() {
             if (fcmToken) {
               console.log('FCM Token:', fcmToken);
               // 서버로 토큰 전송
-              fetch(`https://api.bunout.info:8080/v1/auth/login/kakao?code=${logincode}`, {
+              fetch(`http://api.bunout.info:8080/v1/auth/login/kakao?code=${logincode}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
