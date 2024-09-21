@@ -77,7 +77,7 @@ export default function MissionBox({
         <input
             type="file"
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={handleOpenGallery}
             style={{ display: "block", marginTop: "10px" }}
           />
       ) : 
