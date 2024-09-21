@@ -71,15 +71,9 @@ export default function MissionBox({
 
       {/* Conditionally render checkbox or image based on isChecked */}
       {isChecked || isFinished ?(
-        // <div className="mission-img-box" onClick={handleOpenGallery}>
-        //   <img className="img-width" src={imageSrc} alt="Mission completed" />
-        // </div>
-        <input
-            type="file"
-            accept="image/*"
-            onChange={handleOpenGallery}
-            style={{ display: "block", marginTop: "10px" }}
-          />
+        <div className="mission-img-box" onClick={handleOpenGallery}>
+          <img className="img-width" src={imageSrc} alt="Mission completed" />
+        </div>
       ) : 
       (
         <div className="mainpage-mission-checkbox">
