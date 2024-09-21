@@ -32,7 +32,7 @@ export default function MissionBox({
     try {
       const image = await Camera.getPhoto({
         resultType: CameraResultType.Uri,
-        source: source, //CameraSource.Photos
+        source: CameraSource.Prompt,
         quality: 90,
       });
 
