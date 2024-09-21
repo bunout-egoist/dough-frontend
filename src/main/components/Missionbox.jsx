@@ -32,7 +32,7 @@ export default function MissionBox({
     try {
       const image = await Camera.getPhoto({
         resultType: CameraResultType.Uri,
-        source: CameraSource.Prompt,
+        source: CameraSource.Photos,
         quality: 90,
       });
 
@@ -71,9 +71,15 @@ export default function MissionBox({
 
       {/* Conditionally render checkbox or image based on isChecked */}
       {isChecked || isFinished ?(
-        <div className="mission-img-box" onClick={handleOpenGallery}>
-          <img className="img-width" src={imageSrc} alt="Mission completed" />
-        </div>
+        // <div className="mission-img-box" onClick={handleOpenGallery}>
+        //   <img className="img-width" src={imageSrc} alt="Mission completed" />
+        // </div>
+        <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            style={{ display: "block", marginTop: "10px" }}
+          />
       ) : 
       (
         <div className="mainpage-mission-checkbox">
