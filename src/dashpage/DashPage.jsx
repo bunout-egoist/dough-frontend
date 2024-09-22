@@ -3,9 +3,10 @@ import styles from './dash.css';
 import $ from "jquery";
 import Calendar from "./Calendar";
 import Navbar from "../navbar/Navbar";
-
+import { useNavigate } from "react-router-dom";
 
 export default function DashPage() {
+    const navigate = useNavigate();
     // 토큰 받기
     const [accessToken, setAccessToken] = useState(null);
     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
@@ -40,7 +41,10 @@ export default function DashPage() {
         if (response.status === 401) {
           console.log('다시 발급');
             refreshAccessToken();
-        } else {
+        }else if (response.status == 404){
+          navigate('/');
+        } 
+        else {
             return response.json();
         }
     })
@@ -52,6 +56,7 @@ export default function DashPage() {
       })
       .catch(error => {
         console.error('Error fetching data:', error);
+        navigate('/');
       });
     }
 

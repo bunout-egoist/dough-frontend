@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import RoundSlide from "./components/RoundSlide";
 import { Link } from "react-router-dom";
 import MissionBox from './components/Missionbox';
-
+import { useNavigate } from "react-router-dom";
 export default function Mainpage() {
-
+  const navigate = useNavigate();
   // 토큰 받기
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
@@ -125,7 +125,10 @@ useEffect(() => {
                     setMainContents({ ...data, completeQuest, isSpecial, specialQuest });
                 }
             })
-            .catch(error => console.error('Error fetching data:', error));
+            .catch(error => {
+              console.error('Error fetching data:', error)
+              navigate('/');
+            });
         };
 
         // access token 재발급
