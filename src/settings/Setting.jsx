@@ -10,6 +10,10 @@ export default function Setting() {
   const [logoutState, setLogoutState] = useState(false);
   const [signOutState, setSignOutState] = useState(false);
   const navigate = useNavigate();
+  const [isChecked2, setIsChecked2] = useState(false);
+const [isChecked3, setIsChecked3] = useState(false);
+const [isChecked4, setIsChecked4] = useState(false);
+
   const [notificationSettings, setNotificationSettings] = useState({
     not1: 0,
     not2: 0,
