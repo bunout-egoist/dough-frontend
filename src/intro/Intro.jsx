@@ -61,7 +61,7 @@ export default function Intro() {
         window.AppleID.auth.init({
           clientId: 'com.bunout.appServices', // Apple Developer에서 제공하는 clientId
           scope: '', // 예: 'name email'
-          redirectURI: 'https://bunout.info/api/v1/auth/login/apple', // 리다이렉트될 URI
+          redirectURI: 'https://app.bunout.info/api/v1/auth/login/apple', // 리다이렉트될 URI
           usePopup: false, // 팝업으로 인증할지 여부
         });
     
