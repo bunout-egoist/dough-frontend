@@ -62,9 +62,9 @@ const [isChecked4, setIsChecked4] = useState(false);
                     not2: data[1].id,
                     not3: data[2].id,
                     isChecked1: data.every(item => item.isChecked),
-                    isChecked2: data[0].isChecked || true,
-                    isChecked3: data[1].isChecked || true,
-                    isChecked4: data[2].isChecked || true
+                    isChecked2: setIsChecked2(data[0].isChecked || true) ,
+                    isChecked3: setIsChecked3(data[1].isChecked || true) ,
+                    isChecked4: setIsChecked4(data[2].isChecked || true) 
                 });
               })
               .catch(error => {
@@ -113,9 +113,9 @@ const [isChecked4, setIsChecked4] = useState(false);
             const newSettings = { ...prevState, [type]: !prevState[type] };
             // Handle the related settings for toggling all notifications
             if (type === "isChecked1") {
-                newSettings.isChecked2 = newSettings.isChecked1;
-                newSettings.isChecked3 = newSettings.isChecked1;
-                newSettings.isChecked4 = newSettings.isChecked1;
+                setIsChecked2(newSettings.isChecked1);
+                setIsChecked3(newSettings.isChecked1);
+                setIsChecked4(newSettings.isChecked1);
             }
             updateAlarmData(newSettings);
             return newSettings;
