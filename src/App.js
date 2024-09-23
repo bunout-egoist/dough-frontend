@@ -20,6 +20,7 @@ import AppleLogin from "react-apple-login";
 import QuestType from "./settings/page/QuestType";
 import EditQuest from "./settings/page/EditQuest";
 import FinishSign from "./intro/FinishSign";
+import AppleLoginRedirect from "./intro/AppleLoginRedirect";
 function App() {
   const location = useLocation();
 
@@ -32,7 +33,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/oauth2/callback/kakao" element={<Redirection/>}/>
-            <Route path="/api/v1/auth/login/apple" element={<Redirection/>}/>
+            <Route path="/api/v1/auth/login/apple" component={AppleLoginRedirect}/>
             <Route path="/" element={<Intro />} />
             <Route path="/finish" element={<FinishSign />} />
             <Route path="/setting/edit-type" element={<EditType/>}/>
