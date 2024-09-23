@@ -108,9 +108,18 @@ const [isChecked4, setIsChecked4] = useState(false);
             const newSettings = { ...prevState, [type]: !prevState[type] };
             // Handle the related settings for toggling all notifications
             if (type === "isChecked1") {
-                setIsChecked2(newSettings.isChecked1);
-                setIsChecked3(newSettings.isChecked1);
-                setIsChecked4(newSettings.isChecked1);
+                setIsChecked2(true);
+                setIsChecked3(true);
+                setIsChecked4(true);
+            }
+            else if (type === "isChecked2") {
+                setIsChecked2(!isChecked2);
+            }
+            else if (type === "isChecked3") {
+                setIsChecked2(!isChecked2);
+            }
+            else if (type === "isChecked4") {
+                setIsChecked2(!isChecked2);
             }
             console.log('알람',type,isChecked1,isChecked2,isChecked3,isChecked4);
             updateAlarmData(newSettings);
