@@ -112,8 +112,9 @@ const [isChecked4, setIsChecked4] = useState(false);
                 setIsChecked3(newSettings.isChecked1);
                 setIsChecked4(newSettings.isChecked1);
             }
+            console.log('알람',type,isChecked1,isChecked2,isChecked3,isChecked4);
             updateAlarmData(newSettings);
-            console.log('알람',type,newSettings);
+           
             return newSettings;
         });
     };
