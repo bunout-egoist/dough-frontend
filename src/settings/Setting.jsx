@@ -10,6 +10,10 @@ export default function Setting() {
   const [logoutState, setLogoutState] = useState(false);
   const [signOutState, setSignOutState] = useState(false);
   const navigate = useNavigate();
+  const [not1, setNot1] = useState(0);
+  const [not2, setNot2] = useState(0);
+  const [not3, setNot3] = useState(0);
+
     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
     
     useEffect(()=>{
@@ -44,11 +48,12 @@ export default function Setting() {
                 }
             })
               .then(data => {
-                console.log('여기',data);
                 setCheckAlarm(data);
     
                  // 데이터 기반 체크박스 상태 업데이트
-                console.log(data[1].id)
+                setNot1(data[0].id)
+                setNot2(data[1].id)
+                setNot3(data[2].id)
                 const isChecked1 = data.every(item => item.isChecked);
                 setIsChecked1(isChecked1);
     
@@ -137,13 +142,13 @@ export default function Setting() {
     }
     const alarmData = JSON.stringify({
         "notifications" : [ {
-          "id" : 1,
+          "id" : not1,
           "isChecked" : isChecked2
         }, {
-          "id" : 2,
+          "id" : not2,
           "isChecked" : isChecked3
         }, {
-          "id" : 3,
+          "id" : not3,
           "isChecked" : isChecked4
         } ]
       });
