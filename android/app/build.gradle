@@ -27,7 +27,7 @@ android {
                 storePassword project.property('RELEASE_STORE_PASSWORD')
                 keyPassword project.property('RELEASE_KEY_PASSWORD')
             } else {
-                storeFile file('C:\\Users\\user\\my-keys\\my-release-key.jks') // 실제 위치로 수정
+                storeFile file('C:\\Windows\\System32\\my-release-key.jks') // 실제 위치로 수정
                 keyAlias 'my-key-alias'
                 storePassword 'jllee000'
                 keyPassword 'jllee000'
