@@ -19,6 +19,7 @@
     padding-bottom: 3.8rem;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 .intropage-title{
     padding-top: 6.9rem;

@@ -10,6 +10,7 @@ export default function Setting() {
   const [logoutState, setLogoutState] = useState(false);
   const [signOutState, setSignOutState] = useState(false);
   const navigate = useNavigate();
+  const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
 const [isChecked3, setIsChecked3] = useState(false);
 const [isChecked4, setIsChecked4] = useState(false);
@@ -17,11 +18,7 @@ const [isChecked4, setIsChecked4] = useState(false);
   const [notificationSettings, setNotificationSettings] = useState({
     not1: 0,
     not2: 0,
-    not3: 0,
-    isChecked1: false,
-    isChecked2: false,
-    isChecked3: false,
-    isChecked4: false
+    not3: 0
 });
     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
     
@@ -50,21 +47,20 @@ const [isChecked4, setIsChecked4] = useState(false);
               })
               .then(response => {
                 if (response.status === 401) {
-                  console.log('다시 발급');
                     refreshAccessToken();
                 } else {
                     return response.json();
                 }
             })
               .then(data => {
+                setIsChecked1(data.every(item => item.isChecked))
+                setIsChecked2(data[0].isChecked || true);
+                setIsChecked3(data[1].isChecked || true);
+                setIsChecked4(data[2].isChecked || true);
                 setNotificationSettings({
                     not1: data[0].id,
                     not2: data[1].id,
                     not3: data[2].id,
-                    isChecked1: data.every(item => item.isChecked),
-                    isChecked2: setIsChecked2(data[0].isChecked || true) ,
-                    isChecked3: setIsChecked3(data[1].isChecked || true) ,
-                    isChecked4: setIsChecked4(data[2].isChecked || true) 
                 });
               })
               .catch(error => {
@@ -85,7 +81,6 @@ const [isChecked4, setIsChecked4] = useState(false);
             })
             .then(response => {
                 if (response.status === 401) {
-                  console.log('다시 발급');
                     refreshAccessToken();
                 } else {
                     return response.json();
@@ -118,6 +113,7 @@ const [isChecked4, setIsChecked4] = useState(false);
                 setIsChecked4(newSettings.isChecked1);
             }
             updateAlarmData(newSettings);
+            console.log('알람',type,newSettings);
             return newSettings;
         });
     };
