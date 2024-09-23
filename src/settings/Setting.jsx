@@ -13,6 +13,10 @@ export default function Setting() {
   const [not1, setNot1] = useState(0);
   const [not2, setNot2] = useState(0);
   const [not3, setNot3] = useState(0);
+  const [isChecked1, setIsChecked1] = useState(false);
+  const [isChecked2, setIsChecked2] = useState(false);
+  const [isChecked3, setIsChecked3] = useState(false);
+  const [isChecked4, setIsChecked4] = useState(false);
 
     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
     
@@ -107,10 +111,6 @@ export default function Setting() {
        }
     },[accessToken])
     const [checkAlarm, setCheckAlarm] = useState([]);
-    const [isChecked1, setIsChecked1] = useState(false);
-    const [isChecked2, setIsChecked2] = useState(false);
-    const [isChecked3, setIsChecked3] = useState(false);
-    const [isChecked4, setIsChecked4] = useState(false);
 
     const handleToggle1 = () => {
         const newChecked = !isChecked1;
@@ -143,13 +143,13 @@ export default function Setting() {
     const alarmData = JSON.stringify({
         "notifications" : [ {
           "id" : not1,
-          "isChecked" : isChecked2
+          "isChecked" : !isChecked2
         }, {
           "id" : not2,
           "isChecked" : isChecked3
         }, {
           "id" : not3,
-          "isChecked" : isChecked4
+          "isChecked" : !isChecked4
         } ]
       });
    
