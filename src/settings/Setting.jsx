@@ -122,11 +122,15 @@ const [isChecked4, setIsChecked4] = useState(false);
             }
     
             // chk2, chk3, chk4가 모두 true일 때 chk1도 true로 설정
-            const allChecked = newSettings.chk2 && newSettings.chk3 && newSettings.chk4;
+            const allChecked = newSettings.not2 && newSettings.not3 && newSettings.not4;
             if (allChecked) {
                 setIsChecked1(true);
             }
-    
+
+            // chk2, chk3, chk4 중 하나라도 false가 될 경우 chk1은 false
+            if (!newSettings.not2 || !newSettings.not3 || !newSettings.not4) {
+                setIsChecked1(false);
+            }
             console.log('알람', type, isChecked1, isChecked2, isChecked3, isChecked4);
             updateAlarmData(newSettings);
     
