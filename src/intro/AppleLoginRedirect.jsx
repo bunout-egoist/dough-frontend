@@ -1,44 +1,43 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect } from "react";
 
 const AppleLoginRedirect = () => {
-  const location = useLocation();
+    useEffect(() => {
+        // URL에서 form-data 추출
+        const queryParams = new URLSearchParams(window.location.search);
+        const code = queryParams.get('code');
+        const id_token = queryParams.get('id_token');
 
-  useEffect(() => {
-    // Extract the code and id_token from the URL parameters
-    const params = new URLSearchParams(location.search);
-    const code = params.get('code');
-    const id_token = params.get('id_token');
+        // 백엔드 API로 데이터 전송
+        const sendDataToBackend = async () => {
+            const response = await fetch('/api/v1/auth/login/apple', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ code, id_token }), // payload
+            });
 
-    if (code && id_token) {
-      // Prepare the data to send to the backend
-      const formData = new FormData();
-      formData.append('code', code);
-      formData.append('id_token', id_token);
+            if (response.ok) {
+                // 성공적으로 전송된 경우 처리
+                const data = await response.json();
+                console.log('Response from backend:', data);
+            } else {
+                // 오류 처리
+                console.error('Error sending data to backend:', response.statusText);
+            }
+        };
 
-      // Send the code and id_token to the backend
-      fetch('/api/v1/auth/login/apple', {
-        method: 'POST',
-        body: formData,
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Backend response:', data);
-          // Handle successful response, e.g., redirect to a dashboard or show a message
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          // Handle errors here
-        });
-    }
-  }, [location.search]);
+        if (code && id_token) {
+            sendDataToBackend();
+        }
+    }, []);
 
-  return (
-    <div>
-      <h1>Processing Apple Login...</h1>
-      {/* You can display a loader or some message here */}
-    </div>
-  );
+    return (
+        <div>
+            {/* 로딩 중 표시할 수 있는 컴포넌트 */}
+            <h1>Loading...</h1>
+        </div>
+    );
 };
 
 export default AppleLoginRedirect;
