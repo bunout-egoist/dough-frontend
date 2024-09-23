@@ -33,7 +33,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/oauth2/callback/kakao" element={<Redirection/>}/>
-            <Route path="/api/v1/auth/login/apple" component={AppleLoginRedirect}/>
+            <Route path="/v1/auth/login/apple" element={<AppleLoginRedirect/>}/>
             <Route path="/" element={<Intro />} />
             <Route path="/finish" element={<FinishSign />} />
             <Route path="/setting/edit-type" element={<EditType/>}/>
