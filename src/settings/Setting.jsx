@@ -10,14 +10,15 @@ export default function Setting() {
   const [logoutState, setLogoutState] = useState(false);
   const [signOutState, setSignOutState] = useState(false);
   const navigate = useNavigate();
-  const [not1, setNot1] = useState(0);
-  const [not2, setNot2] = useState(0);
-  const [not3, setNot3] = useState(0);
-  const [isChecked1, setIsChecked1] = useState(false);
-  const [isChecked2, setIsChecked2] = useState(false);
-  const [isChecked3, setIsChecked3] = useState(false);
-  const [isChecked4, setIsChecked4] = useState(false);
-
+  const [notificationSettings, setNotificationSettings] = useState({
+    not1: 0,
+    not2: 0,
+    not3: 0,
+    isChecked1: false,
+    isChecked2: false,
+    isChecked3: false,
+    isChecked4: false
+});
     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
     
     useEffect(()=>{
@@ -52,23 +53,15 @@ export default function Setting() {
                 }
             })
               .then(data => {
-                setCheckAlarm(data);
-    
-                 // 데이터 기반 체크박스 상태 업데이트
-                setNot1(data[0].id)
-                setNot2(data[1].id)
-                setNot3(data[2].id)
-                const isChecked1 = data.every(item => item.isChecked);
-                setIsChecked1(isChecked1);
-    
-                const alarmMap = data.reduce((acc, item) => {
-                acc[item.id] = item.isChecked;
-                return acc;
-                }, {});
-
-                setIsChecked2(alarmMap[1] || false);
-                setIsChecked3(alarmMap[2] || false);
-                setIsChecked4(alarmMap[3] || false);
+                setNotificationSettings({
+                    not1: data[0].id,
+                    not2: data[1].id,
+                    not3: data[2].id,
+                    isChecked1: data.every(item => item.isChecked),
+                    isChecked2: data[0].isChecked || true,
+                    isChecked3: data[1].isChecked || true,
+                    isChecked4: data[2].isChecked || true
+                });
               })
               .catch(error => {
                 console.error('Error fetching data:', error);
@@ -110,68 +103,48 @@ export default function Setting() {
         fetchSetting(accessToken);
        }
     },[accessToken])
-    const [checkAlarm, setCheckAlarm] = useState([]);
-
-    const handleToggle1 = () => {
-        const newChecked = !isChecked1;
-        setIsChecked1(newChecked);
-        if (newChecked) {
-            setIsChecked2(true);
-            setIsChecked3(true);
-            setIsChecked4(true);
-        } else {
-            setIsChecked2(false);
-            setIsChecked3(false);
-            setIsChecked4(false);
-        }
-        handleAlarmData();
+    // Handle notification toggle changes
+    const handleToggle = (type) => {
+        setNotificationSettings(prevState => {
+            const newSettings = { ...prevState, [type]: !prevState[type] };
+            // Handle the related settings for toggling all notifications
+            if (type === "isChecked1") {
+                newSettings.isChecked2 = newSettings.isChecked1;
+                newSettings.isChecked3 = newSettings.isChecked1;
+                newSettings.isChecked4 = newSettings.isChecked1;
+            }
+            updateAlarmData(newSettings);
+            return newSettings;
+        });
     };
-
-    const handleToggle2 = () => {
-        setIsChecked2(!isChecked2);
-        handleAlarmData();
-    }
-    const handleToggle3 = () => {
-        setIsChecked3(!isChecked3);
-        handleAlarmData();
-    }        
-        
-    const handleToggle4 = () => {
-        setIsChecked4(!isChecked4);
-        handleAlarmData();
-    }
-    const alarmData = JSON.stringify({
-        "notifications" : [ {
-          "id" : not1,
-          "isChecked" : !isChecked2
-        }, {
-          "id" : not2,
-          "isChecked" : isChecked3
-        }, {
-          "id" : not3,
-          "isChecked" : !isChecked4
-        } ]
-      });
-   
-    const handleAlarmData=()=>{
+    
+  
+    const updateAlarmData = (newSettings) => {
+        const alarmData = JSON.stringify({
+            "notifications": [
+                { "id": newSettings.not1, "isChecked": newSettings.isChecked2 },
+                { "id": newSettings.not2, "isChecked": newSettings.isChecked3 },
+                { "id": newSettings.not3, "isChecked": newSettings.isChecked4 }
+            ]
+        });
         fetch(`/api/v1/notifications`, {
             method: 'PUT',
             credentials: 'include',
             headers: {
-              'Authorization': `Bearer ${accessToken}`,
-              'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
             },
-            body : alarmData
-          })
-          .then(response => response.json())
-          .then(data => {
-            console.log('2');
-            console.log('보낸거',alarmData);
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-    }
+            body: alarmData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Notification settings updated');
+            })
+            .catch(error => {
+                console.error('Error updating notifications:', error);
+            });
+    };
+
 
     const handleLogout=()=>{
         fetch(`/api/v1/logout`, {
@@ -299,8 +272,8 @@ export default function Setting() {
                                     <input
                                         type="checkbox"
                                         id="chk1"
-                                        checked={isChecked1}
-                                        onChange={handleToggle1}
+                                        checked={notificationSettings.isChecked1}
+                                        onChange={() => handleToggle("isChecked1")}
                                     />
                                     <label className="slider round" htmlFor="chk1"></label>
                                 </div>
@@ -315,8 +288,8 @@ export default function Setting() {
                                         <input
                                             type="checkbox"
                                             id="chk2"
-                                            checked={isChecked2}
-                                            onChange={handleToggle2}
+                                            checked={notificationSettings.isChecked2}
+                                             onChange={() => handleToggle("isChecked2")}
                                         />
                                         <label className="slider round" htmlFor="chk2"></label>
                                     </div>
@@ -332,8 +305,8 @@ export default function Setting() {
                                         <input
                                             type="checkbox"
                                             id="chk3"
-                                            checked={isChecked3}
-                                            onChange={handleToggle3}
+                                            checked={notificationSettings.isChecked3}
+                                            onChange={() => handleToggle("isChecked3")}
                                         />
                                         <label className="slider round" htmlFor="chk3"></label>
                                     </div>
@@ -349,8 +322,8 @@ export default function Setting() {
                                         <input
                                             type="checkbox"
                                             id="chk4"
-                                            checked={isChecked4}
-                                            onChange={handleToggle4}
+                                            checked={notificationSettings.isChecked4}
+                                        onChange={() => handleToggle("isChecked4")}
                                         />
                                         <label className="slider round" htmlFor="chk4"></label>
                                     </div>
