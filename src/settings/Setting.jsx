@@ -104,37 +104,36 @@ const [isChecked4, setIsChecked4] = useState(false);
     },[accessToken])
     // Handle notification toggle changes
     const handleToggle = (type) => {
-        setNotificationSettings(prevState => {
+        setNotificationSettings((prevState) => {
             const newSettings = { ...prevState, [type]: !prevState[type] };
-            // Handle the related settings for toggling all notifications
+    
             if (type === "chk1") {
-                setIsChecked1(isChecked1);
-                if (isChecked1==true){
-                    setIsChecked2(true);
-                    setIsChecked3(true);
-                    setIsChecked4(true);
-                }  else if (isChecked1==false){
-                    setIsChecked2(false);
-                    setIsChecked3(false);
-                    setIsChecked4(false);
-                }
-       
+                // chk1 체크 상태에 따라 chk2, chk3, chk4의 상태 설정
+                const newCheckedState = !prevState.chk1; // chk1의 새로운 상태
+                setIsChecked2(newCheckedState);
+                setIsChecked3(newCheckedState);
+                setIsChecked4(newCheckedState);
+            } else if (type === "chk2") {
+                setIsChecked2(!isChecked2);
+            } else if (type === "chk3") {
+                setIsChecked3(!isChecked3);
+            } else if (type === "chk4") {
+                setIsChecked4(!isChecked4);
             }
-            else if (type === "chk2") {
-                setIsChecked2(isChecked2);
+    
+            // chk2, chk3, chk4가 모두 true일 때 chk1도 true로 설정
+            const allChecked = newSettings.chk2 && newSettings.chk3 && newSettings.chk4;
+            if (allChecked) {
+                setIsChecked1(true);
             }
-            else if (type === "chk3") {
-                setIsChecked2(isChecked3);
-            }
-            else if (type === "chk4") {
-                setIsChecked2(!isChecked4);
-            }
-            console.log('알람',type,isChecked1,isChecked2,isChecked3,isChecked4);
+    
+            console.log('알람', type, isChecked1, isChecked2, isChecked3, isChecked4);
             updateAlarmData(newSettings);
-           
+    
             return newSettings;
         });
     };
+    
     
   
     const updateAlarmData = (newSettings) => {
