@@ -107,19 +107,27 @@ const [isChecked4, setIsChecked4] = useState(false);
         setNotificationSettings(prevState => {
             const newSettings = { ...prevState, [type]: !prevState[type] };
             // Handle the related settings for toggling all notifications
-            if (type === "isChecked1") {
-                setIsChecked2(true);
-                setIsChecked3(true);
-                setIsChecked4(true);
+            if (type === "chk1") {
+                setIsChecked1(isChecked1);
+                if (isChecked1==true){
+                    setIsChecked2(true);
+                    setIsChecked3(true);
+                    setIsChecked4(true);
+                }  else if (isChecked1==false){
+                    setIsChecked2(false);
+                    setIsChecked3(false);
+                    setIsChecked4(false);
+                }
+       
             }
-            else if (type === "isChecked2") {
-                setIsChecked2(!isChecked2);
+            else if (type === "chk2") {
+                setIsChecked2(isChecked2);
             }
-            else if (type === "isChecked3") {
-                setIsChecked2(!isChecked2);
+            else if (type === "chk3") {
+                setIsChecked2(isChecked3);
             }
-            else if (type === "isChecked4") {
-                setIsChecked2(!isChecked2);
+            else if (type === "chk4") {
+                setIsChecked2(!isChecked4);
             }
             console.log('알람',type,isChecked1,isChecked2,isChecked3,isChecked4);
             updateAlarmData(newSettings);
@@ -282,8 +290,8 @@ const [isChecked4, setIsChecked4] = useState(false);
                                     <input
                                         type="checkbox"
                                         id="chk1"
-                                        checked={notificationSettings.isChecked1}
-                                        onChange={() => handleToggle("isChecked1")}
+                                        checked={isChecked1}
+                                        onChange={() => handleToggle("chk1")}
                                     />
                                     <label className="slider round" htmlFor="chk1"></label>
                                 </div>
@@ -298,8 +306,8 @@ const [isChecked4, setIsChecked4] = useState(false);
                                         <input
                                             type="checkbox"
                                             id="chk2"
-                                            checked={notificationSettings.isChecked2}
-                                             onChange={() => handleToggle("isChecked2")}
+                                            checked={isChecked2}
+                                             onChange={() => handleToggle("chk2")}
                                         />
                                         <label className="slider round" htmlFor="chk2"></label>
                                     </div>
@@ -315,8 +323,8 @@ const [isChecked4, setIsChecked4] = useState(false);
                                         <input
                                             type="checkbox"
                                             id="chk3"
-                                            checked={notificationSettings.isChecked3}
-                                            onChange={() => handleToggle("isChecked3")}
+                                            checked={isChecked3}
+                                            onChange={() => handleToggle("chk3")}
                                         />
                                         <label className="slider round" htmlFor="chk3"></label>
                                     </div>
@@ -332,8 +340,8 @@ const [isChecked4, setIsChecked4] = useState(false);
                                         <input
                                             type="checkbox"
                                             id="chk4"
-                                            checked={notificationSettings.isChecked4}
-                                        onChange={() => handleToggle("isChecked4")}
+                                            checked={isChecked4}
+                                        onChange={() => handleToggle("chk4")}
                                         />
                                         <label className="slider round" htmlFor="chk4"></label>
                                     </div>
