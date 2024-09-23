@@ -126,9 +126,9 @@ const [isChecked4, setIsChecked4] = useState(false);
     const updateAlarmData = (newSettings) => {
         const alarmData = JSON.stringify({
             "notifications": [
-                { "id": newSettings.not1, "isChecked": newSettings.isChecked2 },
-                { "id": newSettings.not2, "isChecked": newSettings.isChecked3 },
-                { "id": newSettings.not3, "isChecked": newSettings.isChecked4 }
+                { "id": newSettings.not1, "isChecked": isChecked2 },
+                { "id": newSettings.not2, "isChecked": isChecked3 },
+                { "id": newSettings.not3, "isChecked": isChecked4 }
             ]
         });
         fetch(`/api/v1/notifications`, {
