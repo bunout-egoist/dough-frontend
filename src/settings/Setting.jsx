@@ -44,10 +44,11 @@ export default function Setting() {
                 }
             })
               .then(data => {
-                console.log('1');
+                console.log('여기',data);
                 setCheckAlarm(data);
     
                  // 데이터 기반 체크박스 상태 업데이트
+                console.log(data[1].id)
                 const isChecked1 = data.every(item => item.isChecked);
                 setIsChecked1(isChecked1);
     
@@ -55,7 +56,7 @@ export default function Setting() {
                 acc[item.id] = item.isChecked;
                 return acc;
                 }, {});
-    
+
                 setIsChecked2(alarmMap[1] || false);
                 setIsChecked3(alarmMap[2] || false);
                 setIsChecked4(alarmMap[3] || false);
