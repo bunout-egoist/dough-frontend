@@ -106,9 +106,11 @@ const [isChecked4, setIsChecked4] = useState(false);
     const handleToggle = (type) => {
         setNotificationSettings((prevState) => {
             const newSettings = { ...prevState, [type]: !prevState[type] };
-    
+            
+            let newChecked1 = isChecked1;
+            
+            // 상태 변경에 따른 체크박스 업데이트
             if (type === "chk1") {
-                // chk1 체크 상태에 따라 chk2, chk3, chk4의 상태 설정
                 const newCheckedState = !prevState.chk1; // chk1의 새로운 상태
                 setIsChecked2(newCheckedState);
                 setIsChecked3(newCheckedState);
@@ -122,16 +124,18 @@ const [isChecked4, setIsChecked4] = useState(false);
             }
     
             // chk2, chk3, chk4가 모두 true일 때 chk1도 true로 설정
-            const allChecked = newSettings.not2 && newSettings.not3 && newSettings.not4;
-            if (allChecked) {
-                setIsChecked1(true);
+            if (newSettings.not2 && newSettings.not3 && newSettings.not4) {
+                newChecked1 = true;
+            } else {
+                // chk2, chk3, chk4 중 하나라도 false가 될 경우 chk1은 false
+                newChecked1 = false;
             }
-
-            // chk2, chk3, chk4 중 하나라도 false가 될 경우 chk1은 false
-            if (!newSettings.not2 || !newSettings.not3 || !newSettings.not4) {
-                setIsChecked1(false);
-            }
-            console.log('알람', type, isChecked1, isChecked2, isChecked3, isChecked4);
+    
+            setIsChecked1(newChecked1); // 여기서 chk1의 상태를 업데이트
+    
+            console.log('알람', type, newChecked1, newSettings.not2, newSettings.not3, newSettings.not4);
+    
+            // 새 상태로 업데이트된 후에 updateAlarmData 호출
             updateAlarmData(newSettings);
     
             return newSettings;
