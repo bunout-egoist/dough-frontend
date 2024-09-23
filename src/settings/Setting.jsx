@@ -137,6 +137,7 @@ const [isChecked4, setIsChecked4] = useState(false);
     
   
     const updateAlarmData = (newSettings) => {
+
         const alarmData = JSON.stringify({
             "notifications": [
                 { "id": newSettings.not1, "isChecked": isChecked2 },
@@ -144,6 +145,7 @@ const [isChecked4, setIsChecked4] = useState(false);
                 { "id": newSettings.not3, "isChecked": isChecked4 }
             ]
         });
+        console.log(alarmData,'보내기전');
         fetch(`/api/v1/notifications`, {
             method: 'PUT',
             credentials: 'include',
@@ -155,6 +157,7 @@ const [isChecked4, setIsChecked4] = useState(false);
         })
             .then(response => response.json())
             .then(data => {
+                console.log(alarmData,data);
                 console.log('Notification settings updated');
             })
             .catch(error => {
