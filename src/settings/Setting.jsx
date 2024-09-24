@@ -164,9 +164,9 @@ useEffect(() => {
             if (fetchTrue){
                 const alarmData = JSON.stringify({
                     "notifications": [
-                        { "id": newSettings.not1, "isChecked": isChecked2 },
-                        { "id": newSettings.not2, "isChecked": isChecked3 },
-                        { "id": newSettings.not3, "isChecked": isChecked4 }
+                        { "id": notificationSettings.not1, "isChecked": isChecked2 },
+                        { "id": notificationSettings.not2, "isChecked": isChecked3 },
+                        { "id": notificationSettings.not3, "isChecked": isChecked4 }
                     ]
                 });
                 console.log(alarmData,'보내기전');
