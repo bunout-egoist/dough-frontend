@@ -28,66 +28,64 @@ export default function Redirection() {
         try {
           console.log('들어옴');
           const permission = await Notification.requestPermission();
+          let fcmToken = null;
+
           if (permission === 'granted') {
-            const fcmToken = await getToken(messaging, {
-              vapidKey: 'BNurVqZe4BswlsPVV-GQ9u9HSOcCgDFKbC9ZcFOztppeAT3xVkEGbT-ZDBkTKjUH3EhWgGnQgqqkg9pcAqL0LQk', // 여기서 VAPID 공개 키를 사용합니다.
-            });
-            if (fcmToken) {
-              // 서버로 토큰 전송
-              fetch(`/api/v1/auth/login/kakao?code=${logincode}`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body : JSON.stringify({
-                  "fcmToken" :fcmToken
-                }),
-                credentials: 'include'
-              })
-              .then((response) => {
-                console.log("Response status:", response.status);
-                if (response.status === 200) {
-                  setLoginSuccess(true);
-                }
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-                return response.json();
-              })
-              .then((data) => {
-                console.log("Received data:", data, data.isNewMember);
-        
-                  const accessToken = data.accessToken;
-                  const refreshToken = data.refreshToken;
-                  // Store tokens in local storage
-                  localStorage.setItem('accessToken', accessToken);
-                  localStorage.setItem('refreshToken', refreshToken);
-                  console.log(localStorage.getItem('accessToken', accessToken));
-                  setLoginSuccess(true); // 토큰 저장 후에 상태 업데이트
-                  setIsNewMember(data.isNewMember);
-                  console.log('상태?',data.isNewMember);
-                // else {
-                //   console.error('로그인 중 오류 발생:', data.message);
-                // }
-              })
-              .catch((error) => {
-                console.error('로그인 중 오류 발생:', error);
+            try {
+              fcmToken = await getToken(messaging, {
+                vapidKey: 'BNurVqZe4BswlsPVV-GQ9u9HSOcCgDFKbC9ZcFOztppeAT3xVkEGbT-ZDBkTKjUH3EhWgGnQgqqkg9pcAqL0LQk',
               });
-            } else {
-              alert('어플 내 알람 권한 설정을 반드시 허용해주세요!');
-              navigate('/');
-            } 
+            } catch (error) {
+              console.error('FCM 토큰을 가져오는 중 오류 발생:', error);
+            }
           }
-          else{
+
+          if (!fcmToken) {
             alert('어플 내 알람 권한 설정을 반드시 허용해주세요!');
-            navigate('/');
           }
+          console.log(fcmToken,'토큰존재');
+          // 서버로 로그인 요청 전송 (fcmToken이 없으면 null로 전송)
+          fetch(`/api/v1/auth/login/kakao?code=${logincode}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              "fcmToken": fcmToken || null,
+            }),
+            credentials: 'include',
+          })
+          .then((response) => {
+            console.log("Response status:", response.status);
+            if (response.status === 200) {
+              setLoginSuccess(true);
+            }
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Received data:", data, data.isNewMember);
+            const accessToken = data.accessToken;
+            const refreshToken = data.refreshToken;
+
+            // Store tokens in local storage
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
+            setLoginSuccess(true); 
+            setIsNewMember(data.isNewMember);
+          })
+          .catch((error) => {
+            console.error('로그인 중 오류 발생:', error);
+          });
+
         } catch (error) {
           console.error('Error getting FCM token:', error);
         }
       };
-      getAndSendToken();
 
+      getAndSendToken();
     }
   }, [logincode]);
 
