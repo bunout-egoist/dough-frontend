@@ -12,9 +12,9 @@ export default function Setting() {
   const navigate = useNavigate();
   const [isChecked1, setIsChecked1] = useState(false);
   const [isChecked2, setIsChecked2] = useState(false);
-const [isChecked3, setIsChecked3] = useState(false);
-const [isChecked4, setIsChecked4] = useState(false);
-
+    const [isChecked3, setIsChecked3] = useState(false);
+    const [isChecked4, setIsChecked4] = useState(false);
+    const [fetchTrue, setFetchTrue]= useState(false)
   const [notificationSettings, setNotificationSettings] = useState({
     not1: 0,
     not2: 0,
@@ -62,6 +62,8 @@ const [isChecked4, setIsChecked4] = useState(false);
                     not2: data[1].id,
                     not3: data[2].id,
                 });
+                setFetchTrue(true);
+                
                 console.log('첫 세팅', isChecked1, isChecked2, isChecked3,isChecked4);
               })
               .catch(error => {
@@ -105,74 +107,79 @@ const [isChecked4, setIsChecked4] = useState(false);
     },[accessToken])
     // Handle notification toggle changes
     const handleToggle = (type) => {
-        fetchSetting(accessToken);
-        setNotificationSettings((prevState) => {
-            const newSettings = { ...prevState, [type]: !prevState[type] };
-            
-            let newChecked1 = isChecked1;
-            
-            // 상태 변경에 따른 체크박스 업데이트
-            if (type === "chk1") {
-                const newCheckedState = !prevState.chk1; // chk1의 새로운 상태
-                setIsChecked2(newCheckedState);
-                setIsChecked3(newCheckedState);
-                setIsChecked4(newCheckedState);
-            } else if (type === "chk2") {
-                setIsChecked2(!isChecked2);
-            } else if (type === "chk3") {
-                setIsChecked3(!isChecked3);
-            } else if (type === "chk4") {
-                setIsChecked4(!isChecked4);
-            }
-    
-            // chk2, chk3, chk4가 모두 true일 때 chk1도 true로 설정
-            if (newSettings.not2 && newSettings.not3 && newSettings.not4) {
-                newChecked1 = true;
-            } else {
-                // chk2, chk3, chk4 중 하나라도 false가 될 경우 chk1은 false
-                newChecked1 = false;
-            }
-    
-            setIsChecked1(newChecked1); // 여기서 chk1의 상태를 업데이트
-    
-            console.log('알람', type, newChecked1, isChecked1, isChecked2, isChecked3,isChecked4);
-    
-            // 새 상태로 업데이트된 후에 updateAlarmData 호출
-            updateAlarmData(newSettings);
-    
-            return newSettings;
-        });
+        if (fetchTrue){
+            console.log(isChecked1,isChecked2,isChecked3,isChecked4, '토글처리전')
+            setNotificationSettings((prevState) => {
+                const newSettings = { ...prevState, [type]: !prevState[type] };
+                
+                let newChecked1 = isChecked1;
+                
+                // 상태 변경에 따른 체크박스 업데이트
+                if (type === "chk1") {
+                    const newCheckedState = !prevState.chk1; // chk1의 새로운 상태
+                    setIsChecked2(newCheckedState);
+                    setIsChecked3(newCheckedState);
+                    setIsChecked4(newCheckedState);
+                } else if (type === "chk2") {
+                    setIsChecked2(!isChecked2);
+                } else if (type === "chk3") {
+                    setIsChecked3(!isChecked3);
+                } else if (type === "chk4") {
+                    setIsChecked4(!isChecked4);
+                }
+        
+                // chk2, chk3, chk4가 모두 true일 때 chk1도 true로 설정
+                if (newSettings.not2 && newSettings.not3 && newSettings.not4) {
+                    newChecked1 = true;
+                } else {
+                    // chk2, chk3, chk4 중 하나라도 false가 될 경우 chk1은 false
+                    newChecked1 = false;
+                }
+        
+                setIsChecked1(newChecked1); // 여기서 chk1의 상태를 업데이트
+        
+                console.log('토글후알람', type, newChecked1, isChecked1, isChecked2, isChecked3,isChecked4);
+        
+                // 새 상태로 업데이트된 후에 updateAlarmData 호출
+                updateAlarmData(newSettings);
+        
+                return newSettings;
+            });
+        }
+        
     };
     
     
   
     const updateAlarmData = (newSettings) => {
 
-        const alarmData = JSON.stringify({
-            "notifications": [
-                { "id": newSettings.not1, "isChecked": isChecked2 },
-                { "id": newSettings.not2, "isChecked": isChecked3 },
-                { "id": newSettings.not3, "isChecked": isChecked4 }
-            ]
-        });
-        console.log(alarmData,'보내기전');
-        fetch(`/api/v1/notifications`, {
-            method: 'PUT',
-            credentials: 'include',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
-            },
-            body: alarmData
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(alarmData,data);
-                console.log('Notification settings updated');
-            })
-            .catch(error => {
-                console.error('Error updating notifications:', error);
+        if (fetchTrue){
+            const alarmData = JSON.stringify({
+                "notifications": [
+                    { "id": newSettings.not1, "isChecked": isChecked2 },
+                    { "id": newSettings.not2, "isChecked": isChecked3 },
+                    { "id": newSettings.not3, "isChecked": isChecked4 }
+                ]
             });
+            console.log(alarmData,'보내기전');
+            fetch(`/api/v1/notifications`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: alarmData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(alarmData,data);
+                    console.log('Notification settings updated');
+                })
+                .catch(error => {
+                    console.error('Error updating notifications:', error);
+                });
+        }
     };
 
 
