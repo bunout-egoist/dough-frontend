@@ -105,6 +105,7 @@ const [isChecked4, setIsChecked4] = useState(false);
     },[accessToken])
     // Handle notification toggle changes
     const handleToggle = (type) => {
+        fetchSetting(accessToken);
         setNotificationSettings((prevState) => {
             const newSettings = { ...prevState, [type]: !prevState[type] };
             
@@ -134,7 +135,7 @@ const [isChecked4, setIsChecked4] = useState(false);
     
             setIsChecked1(newChecked1); // 여기서 chk1의 상태를 업데이트
     
-            console.log('알람', type, newChecked1, newSettings.not2, newSettings.not3, newSettings.not4);
+            console.log('알람', type, newChecked1, isChecked1, isChecked2, isChecked3,isChecked4);
     
             // 새 상태로 업데이트된 후에 updateAlarmData 호출
             updateAlarmData(newSettings);
