@@ -10,20 +10,23 @@ export default function MainBg() {
       backgroundColor: "#FF7A2F",
       isChecked: false,
       missionText: "노래 들으면서 10분 산책하기",
+      subMissionText:'점심을 먹고',
       status: "",
     },
     {
       id: 2,
       backgroundColor: "#8FBCFF",
       isChecked: false,
-      missionText: "노래 들으면서 20분 춤추기",
+      missionText: "지금으로부터 딱 15분만 걱정하기",
+      subMissionText:'타이머를 키고 15분 설정',
       status: "",
     },
     {
       id: 3,
       backgroundColor: "#FFC13A",
       isChecked: false,
-      missionText: "노래 들으면서 50분 디제잉하기",
+      missionText: "오늘 하루 나를 위한 음식 요리하기",
+      subMissionText:'나를 챙기는 시간',
       status: "",
     },
   ];
@@ -119,6 +122,7 @@ export default function MainBg() {
               backgroundColor={mission.backgroundColor}
               isChecked={mission.isChecked}
               missionText={mission.missionText}
+              missionSubText={mission.subMissionText}
               status={mission.status} // Pass the status prop
               onCheck={() => handleMissionCheck(mission.id)}
             />
