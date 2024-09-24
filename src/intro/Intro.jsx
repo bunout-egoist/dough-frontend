@@ -46,12 +46,12 @@ export default function Intro() {
         window.location.href = link;
     };
   
-    // const handleAppleResponse = (response) => {
-    //     console.log("Apple Login Response: ", response);
-    //     // response.detail.authorization.id_token을 통해 idToken 확인 가능
-    //     const idToken = response?.authorization?.id_token;
-    //     console.log("ID Token: ", idToken);
-    // };
+    const handleAppleResponse = (response) => {
+        console.log("Apple Login Response: ", response);
+        // response.detail.authorization.id_token을 통해 idToken 확인 가능
+        const idToken = response?.authorization?.id_token;
+        console.log("ID Token: ", idToken);
+    };
     // const loginWithApple = async (e) => {
     //     e.preventDefault();
     
@@ -93,7 +93,7 @@ export default function Intro() {
                                 </div>
                             </div>
                             {isIos ? (
-                                <div className="intropage-sns intropage-apple" onClick={loginWithApple}>
+                                <div className="intropage-sns intropage-apple" >
                                     <AppleLogin
                                         clientId="com.bunout.appServices"
                                         redirectURI="https://app.bunout.info/api/v1/auth/login/apple" 
