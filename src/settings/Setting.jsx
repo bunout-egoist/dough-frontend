@@ -161,7 +161,7 @@ useEffect(() => {
     useEffect(() => {
         // const updateAlarmData = (newSettings) => {
 
-            if (fetchTrue){
+            if (fetchTrue && toggleTrue){
                 const alarmData = JSON.stringify({
                     "notifications": [
                         { "id": notificationSettings.not1, "isChecked": isChecked2 },
@@ -188,6 +188,7 @@ useEffect(() => {
                         console.error('Error updating notifications:', error);
                     });
             }
+            setToggleTrue(false);
         // };
     
       }, [fetchTrue, toggleTrue,isChecked1, isChecked2, isChecked3, isChecked4]);
