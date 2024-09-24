@@ -128,7 +128,7 @@ export default function Intro() {
                                 </div>
                             ) : null}
                             <Link to="/tutorial">
-                                <div>서비스 둘러보기</div>
+                                <div className="landing-tuto">서비스 둘러보기</div>
                             </Link>
                         </div>
                     </div>

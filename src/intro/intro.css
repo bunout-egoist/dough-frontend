@@ -94,3 +94,10 @@
     width: 22rem;
     animation: shown 3.1s forwards;
 }
+
+.landing-tuto{
+    color: #8F94A2;
+    font-family: 'Pretendard-Regular';
+    font-size: 1.3rem;
+    text-decoration: underline;
+}
