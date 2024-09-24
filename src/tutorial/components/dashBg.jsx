@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from '../../dashpage/dash.css';
 import $ from "jquery";
 import Calendar from "../../dashpage/Calendar";
-import Navbar from "../navbar/Navbar";
+import Navbar from '../../navbar/Navbar';
 import { useNavigate } from "react-router-dom";
 
 export default function DashBg() {
