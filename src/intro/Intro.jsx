@@ -3,6 +3,7 @@ import styles from "./intro.css"; // eslint-disable-next-line
 import { isPlatform } from '@ionic/react';  // Import Capacitor's isPlatform utility
 import { Link } from "react-router-dom";
 import FirstPage from "./FirstPage";
+import AppleLogin from "react-apple-login";
 export default function Intro() {
     const [isIos, setIsIos] = useState(false); // State to determine if the device is iOS
     const [showNextPage, setShowNextPage] = useState(false); // State to toggle between FirstPage and NextPage
@@ -44,39 +45,34 @@ export default function Intro() {
     const loginHandler = () => {
         window.location.href = link;
     };
-    // async function handleAppleLogin() {
-    //    
-    //         const APPLE_CLIENT_ID = 'com.bunout.appServices';
-    //         const APPLE_REDIRECT_URI= encodeURIComponent('https://bunout.info/api/v1/auth/login/apple');
-    //         const appleLoginUrl = `https://appleid.apple.com/auth/authorize?client_id=${APPLE_CLIENT_ID}&redirect_uri=${APPLE_REDIRECT_URI}&response_type=code&response_mode=post-form`;
-    //         window.location.href = appleLoginUrl;
-    //     
+  
+    // const handleAppleResponse = (response) => {
+    //     console.log("Apple Login Response: ", response);
+    //     // response.detail.authorization.id_token을 통해 idToken 확인 가능
+    //     const idToken = response?.authorization?.id_token;
+    //     console.log("ID Token: ", idToken);
     // };
-    const loginWithApple = async (e) => {
-        e.preventDefault();
+    // const loginWithApple = async (e) => {
+    //     e.preventDefault();
     
-        console.log('sign in with apple');
+    //     console.log('sign in with apple');
     
-        // AppleID 초기화
-        window.AppleID.auth.init({
-          clientId: 'com.bunout.appServices', // Apple Developer에서 제공하는 clientId
-          scope: '', // 예: 'name email'
-          redirectURI: 'https://app.bunout.info/api/v1/auth/login/apple', // 리다이렉트될 URI
-          usePopup: false, // 팝업으로 인증할지 여부
-        });
-    
-        try {
-          // Apple 로그인 요청
-          const res = await window.AppleID.auth.signIn();
-          console.log('Apple Login Response:', res);
-          // 로그인 성공 시 처리 로직 추가
-        } catch (error) {
-          console.error('Apple Login Error:', error);
-        }
-      };
-    //   const appleResponse = (response) => {
-    //     console.log("Apple Login Response:", response);
-    //     // Apple 로그인 후 처리
+    //     // AppleID 초기화
+    //     window.AppleID.auth.init({
+    //       clientId: 'com.bunout.appServices', // Apple Developer에서 제공하는 clientId
+    //       scope: '', // 예: 'name email'
+    //       redirectURI: 'https://app.bunout.info/api/v1/auth/login/apple', // 리다이렉트될 URI
+    //       usePopup: false, // 팝업으로 인증할지 여부
+    //     });
+
+    //     try {
+    //       // Apple 로그인 요청
+    //       const res = await window.AppleID.auth.signIn();
+    //       console.log('Apple Login Response:', res);
+    //       // 로그인 성공 시 처리 로직 추가
+    //     } catch (error) {
+    //       console.error('Apple Login Error:', error);
+    //     }
     // };
 
     const [gifSrc, setGifSrc] = useState('/images/intro/onboard.gif');
@@ -98,33 +94,18 @@ export default function Intro() {
                             </div>
                             {isIos ? (
                                 <div className="intropage-sns intropage-apple" onClick={loginWithApple}>
-                                    {/* <AppleLogin
-                            clientId="com.bunout.appServices"
-                            redirectURI="https://bunout.info/api/v1/auth/login/apple"
-                            usePopup={false}
-                            callback={appleResponse} // Catch the response
-                            scope="email name"
-                            responseMode="query"
-                            render={renderProps => (  //Custom Apple Sign in Button
-                                    <button
-                                        onClick={renderProps.onClick}
-                                            style={{
-                                                backgroundColor: "white",
-                                                padding: 10,
-                                                border: "1px solid black",
-                                                fontFamily: "none",
-                                                lineHeight: "25px",
-                                                fontSize: "25px"
-                                                }}
-                                        >
-                                        <i className="fa-brands fa-apple px-2 "></i>
-                                        Continue with Apple
-                                    </button>
-                    )}
-                    />        */}
-                    <div className="intropage-kakao-img" >
+                                    <AppleLogin
+                                        clientId="com.bunout.appServices"
+                                        redirectURI="https://app.bunout.info/api/v1/auth/login/apple" 
+                                        responseType="code id_token" // OAuth 2.0에서 사용할 응답 형식
+                                        responseMode="form_post" // 서버로 전달할 방식 (post 요청으로 전달)
+                                        usePopup={false} // 팝업 방식이 아닌 리디렉션 방식 사용
+                                        onSuccess={handleAppleResponse} // 성공 시 실행될 함수
+                                        onError={(error) => console.error('Apple Login Error: ', error)} // 에러 처리
+                                        />
+                        {/* <div className="intropage-kakao-img" >
                                         <img src="/images/intro/apple.png" className="img-width" alt="Apple Login" />
-                                    </div>
+                                    </div> */}
                                 </div>
                             ) : null}
                             <Link to="/tutorial">
