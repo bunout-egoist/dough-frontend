@@ -130,6 +130,7 @@ useEffect(() => {
                     setIsChecked2(newCheckedState);
                     setIsChecked3(newCheckedState);
                     setIsChecked4(newCheckedState);
+                    console.log('1번째',newCheckedState)
                 } else if (type === "chk2") {
                     setIsChecked2(!isChecked2);
                 } else if (type === "chk3") {
