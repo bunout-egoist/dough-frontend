@@ -105,6 +105,14 @@ export default function Setting() {
         fetchSetting(accessToken);
        }
     },[accessToken])
+
+
+// Add another useEffect to log the state once it's updated
+useEffect(() => {
+    if (fetchTrue) {
+      console.log('첫 세팅2', isChecked1, isChecked2, isChecked3, isChecked4);
+    }
+  }, [fetchTrue, isChecked1, isChecked2, isChecked3, isChecked4]);
     // Handle notification toggle changes
     const handleToggle = (type) => {
         if (fetchTrue){
