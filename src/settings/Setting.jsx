@@ -122,10 +122,10 @@ useEffect(() => {
                 const newSettings = { ...prevState, [type]: !prevState[type] };
                 
                 let newChecked1 = isChecked1;
-                
+                const newCheckedState = !prevState.chk1; // chk1의 새로운 상태
                 // 상태 변경에 따른 체크박스 업데이트
                 if (type === "chk1") {
-                    const newCheckedState = !prevState.chk1; // chk1의 새로운 상태
+                   
                     setIsChecked1(newCheckedState)
                     setIsChecked2(newCheckedState);
                     setIsChecked3(newCheckedState);
@@ -144,7 +144,7 @@ useEffect(() => {
                     newChecked1 = true;
                 } else {
                     // chk2, chk3, chk4 중 하나라도 false가 될 경우 chk1은 false
-                    newChecked1 = false;
+                    newChecked1 = newCheckedState;
                 }
         
                 setIsChecked1(newChecked1); // 여기서 chk1의 상태를 업데이트
