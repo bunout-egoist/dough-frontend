@@ -103,7 +103,7 @@ export default function Intro() {
                                         onSuccess={handleAppleResponse} // 성공 시 실행될 함수
                                         onError={(error) => console.error('Apple Login Error: ', error)} // 에러 처리
                                         />
-                        {/* <div className="intropage-kakao-img" >
+                                    {/* <div className="intropage-kakao-img" >
                                         <img src="/images/intro/apple.png" className="img-width" alt="Apple Login" />
                                     </div> */}
                                 </div>

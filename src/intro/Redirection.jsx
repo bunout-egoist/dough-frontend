@@ -41,7 +41,14 @@ export default function Redirection() {
           }
 
           if (!fcmToken) {
-            alert('어플 내 알람 권한 설정을 반드시 허용해주세요!');
+            if (window.ReactNativeWebView) {
+              // WebView에서 실행되는 경우
+              window.ReactNativeWebView.postMessage('알람을 허용해주세요!');
+            } else {
+              // 브라우저에서 실행되는 경우
+              alert('알람을 허용해주세요!');
+            }
+            
           }
           console.log(fcmToken,'토큰존재');
           // 서버로 로그인 요청 전송 (fcmToken이 없으면 null로 전송)

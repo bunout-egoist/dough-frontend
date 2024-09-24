@@ -65,7 +65,14 @@ export default function EditQuest() {
             // 204 No Content 응답의 경우는 데이터가 없기 때문에 data는 undefined
             if (data) {
                 console.error('오류 발생:', data.message);
-                alert(data.message)
+                if (window.ReactNativeWebView) {
+                    // WebView에서 실행되는 경우
+                    window.ReactNativeWebView.postMessage(data.message);
+                  } else {
+                    // 브라우저에서 실행되는 경우
+                    alert(data.message);
+                  }
+                  
                 setTimeout(()=>{
                     navigate('/setting');
                 },1500)

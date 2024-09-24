@@ -62,7 +62,14 @@ const handleButtonClick = () => {
     })
     .then(data => {
       if (data.code == 3001){
-        alert('번아웃 유형은 이번 달에 이미 수정되었습니다.')
+        if (window.ReactNativeWebView) {
+            // WebView에서 실행되는 경우
+            window.ReactNativeWebView.postMessage("번아웃 유형은 이번 달에 이미 수정되었습니다.");
+          } else {
+            // 브라우저에서 실행되는 경우
+            alert("번아웃 유형은 이번 달에 이미 수정되었습니다.");
+          }
+          
       }
       setTimeout(()=>{
         navigate('/setting');

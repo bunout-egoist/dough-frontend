@@ -34,7 +34,14 @@ export default function Info() {
         
         // Validate nickname length
         if (value.length > 5) {
-            alert('닉네임은 5자 이하로 적어주세요');
+            if (window.ReactNativeWebView) {
+                // WebView에서 실행되는 경우
+                window.ReactNativeWebView.postMessage("닉네임은 5자 이하로 적어주세요");
+              } else {
+                // 브라우저에서 실행되는 경우
+                alert("닉네임은 5자 이하로 적어주세요");
+              }
+              
             setNickname(""); // Clear the input if more than 5 characters
             setIsButtonEnabled(false);
         } else {
