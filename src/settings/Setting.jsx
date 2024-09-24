@@ -14,7 +14,8 @@ export default function Setting() {
   const [isChecked2, setIsChecked2] = useState(false);
     const [isChecked3, setIsChecked3] = useState(false);
     const [isChecked4, setIsChecked4] = useState(false);
-    const [fetchTrue, setFetchTrue]= useState(false)
+    const [fetchTrue, setFetchTrue]= useState(false);
+    const [toggleTrue, setToggleTrue]= useState(false);
   const [notificationSettings, setNotificationSettings] = useState({
     not1: 0,
     not2: 0,
@@ -145,51 +146,53 @@ useEffect(() => {
                 }
         
                 setIsChecked1(newChecked1); // 여기서 chk1의 상태를 업데이트
-        
+                
                 console.log('토글후알람', type, newChecked1, isChecked1, isChecked2, isChecked3,isChecked4);
         
                 // 새 상태로 업데이트된 후에 updateAlarmData 호출
-                updateAlarmData(newSettings);
-        
+                // updateAlarmData(newSettings);
+                setToggleTrue(true);
                 return newSettings;
             });
         }
         
     };
     
-    
-  
-    const updateAlarmData = (newSettings) => {
+    useEffect(() => {
+        // const updateAlarmData = (newSettings) => {
 
-        if (fetchTrue){
-            const alarmData = JSON.stringify({
-                "notifications": [
-                    { "id": newSettings.not1, "isChecked": isChecked2 },
-                    { "id": newSettings.not2, "isChecked": isChecked3 },
-                    { "id": newSettings.not3, "isChecked": isChecked4 }
-                ]
-            });
-            console.log(alarmData,'보내기전');
-            fetch(`/api/v1/notifications`, {
-                method: 'PUT',
-                credentials: 'include',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                },
-                body: alarmData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(alarmData,data);
-                    console.log('Notification settings updated');
-                })
-                .catch(error => {
-                    console.error('Error updating notifications:', error);
+            if (fetchTrue){
+                const alarmData = JSON.stringify({
+                    "notifications": [
+                        { "id": newSettings.not1, "isChecked": isChecked2 },
+                        { "id": newSettings.not2, "isChecked": isChecked3 },
+                        { "id": newSettings.not3, "isChecked": isChecked4 }
+                    ]
                 });
-        }
-    };
-
+                console.log(alarmData,'보내기전');
+                fetch(`/api/v1/notifications`, {
+                    method: 'PUT',
+                    credentials: 'include',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: alarmData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(alarmData,data);
+                        console.log('Notification settings updated');
+                    })
+                    .catch(error => {
+                        console.error('Error updating notifications:', error);
+                    });
+            }
+        // };
+    
+      }, [fetchTrue, toggleTrue,isChecked1, isChecked2, isChecked3, isChecked4]);
+  
+    
 
     const handleLogout=()=>{
         fetch(`/api/v1/logout`, {
