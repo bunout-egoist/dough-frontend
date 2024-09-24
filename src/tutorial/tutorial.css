@@ -56,10 +56,10 @@
     top: 63%;
 }
 .tutorial-img-7{
-    top: 45%;
+    top: 43%;
 }
 .tutorial-img-8{
-    top: 55%;
+    top: 53%;
 }
 .tutorial-img-9{
     top: 55%;
@@ -215,6 +215,7 @@
     top: 60%;
 }
 .chat-6 .pointer{
+    display: none !important;
     transform: rotate(45deg) skew(15deg, 15deg);
     border-radius: 8px;
     margin-top: -9.5em;
@@ -363,13 +364,16 @@
         top: 32% !important;
     }
     .tutorial-img-5{
-        top: 32% !important;
+        top: 35% !important;
+    }
+    .tutorial-img-7 {
+        top: 35.9% !important;
     }
 }
 
 @media  (min-height:875px) and (min-width : 355px)  {
     .tutorial-img-5{
-        top: 37% !important;
+        top: 42% !important;
     }
 }
 
