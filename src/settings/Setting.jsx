@@ -62,6 +62,7 @@ const [isChecked4, setIsChecked4] = useState(false);
                     not2: data[1].id,
                     not3: data[2].id,
                 });
+                console.log('첫 세팅', isChecked1, isChecked2, isChecked3,isChecked4);
               })
               .catch(error => {
                 console.error('Error fetching data:', error);
