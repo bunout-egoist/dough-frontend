@@ -55,9 +55,9 @@ export default function Setting() {
             })
               .then(data => {
                 setIsChecked1(data.every(item => item.isChecked))
-                setIsChecked2(data[0].isChecked || true);
-                setIsChecked3(data[1].isChecked || true);
-                setIsChecked4(data[2].isChecked || true);
+                setIsChecked2(data[0].isChecked);
+                setIsChecked3(data[1].isChecked);
+                setIsChecked4(data[2].isChecked);
                 setNotificationSettings({
                     not1: data[0].id,
                     not2: data[1].id,
