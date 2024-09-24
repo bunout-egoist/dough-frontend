@@ -126,6 +126,7 @@ useEffect(() => {
                 // 상태 변경에 따른 체크박스 업데이트
                 if (type === "chk1") {
                     const newCheckedState = !prevState.chk1; // chk1의 새로운 상태
+                    setIsChecked1(newCheckedState)
                     setIsChecked2(newCheckedState);
                     setIsChecked3(newCheckedState);
                     setIsChecked4(newCheckedState);
