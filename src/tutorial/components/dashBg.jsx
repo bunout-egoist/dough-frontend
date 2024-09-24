@@ -5,7 +5,7 @@ import Calendar from "../../dashpage/Calendar";
 import Navbar from "../navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 
-export default function DashPage() {
+export default function DashBg() {
     const navigate = useNavigate();
     // 토큰 받기
     const [accessToken, setAccessToken] = useState(null);

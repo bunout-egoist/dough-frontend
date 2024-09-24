@@ -3,7 +3,7 @@ import styles from "./tutorial.css";
 import Chatbox from "./components/Chatbox";
 import MainBg from "./components/MainBg";
 import Navbar from './../navbar/Navbar';
-import DashPage from './../dashpage/DashPage';
+import DashBg from "./components/dashBg";
 import Finish from "./components/FInish";
 export default function Tutorial() {
     const [chatKey, setChatKey] = useState(0);
@@ -44,7 +44,7 @@ export default function Tutorial() {
         <div className="tutorial-page">
             <div className="tutorial-bg-area">
                 {/* Conditional Rendering: Use Calendar if chatKey is 11 or more, otherwise use MainBg */}
-                {chatKey < 10 ? <MainBg /> : <DashPage />}
+                {chatKey < 10 ? <MainBg /> : <DashBg />}
                 <Navbar />
             </div>
             <div className="tutorial-cover-area">
