@@ -1,10 +1,35 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-  ],
-  "start_url": ".",
+  "short_name": "BUNOUT",
+  "name": "BUNOUT",
+  "start_url": "https://app.bunout.info/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "id": "bunout",
+  "description": "bunout app",
+  "dir": "ltr",
+  "scope": "https://app.bunout.info/",
+  "lang": "ko",
+  "orientation": "any",
+  "categories": [
+    "entertainment",
+    "fitness",
+    "health",
+    "lifestyle",
+    "medical",
+    "personalization",
+    "social"
+  ],
+  "display_override": [
+    "standalone",
+    "window-controls-overlay"
+  ],
+  "icons": [
+  {
+      "src": "/images/icons/aos.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+  }
+]
 }
