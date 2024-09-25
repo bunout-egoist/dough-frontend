@@ -13,3 +13,14 @@ root.render(
   </BrowserRouter>
 );
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("sw.js")
+    .then(() => {
+      console.log("Okey!");
+    })
+    .catch((error) => {
+      cosole.log("FAIL", error);
+    });
+}
+
