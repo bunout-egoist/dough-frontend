@@ -28,22 +28,40 @@ export default function MissionBox({
   const tagClassName = `mission-tag ${isChecked ? "mission-tag-checked" : ""}`;
 
   // Function to open the gallery and select an image
+
   const handleOpenGallery = async () => {
     try {
+      // 권한 요청
+      const permission = await Camera.requestPermissions({
+        permissions: ['camera', 'photos'],
+      });
+  
+      // 권한이 부여되지 않았으면 종료
+      if (permission.camera !== 'granted' || permission.photos !== 'granted') {
+        alert('카메라 또는 사진 라이브러리에 접근할 수 없습니다. 권한을 확인해주세요.');
+        return;
+      }
+  
       const image = await Camera.getPhoto({
         resultType: CameraResultType.Uri,
         source: CameraSource.Photos,
         quality: 90,
       });
-
-      setImageSrc(image.webPath);
-      const response = await fetch(image.webPath);
-      const blob = await response.blob(); // Convert the image URI to a blob
-
-      console.log("Image blob:", blob);
-      const file = new File([blob], "image.jpg", { type: blob.type });
-
-      onImageUpload(id,file); // Pass the blob to Mainpage
+  
+      console.log("Selected image:", image); // 선택된 이미지 확인
+  
+      if (image && image.webPath) {
+        setImageSrc(image.webPath);
+        const response = await fetch(image.webPath);
+        const blob = await response.blob();
+        
+        console.log("Image blob:", blob);
+        const file = new File([blob], "image.jpg", { type: blob.type });
+  
+        onImageUpload(id, file); // 이미지 업로드 함수 호출
+      } else {
+        console.error("No valid webPath returned from Camera.getPhoto");
+      }
     } catch (err) {
       console.error("Error selecting image: ", err);
     }
@@ -84,6 +102,8 @@ export default function MissionBox({
             }`}
             checked={isChecked}
             onChange={onCheck}
+            accept="images/*" 
+            capture="filesystem"
           />
         </div>
       )}
