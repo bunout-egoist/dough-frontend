@@ -3,7 +3,7 @@ import styles from "./tutorial.css";
 import Chatbox from "./components/Chatbox";
 import MainBg from "./components/MainBg";
 import Navbar from './../navbar/Navbar';
-import DashBg from "./components/DashBg";
+import DashBg from "./components/dashBg";
 import Finish from "./components/FInish";
 export default function Tutorial() {
     const [chatKey, setChatKey] = useState(0);
