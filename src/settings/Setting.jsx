@@ -54,6 +54,7 @@ export default function Setting() {
                 }
             })
               .then(data => {
+                console.log('알람업뎃함',data);
                 setIsChecked1(data.every(item => item.isChecked))
                 setIsChecked2(data[0].isChecked);
                 setIsChecked3(data[1].isChecked);
