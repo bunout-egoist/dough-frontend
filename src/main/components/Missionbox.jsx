@@ -102,8 +102,6 @@ export default function MissionBox({
             }`}
             checked={isChecked}
             onChange={onCheck}
-            accept="images/*" 
-            capture="filesystem"
           />
         </div>
       )}
