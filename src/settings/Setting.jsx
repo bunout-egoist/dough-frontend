@@ -16,11 +16,30 @@ export default function Setting() {
     const [isChecked4, setIsChecked4] = useState(false);
     const [fetchTrue, setFetchTrue]= useState(false);
     const [toggleTrue, setToggleTrue]= useState(false);
+    const [isFcm, setIsFcm] = useState(false);
   const [notificationSettings, setNotificationSettings] = useState({
     not1: 0,
     not2: 0,
     not3: 0
 });
+
+// 얼럿
+const showNotification = (title, message) => {
+    // 알림 권한을 요청
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        // 알림 생성
+        new Notification(title, {
+          body: message,
+        });
+      } else {
+        console.log('알림 권한이 허용되지 않았습니다.');
+      }
+    }).catch(err => {
+      console.error('알림 권한 요청 중 오류 발생:', err);
+    });
+  };
+
     // 토큰을 useEffect를 통해 로컬스토리지에서 가져옴
     
     useEffect(()=>{
@@ -56,7 +75,13 @@ export default function Setting() {
               .then(data => {
                 console.log('알람업뎃함',data);
                 if (data[0].isFcmExisted == false){
-                    navigate('/');
+                    showNotification('BUNOUT', '기기 설정에서 어플 알람을 허용 후 재입장해주세요!')
+                    setTimeout(()=>{
+                        navigate('/')
+                    },2000)
+                  setIsFcm(false);
+                } else {
+                    setIsFcm(true);
                 }
                 setIsChecked1(data.every(item => item.isChecked))
                 setIsChecked2(data[0].isChecked);
@@ -120,8 +145,8 @@ useEffect(() => {
   }, [fetchTrue, isChecked1, isChecked2, isChecked3, isChecked4]);
     // Handle notification toggle changes
     const handleToggle = (type) => {
-        if (fetchTrue){
-            console.log(isChecked1,isChecked2,isChecked3,isChecked4, '토글처리전')
+        if (fetchTrue && isFcm){
+            console.log(isChecked1,isChecked2,isChecked3,isChecked4, '토글처리전');
             setNotificationSettings((prevState) => {
                 const newSettings = { ...prevState, [type]: !prevState[type] };
                 
@@ -160,6 +185,9 @@ useEffect(() => {
                 setToggleTrue(true);
                 return newSettings;
             });
+        }
+        else if (isFcm == false) {
+            alert('')
         }
         
     };

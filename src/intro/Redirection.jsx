@@ -22,6 +22,23 @@ export default function Redirection() {
   // Firebase 앱 초기화
   const app = initializeApp(firebaseConfig);
   const messaging = getMessaging(app);
+
+  const showNotification = (title, message) => {
+    // 알림 권한을 요청
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        // 알림 생성
+        new Notification(title, {
+          body: message,
+        });
+      } else {
+        console.log('알림 권한이 허용되지 않았습니다.');
+      }
+    }).catch(err => {
+      console.error('알림 권한 요청 중 오류 발생:', err);
+    });
+  };
+
   useEffect(() => {
     if (logincode) {
       const getAndSendToken = async () => {
@@ -41,13 +58,14 @@ export default function Redirection() {
           }
 
           if (!fcmToken) {
-            if (window.ReactNativeWebView) {
-              // WebView에서 실행되는 경우
-              window.ReactNativeWebView.postMessage('알람을 허용해주세요!');
-            } else {
-              // 브라우저에서 실행되는 경우
-              alert('알람을 허용해주세요!');
-            }
+            showNotification('BUNOUT', '어플설정에 들어가 알림 설정을 허용해주세요!');
+            // if (window.ReactNativeWebView) {
+            //   // WebView에서 실행되는 경우
+            //   window.ReactNativeWebView.postMessage('알람을 허용해주세요!');
+            // } else {
+            //   // 브라우저에서 실행되는 경우
+            //   alert('알람을 허용해주세요!');
+            // }
             
           }
           console.log(fcmToken,'토큰존재');
