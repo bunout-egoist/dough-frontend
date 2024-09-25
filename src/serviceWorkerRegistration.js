@@ -4,7 +4,7 @@
 // serviceWorker.js는 앱에 따라 다를 수 있으므로 실제 파일 이름과 경로를 확인하세요.
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      const swUrl = `${process.env.PUBLIC_URL}/sw.js`;
   
       navigator.serviceWorker
         .register(swUrl)
