@@ -20,7 +20,7 @@ if ("serviceWorker" in navigator) {
       console.log("Okey!");
     })
     .catch((error) => {
-      cosole.log("FAIL", error);
+      console.log("FAIL", error);
     });
 }
 
