@@ -326,7 +326,7 @@ useEffect(() => {
         <Link to="/level">
             <div className="mainpage-level-landing">
               <div className="mainpage-level-num">
-                레벨{level}
+                레벨 {level}
                 <svg
                   width="4"
                   height="8"
