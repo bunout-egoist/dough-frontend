@@ -63,6 +63,7 @@ useEffect(() => {
             .then(data => {
                 if (data) {
                     setMainContents(data);
+                    setLevel(data.level);
                     console.log(data);
                     const fixedColor = ["#5D9AFD","#41B3A2","#FFBE16","#FF7F42"];
                     const colorSet = [
@@ -184,6 +185,8 @@ useEffect(() => {
   const [activeMissionId, setActiveMissionId] = useState(null);
   const [isRoundSlideVisible, setIsRoundSlideVisible] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null); // State to store the selected image file
+  const [level, setLevel] = useState(0);
+
   useEffect(() => {
     // 세션 스토리지에서 저장된 데이터 읽기
     const savedMissions = sessionStorage.getItem('finishedMissions');
@@ -323,7 +326,7 @@ useEffect(() => {
         <Link to="/level">
             <div className="mainpage-level-landing">
               <div className="mainpage-level-num">
-                레벨2
+                레벨{level}
                 <svg
                   width="4"
                   height="8"
