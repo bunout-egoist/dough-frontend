@@ -75,10 +75,6 @@ const showNotification = (title, message) => {
               .then(data => {
                 console.log('알람업뎃함',data);
                 if (data[0].isFcmExisted == false){
-                    showNotification('BUNOUT', '기기 설정에서 어플 알람을 허용 후 재입장해주세요!')
-                    setTimeout(()=>{
-                        navigate('/')
-                    },2000)
                   setIsFcm(false);
                 } else {
                     setIsFcm(true);
@@ -187,7 +183,10 @@ useEffect(() => {
             });
         }
         else if (isFcm == false) {
-            alert('')
+            showNotification('BUNOUT', '기기 설정에서 어플 알람을 허용 후 재입장해주세요!')
+            setTimeout(()=>{
+                navigate('/')
+            },2000)
         }
         
     };

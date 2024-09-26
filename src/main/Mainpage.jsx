@@ -143,7 +143,12 @@ useEffect(() => {
                   },
                
             })
-            .then(response => response.json())
+            .then(response => {
+              console.log(response.json(),'상태');
+              if (response.json().code == 400){
+                navigate('/');
+              }
+            })
             .then(data => {
                 console.log('응답?',data);
                 if (data.accessToken) {
