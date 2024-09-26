@@ -38,17 +38,16 @@ export default function MissionBox({
       });
 
       setImageSrc(image.webPath);
-      const fileData = await Filesystem.readFile({
-        path: image.path, // Capacitor가 제공하는 이미지 경로
-      });
-      const blob = new Blob([fileData.data], { type: image.format }); 
+    //   const fileData = await Filesystem.readFile({
+    //     path: image.path, // Capacitor가 제공하는 이미지 경로
+    //   });
+    //   const blob = new Blob([fileData.data], { type: image.format }); 
+    // const file = new File([blob], "image.jpg", { type: blob.type });
+
+       // Fetch the image using the webPath
+    const response = await fetch(image.webPath);
+    const blob = await response.blob(); // Convert the image URI to a blob
     const file = new File([blob], "image.jpg", { type: blob.type });
-
-      // const response = await fetch(image.webPath);
-      // const blob = await response.blob(); // Convert the image URI to a blob
-
-      // console.log("Image blob:", blob);
-      // const file = new File([blob], "image.jpg", { type: blob.type });
 
       onImageUpload(id,file); // Pass the blob to Mainpage
     } catch (err) {
