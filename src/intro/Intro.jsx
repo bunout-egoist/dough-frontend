@@ -11,10 +11,11 @@ export default function Intro() {
 
     useEffect(() => {
         requestCameraPermission();
-        // 카메라 권한 확인
-      checkPermission('camera');
-      // 알림 권한 확인
-      checkPermission('notifications');
+        requestNotificationPermission();
+    //     // 카메라 권한 확인
+    //   checkPermission('camera');
+    //   // 알림 권한 확인
+    //   checkPermission('notifications');
         // Function to check if the current platform is iOS
         const checkPlatform = async () => {
             if (isPlatform('ios')) {
@@ -66,19 +67,31 @@ export default function Intro() {
           alert('카메라 접근이 필요합니다. 설정에서 카메라 권한을 허용해주세요.');
         }
       }
-      async function checkPermission(permissionName) {
-        try {
-          const permissionStatus = await navigator.permissions.query({ name: permissionName });
-          console.log(`${permissionName} 권한 상태:`, permissionStatus.state);
-      
-          // 권한이 없으면 사용자에게 권한 요청 안내
-          if (permissionStatus.state !== 'granted') {
-            alert(`${permissionName} 권한이 필요합니다. 설정에서 허용해주세요.`);
-          }
-        } catch (err) {
-          console.error('Permission check failed:', err);
+      function requestNotificationPermission() {
+        if ('Notification' in window) {
+          Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+              console.log('Notifications permission granted');
+            } else {
+              alert('알림을 사용하려면 권한을 허용해주세요.');
+            }
+          });
         }
       }
+      
+    //   async function checkPermission(permissionName) {
+    //     try {
+    //       const permissionStatus = await navigator.permissions.query({ name: permissionName });
+    //       console.log(`${permissionName} 권한 상태:`, permissionStatus.state);
+      
+    //       // 권한이 없으면 사용자에게 권한 요청 안내
+    //       if (permissionStatus.state !== 'granted') {
+    //         alert(`${permissionName} 권한이 필요합니다. 설정에서 허용해주세요.`);
+    //       }
+    //     } catch (err) {
+    //       console.error('Permission check failed:', err);
+    //     }
+    //   }
       
      
       
