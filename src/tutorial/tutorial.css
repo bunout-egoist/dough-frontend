@@ -22,6 +22,10 @@
     position: absolute;
     width: 100%;
     height: 100dvh;
+    overflow: hidden;
+}
+.tutorial-bg-area .dash-pate{
+    position: fixed;
 }
 .tutorial-cover-area{
     position: absolute;

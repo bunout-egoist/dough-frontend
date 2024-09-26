@@ -131,7 +131,7 @@ export default function DashPage() {
         <div className="mini-title">통계</div>
         <div className="flex-row">
           <div className="bottom-txt">이번 달 가장 열정적인 요일은</div>
-          <div className="bottom-result orange-txt">{highest}요일</div>
+          <div className="bottom-result orange-txt">{highest}</div>
         </div>
         <div className="flex-row">
           <div className="bottom-txt">이번달 평균 달성률은</div>

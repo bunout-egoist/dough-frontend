@@ -4,10 +4,11 @@ import { isPlatform } from '@ionic/react';  // Import Capacitor's isPlatform uti
 import { Link } from "react-router-dom";
 import FirstPage from "./FirstPage";
 import AppleLogin from "react-apple-login";
+import IntroPop from "../popup/IntroPop";
 export default function Intro() {
     const [isIos, setIsIos] = useState(false); // State to determine if the device is iOS
     const [showNextPage, setShowNextPage] = useState(false); // State to toggle between FirstPage and NextPage
-
+    const [nonAllow, setNonAllow] = useState(true);
 
     useEffect(() => {
         requestCameraPermission();
@@ -59,9 +60,12 @@ export default function Intro() {
         try {
           const stream = await navigator.mediaDevices.getUserMedia({ video: true });
           console.log('Camera access granted');
+          setNonAllow(false);
         } catch (err) {
           console.error('Camera access denied', err);
           alert('카메라 접근이 필요합니다. 설정에서 카메라 권한을 허용해주세요.');
+          setNonAllow(true);
+          console.log(nonAllow);
         }
       }
       function requestNotificationPermission() {
@@ -69,8 +73,11 @@ export default function Intro() {
           Notification.requestPermission().then(permission => {
             if (permission === 'granted') {
               console.log('Notifications permission granted');
+                setNonAllow(false);
             } else {
               alert('알림을 사용하려면 권한을 허용해주세요.');
+              setNonAllow(true);
+              console.log(nonAllow);
             }
           });
         }
@@ -101,14 +108,18 @@ export default function Intro() {
     //       console.error('Apple Login Error:', error);
     //     }
     // };
-
+    const handlePopClose = () => {
+        setNonAllow(false); // nonAllow를 false로 설정
+    };
     const [gifSrc, setGifSrc] = useState('/images/intro/onboard.gif');
     return (
         <div className="intropage">
+             {nonAllow ? (<IntroPop onClose={handlePopClose} /> ):(<div></div>)}
              {!showNextPage ? (
                 <FirstPage />
             ) : (
                 <div className="nextpage">
+                    
                     <div className="profile-img">
                         <img src={`${gifSrc}?${new Date().getTime()}`} alt="gif" />
                     </div>
