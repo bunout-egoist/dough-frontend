@@ -12,10 +12,10 @@ export default function Intro() {
     useEffect(() => {
         requestCameraPermission();
         requestNotificationPermission();
-    //     // 카메라 권한 확인
-    //   checkPermission('camera');
-    //   // 알림 권한 확인
-    //   checkPermission('notifications');
+        // 카메라 권한 확인
+      checkPermission('camera');
+      // 알림 권한 확인
+      checkPermission('notifications');
         // Function to check if the current platform is iOS
         const checkPlatform = async () => {
             if (isPlatform('ios')) {

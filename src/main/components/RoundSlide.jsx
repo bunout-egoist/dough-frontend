@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import styles from "../main.css";
-
+import { useNavigate } from "react-router-dom";
 // Swiper modules
 // import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 
 export default function RoundSlide({ onSubmit, selectedMissionId }) {
+  const navigate = useNavigate();
   const initialImages = [
     {
       img: "/images/main/evaluate/1.png",
@@ -54,11 +55,13 @@ export default function RoundSlide({ onSubmit, selectedMissionId }) {
       selectedName: selectedName,
     });
   };
-
+  const exitRoundSlide= ()=>{
+    navigate('/main');
+  }
   return (
     <div className="roundslide-area">
       <div className={styles.carouselContainer}>
-        <div className="pos-rel">
+        <div className="pos-rel" onClick={exitRoundSlide}>
           <Swiper
             spaceBetween={0}
             slidesPerView={5}
