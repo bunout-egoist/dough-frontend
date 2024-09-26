@@ -10,7 +10,7 @@ export default function Intro() {
 
 
     useEffect(() => {
-        requestNotificationPermission()
+        requestCameraPermission();
         // 카메라 권한 확인
       checkPermission('camera');
       // 알림 권한 확인
