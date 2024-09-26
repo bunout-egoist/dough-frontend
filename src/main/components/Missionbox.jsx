@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Camera, CameraSource, CameraResultType } from "@capacitor/camera";
-
+import { Filesystem } from '@capacitor/filesystem';
 export default function MissionBox({
   isChecked,
   onCheck,
@@ -33,16 +33,22 @@ export default function MissionBox({
       const image = await Camera.getPhoto({
         resultType: CameraResultType.Uri,
         source: CameraSource.Photos,
-        quality: 90,
+        quality: 80,
         allowEditing: false,
       });
 
       setImageSrc(image.webPath);
-      const response = await fetch(image.webPath);
-      const blob = await response.blob(); // Convert the image URI to a blob
+      const fileData = await Filesystem.readFile({
+        path: image.path, // Capacitor가 제공하는 이미지 경로
+      });
+      const blob = new Blob([fileData.data], { type: image.format }); 
+    const file = new File([blob], "image.jpg", { type: blob.type });
 
-      console.log("Image blob:", blob);
-      const file = new File([blob], "image.jpg", { type: blob.type });
+      // const response = await fetch(image.webPath);
+      // const blob = await response.blob(); // Convert the image URI to a blob
+
+      // console.log("Image blob:", blob);
+      // const file = new File([blob], "image.jpg", { type: blob.type });
 
       onImageUpload(id,file); // Pass the blob to Mainpage
     } catch (err) {
