@@ -146,7 +146,9 @@ export default function EditQuest() {
                     </>
                 )}
                 <div className="questpage-btn-area">
-                    <div><img src="/images/setting/change-quest.png" className="img-width" /></div>
+                    <div className="btn-notice-div">
+                        <div className="notice-img-div"><img src="/images/setting/change-quest.png" className="img-width" /></div>
+                    </div>
                     <div className={`questpage-btn ${questNum >= 1 ? "questpage-btn-active" : ""}`} onClick={handleButtonClick}>완료하기</div>
                 </div>
             </div>

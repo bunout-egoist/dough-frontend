@@ -253,3 +253,14 @@
   position: fixed;
   width: 100%;
 }
+
+.btn-notice-div{
+  width: 100%;
+
+  position: absolute;
+  bottom: 5rem;
+}
+.notice-img-div{
+  width: 70%;
+  margin: 0 auto 1rem auto;
+}
