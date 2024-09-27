@@ -18,13 +18,31 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 // 백그라운드 메시지 처리
-messaging.onBackgroundMessage((payload) => {
-  console.log('Received background message ', payload);
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
-    icon: '/images/icons/aos.png'
-  };
+// messaging.onBackgroundMessage((payload) => {
+//   console.log('Received background message ', payload);
+//   const notificationTitle = payload.notification.title;
+//   const notificationOptions = {
+//     body: payload.notification.body,
+//     icon: '/images/icons/aos.png'
+//   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+//   self.registration.showNotification(notificationTitle, notificationOptions);
+// });
+self.addEventListener('push', function (event) {
+  if (event.data) {
+    const {
+      data: { title, body, link },
+    } = event.data.json();
+
+    const options = {
+      body,
+      data: {
+        link,
+      },
+    };
+
+    event.waitUntil(self.registration.showNotification(title, options));
+  } else {
+    console.log('푸시 이벤트 데이터가 없습니다.');
+  }
 });
