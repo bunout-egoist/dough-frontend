@@ -86,6 +86,7 @@ export default function EditType() {
                             <div className="typepage-btn-area">
                                 <div className="typepage-btn-area-abs">
                                     <div className="typepage-landing-test">잘 모르겠다면? 유형 검사하러 가기</div>
+                                    <div><img src="/images/setting/change-type.png" className="img-width" /></div>
                                     <div className={`typepage-btn ${selectedType >= 1 ? "typepage-btn-active" : ""}`}  onClick={handleButtonClick}>다음</div>
                                 </div>
                             </div>

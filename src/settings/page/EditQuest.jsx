@@ -132,7 +132,7 @@ export default function EditQuest() {
                         <div className="type-name">{selectedType}</div>
                         <div>
                             <div className="questpage-title">이름 같은 분에게 추천하는 행동이에요.</div>
-                            <div><img src="/images/type/quest-title.png" className="img-width" /></div>
+                            <div><img src="/images/setting/quest-edit.png" className="img-width" /></div>
                         </div>
                         <div className="fixed-quest-area">
                             {selectedMission.map((quest, index) => (
@@ -146,6 +146,7 @@ export default function EditQuest() {
                     </>
                 )}
                 <div className="questpage-btn-area">
+                    <div><img src="/images/setting/change-quest.png" className="img-width" /></div>
                     <div className={`questpage-btn ${questNum >= 1 ? "questpage-btn-active" : ""}`} onClick={handleButtonClick}>완료하기</div>
                 </div>
             </div>

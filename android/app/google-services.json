@@ -1,29 +1,29 @@
 {
-    "project_info": {
-      "project_number": "1064933370265",
-      "project_id": "bunout-2ed63",
-      "storage_bucket": "bunout-2ed63.appspot.com"
-    },
-    "client": [
-      {
-        "client_info": {
-          "mobilesdk_app_id": "1:1064933370265:android:008cfbd250bf00c7170b08",
-          "android_client_info": {
-            "package_name": "app.bunout.info"
-          }
-        },
-        "oauth_client": [],
-        "api_key": [
-          {
-            "current_key": "AIzaSyD7qus8l3AonUUYkWqMpRoEJxCbjV57Q8Y"
-          }
-        ],
-        "services": {
-          "appinvite_service": {
-            "other_platform_oauth_client": []
-          }
+  "project_info": {
+    "project_number": "1064933370265",
+    "project_id": "bunout-2ed63",
+    "storage_bucket": "bunout-2ed63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064933370265:android:008cfbd250bf00c7170b08",
+        "android_client_info": {
+          "package_name": "app.bunout.info"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7qus8l3AonUUYkWqMpRoEJxCbjV57Q8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
-    ],
-    "configuration_version": "1"
-  }
+    }
+  ],
+  "configuration_version": "1"
+}
