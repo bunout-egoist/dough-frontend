@@ -51,7 +51,7 @@ export default function Redirection() {
           if (permission === 'granted') {
             try {
               fcmToken = await getToken(messaging, {
-                vapidKey: 'BNurVqZe4BswlsPVV-GQ9u9HSOcCgDFKbC9ZcFOztppeAT3xVkEGbT-ZDBkTKjUH3EhWgGnQgqqkg9pcAqL0LQk',
+                vapidKey: 'BKSCCM1MOQZ5KfhXgstx-ZrMJR6P6XRlo3Slb1SI1ct0y4MkeeOZJsTaHkc1o4MUrpk_iHTq1hQtDv2UnUUlibw',
               });
             } catch (error) {
               console.error('FCM 토큰을 가져오는 중 오류 발생:', error);
