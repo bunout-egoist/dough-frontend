@@ -10,14 +10,15 @@ export default function Redirection() {
   const logincode = new URL(window.location.href).searchParams.get('code');
   const navigate = useNavigate();
   const firebaseConfig = {
-    apiKey: "AIzaSyDFDeWiSEbnfiZBStTYuIi2rf0Jc45RSQg",
-    authDomain: "bunout-6fab2.firebaseapp.com",
-    projectId: "bunout-6fab2",
-    storageBucket: "bunout-6fab2.appspot.com",
-    messagingSenderId: "111594277875",
-    appId: "1:111594277875:web:dd8f37f8e9d083f144a086",
-    measurementId: "G-87RHEJHXQ1"
+    apiKey: "AIzaSyAtJWz7IMbcsh65wvTJsr7xzsmpIMDD-Ao",
+    authDomain: "bunout-2ed63.firebaseapp.com",
+    projectId: "bunout-2ed63",
+    storageBucket: "bunout-2ed63.appspot.com",
+    messagingSenderId: "1064933370265",
+    appId: "1:1064933370265:web:3251f0d0af4f04fb170b08",
+    measurementId: "G-ZMM294BFWY"
   };
+  
   
   // Firebase 앱 초기화
   const app = initializeApp(firebaseConfig);
