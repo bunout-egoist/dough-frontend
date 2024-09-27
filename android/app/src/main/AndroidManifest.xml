@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<service
+    android:name=".MyFirebaseMessagingService"
+    android:exported="false">
+    <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+    </intent-filter>
+</service>
+
+<receiver
+    android:enabled="true"
+    android:exported="true"
+    android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+    android:permission="com.google.android.c2dm.permission.SEND">
+    <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        <category android:name="com.bunout.app" />
+    </intent-filter>
+</receiver>
 
     <application
         android:allowBackup="true"
