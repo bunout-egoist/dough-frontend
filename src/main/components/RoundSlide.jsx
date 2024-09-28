@@ -64,7 +64,7 @@ export default function RoundSlide({ onSubmit, selectedMissionId, onOut}) {
     <div className="roundslide-area">
       <div className={styles.carouselContainer}>
         <div className="pos-rel">
-         <div className="goOut" onClick={handleOut}>X</div>
+         <div className="goOut" onClick={handleOut}>취소</div>
           <Swiper
             spaceBetween={0}
             slidesPerView={5}
