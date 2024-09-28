@@ -321,7 +321,6 @@ useEffect(() => {
     const finecount = missions.filter(mission => mission.status === "finished").length;
     setCompletedCount(finecount);
     setTotalMissionsCount(missions.length);
-    console.log(finecount);
   }, [missions]);
 
   return (
@@ -375,7 +374,7 @@ useEffect(() => {
         {mainContents && mainContents.burnoutId !== undefined && (
             <div className="mainpage-img">
             <img
-              src={`/images/main/type/${mainContents.burnoutId}/${mainContents.completeQuest}.png`}
+              src={`/images/main/type/${mainContents.burnoutId}/${completedCount}.png`}
               className="img-width"
               alt="Main icon"
             />
