@@ -17,7 +17,7 @@ export default function MainLevel() {
 
 
     const [contents, setContents] = useState({});
-
+    const [bunoutId, setBunoutId] = useState(0);
     useEffect(() => {
         if (accessToken){
             const fetchLevel= (token) => {
@@ -32,7 +32,7 @@ export default function MainLevel() {
                     .then(response => response.json())
                     .then(data => {
                         setContents(data);  // 상태 업데이트
-                        console.log(data.attendanceCount);
+                        setBunoutId(data.burnoutId);
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);
@@ -103,7 +103,7 @@ export default function MainLevel() {
                     <div className="level-top-title-1">{contents.nickname}님</div>
                     <div className="level-top-title-2">멘탈 관리 중...</div>
                 </div>
-                <div className="level-top-img"><img className="img-width" src="/images/main/main_icon.png" /></div>
+                <div className="level-top-img"><img className="img-width" src={`/images/main/type/${bunoutId}/0.png`} /></div>
                 <div className="main-levelpage-level">
                     <div className="level-value">{contents.currentExp}/{contents.requiredExp}</div>
                     <div className="outer">
