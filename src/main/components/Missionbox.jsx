@@ -55,9 +55,14 @@ export default function MissionBox({
     }
   };
   const isFinished = status === 'finished';
+  const handleBoxClick = () => {
+    if (!isFinished) {
+      onCheck(); // 체크박스의 onChange 이벤트 실행
+    }
+  };
 
   return (
-    <div className={`${boxClassName} `}  style={{ backgroundColor, pointerEvents: isFinished ? 'none' : 'auto' }}>
+    <div className={`${boxClassName} `}        onClick={handleBoxClick} style={{ backgroundColor, pointerEvents: isFinished ? 'none' : 'auto' }}>
       <div>
         {/* <div className="mission-tag-flex">
           <div className={tagClassName} style={{ color: `${backgroundColor}` }}>
