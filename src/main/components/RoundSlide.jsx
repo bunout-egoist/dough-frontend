@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 // Swiper modules
 // import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 
-export default function RoundSlide({ onSubmit, selectedMissionId }) {
+export default function RoundSlide({ onSubmit, selectedMissionId, onOut}) {
   const navigate = useNavigate();
   const initialImages = [
     {
@@ -56,12 +56,15 @@ export default function RoundSlide({ onSubmit, selectedMissionId }) {
       selectedName: selectedName,
     });
   };
+  const handleOut = () => {
+    onOut();
+  };
 
   return (
     <div className="roundslide-area">
       <div className={styles.carouselContainer}>
         <div className="pos-rel">
-          <Link to="/main"><div className="goOut">X</div></Link>
+         <div className="goOut" onClick={handleOut}>X</div>
           <Swiper
             spaceBetween={0}
             slidesPerView={5}

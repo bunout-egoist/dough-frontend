@@ -322,13 +322,16 @@ useEffect(() => {
     setCompletedCount(finecount);
     setTotalMissionsCount(missions.length);
   }, [missions]);
-
+  const handleRoundOut = ()=>{
+    setIsRoundSlideVisible(false);
+  }
   return (
     <div className={`mainpage page-area ${isRoundSlideVisible ? 'mainpage-padding' : ''}`}>
       {isRoundSlideVisible && (
         <RoundSlide
           onSubmit={handleRoundSlideSubmit}
           selectedMissionId={activeMissionId}
+          onOut={handleRoundOut}
         />
       )}
       <div className="mainpage-real">
