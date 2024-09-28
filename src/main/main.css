@@ -439,3 +439,10 @@ button:hover {
 .roundslide-submit-btn:active{
     opacity: 50%;
 }
+.goOut{
+    width: 100vw;
+    height: 100dvh;
+    position:absolute;
+    top: 10%;
+    right: 0;
+}
