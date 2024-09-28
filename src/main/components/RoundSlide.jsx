@@ -57,11 +57,12 @@ export default function RoundSlide({ onSubmit, selectedMissionId }) {
   };
   const exitRoundSlide= ()=>{
     navigate('/main');
+    console.log('나가');
   }
   return (
-    <div className="roundslide-area">
+    <div className="roundslide-area" onClick={exitRoundSlide}>
       <div className={styles.carouselContainer}>
-        <div className="pos-rel" onClick={exitRoundSlide}>
+        <div className="pos-rel">
           <Swiper
             spaceBetween={0}
             slidesPerView={5}
