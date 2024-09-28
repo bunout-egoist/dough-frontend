@@ -329,6 +329,14 @@ body, html {
   background-color: white;
   border-bottom: 8px #EDEEF1 solid;
 }
+.detail-top .detail-top-title {
+  display: flex;
+  gap: 31%;
+  align-items: center;
+}
+.detail-top .detail-top-back {
+  width: 1.2rem;
+}
 .detail-top .top-title{
   font-family: 'Pretendard-Bold';
   font-size: 1.8rem;

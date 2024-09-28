@@ -1,6 +1,6 @@
 import React from "react";
 import MissionCard from "./components/MissionCard";
-
+import { Link } from "react-router-dom";
 export default class DetailPage extends React.Component {
     constructor(props) {
         super(props);
@@ -152,7 +152,10 @@ export default class DetailPage extends React.Component {
         return (
             <div className="detail-page page-area">
                 <div className="detail-top">
-                    <div className="top-title">주변 달성률</div>
+                    <div className="detail-top-title">
+                       <Link to="/dashpage"><div className="detail-top-back"><img className="img-width" src="/images/back.png"/></div></Link>
+                        <div className="top-title">주변 달성률</div>
+                    </div>
                     <div className="this-week">
                         {[...Array(7)].map((_, i) => {
                             const offsetDate = new Date(baseDate);
@@ -203,22 +206,9 @@ export default class DetailPage extends React.Component {
                     )}
                     
 
-{/*                     
-                    <MissionCard pictureState={0} />
-                    <MissionCard pictureState={1} /> */}
                 </div>
     
-                {/* <div className="navbar-area">
-                    <div className="navbar-icon">
-                        <img src="/images/navbarImage/chart.png" alt="이미지" className="img-width" />
-                    </div>
-                    <div className="navbar-icon">
-                        <img src="/images/navbarImage/home.png" alt="이미지" className="img-width" />
-                    </div>
-                    <div className="navbar-icon">
-                        <img src="/images/navbarImage/setting.png" alt="이미지" className="img-width" />
-                    </div>
-                </div> */}
+         
             </div>
         );
     }
