@@ -30,6 +30,7 @@ export default function Quest() {
         if (infoData) {
             console.log("Received infoData:", infoData);
             setUpdatedInfoData(infoData); // Initialize updatedInfoData with received infoData
+
         } else {
             console.log("No infoData received");
         }
@@ -138,7 +139,7 @@ export default function Quest() {
                 <>
                     <div className="type-name">{selectedType}</div>
                     <div>
-                        <div className="questpage-title">이름 같은 분에게 추천하는 행동이에요.</div>
+                        <div className="questpage-title">{updatedInfoData.nickname} 같은 분에게 추천하는 행동이에요.</div>
                         <div><img src="/images/type/quest-title.png" className="img-width" /></div>
                     </div>
                     <div className="fixed-quest-area">
