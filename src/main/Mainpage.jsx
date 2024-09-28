@@ -313,6 +313,16 @@ useEffect(() => {
     }
     return 0;
   });
+  const [completedCount, setCompletedCount] = useState(0);
+  const [totalMissionsCount, setTotalMissionsCount] = useState(0); // 전체 미션 개수 상태
+
+  useEffect(() => {
+    // `missions`가 업데이트될 때마다 `finished` 상태인 미션 개수 업데이트
+    const finecount = missions.filter(mission => mission.status === "finished").length;
+    setCompletedCount(finecount);
+    setTotalMissionsCount(missions.length);
+    console.log(finecount);
+  }, [missions]);
 
   return (
     <div className={`mainpage page-area ${isRoundSlideVisible ? 'mainpage-padding' : ''}`}>
@@ -347,7 +357,7 @@ useEffect(() => {
           <div className="mainpage-title">
             스페셜 퀘스트까지<br/>완료해봐요!
           </div>
-        ) : (mainContents && mainContents.completeQuest>=3 && mainContents.isSpecial==1 && mainContents.specialQuest == 1) ?(
+        ) : (mainContents && mainContents.completeQuest>=3 && mainContents.isSpecial==1 && mainContents.specialQuest == 1) || (totalMissionsCount == completedCount)?(
           <div className="mainpage-title">
             퀘스트 완료!<br/>멋지게 해냈어요.😉
           </div>
