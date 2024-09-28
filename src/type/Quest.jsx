@@ -24,8 +24,18 @@ export default function Quest() {
     const [selectedType, setSelectedType] = useState(null); // State for selectedType
     const location = useLocation(); // Use useLocation hook to access the URL
     const navigate = useNavigate(); // Use useNavigate hook for navigation
-
     const infoData = location.state?.infoData;
+    const [updatedInfoData, setUpdatedInfoData] = useState(null); // To store updated infoData
+    useEffect(() => {
+        if (infoData) {
+            console.log("Received infoData:", infoData);
+            setUpdatedInfoData(infoData); // Initialize updatedInfoData with received infoData
+        } else {
+            console.log("No infoData received");
+        }
+    }, [infoData]);
+
+    
     // Parse query parameters
     const searchParams = new URLSearchParams(location.search);
     const initialSelectedType = parseInt(searchParams.get("select"), 10); 
