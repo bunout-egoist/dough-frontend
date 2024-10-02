@@ -50,7 +50,7 @@ export default function EditQuest() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                "fixedQuestId": qindex
+                "fixedQuestId": questNum
             })
         })
         .then(response => {
