@@ -16,6 +16,7 @@ export default function EditQuest() {
         }
     }, []);
 
+    const [qindex, setQIndex] = useState(null);
     const [questNum, setQuestNum] = useState(null);
     const [selectedType, setSelectedType] = useState(null); // State for selectedType
     const location = useLocation(); // Use useLocation hook to access the URL
@@ -40,6 +41,7 @@ export default function EditQuest() {
 
     const handleButtonClick = () => {
         // 퀘스트 선택
+        console.log(qindex,questNum,'응')
         fetch(`/api/v1/members/fixed`, {
             method: 'PUT',
             credentials: 'include',
@@ -48,7 +50,7 @@ export default function EditQuest() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                "fixedQuestId": questNum
+                "fixedQuestId": qindex
             })
         })
         .then(response => {
@@ -119,7 +121,10 @@ export default function EditQuest() {
         });
        }
     },[accessToken]); // Only run when initialSelectedType changes
-
+    const clickQuest=(qN, qI)=>{
+        setQuestNum(qN);
+        setQIndex(qI);
+    }
     return (
        <div className="edit-questpage">
             <div className="setting-typepage-header">
@@ -136,8 +141,8 @@ export default function EditQuest() {
                         </div>
                         <div className="fixed-quest-area">
                             {selectedMission.map((quest, index) => (
-                                <div key={index} className={`fixed-quest-box ${questNum === index + 1 ? `fixed-quest-box-${index + 1}` : ""}`}
-                                    onClick={() => setQuestNum(index + 1)}>
+                                <div key={index} className={`fixed-quest-box  ${qindex === index + 1 ? `fixed-quest-box-${index + 1}` : ""}`}
+                                    onClick={() => clickQuest(quest.questId, index + 1)}>
                                     <div className="quest-sub-txt">{quest.description}</div>
                                     <div className="quest-txt">{quest.activity}</div>
                                 </div>
