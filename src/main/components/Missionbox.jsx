@@ -21,6 +21,7 @@ export default function MissionBox({
   const [isBoxChecked, setIsBoxChecked] = useState(isChecked); // 로컬 상태로 체크 여부 관리
   useEffect(() => {
     setIsBoxChecked(isChecked);
+    console.log('음',isBoxChecked);
   }, [isChecked]);
   
   const boxClassName = `mainpage-mission-box ${
