@@ -57,17 +57,15 @@ export default function MissionBox({
     }
   };
   const isFinished = status === 'finished';
+  const [isBoxChecked, setIsBoxChecked] = useState(isChecked); // 로컬 상태로 체크 여부 관리
+
   const handleBoxClick = (event) => {
-    if (!isFinished) {
-      onCheck(); // 체크박스의 onChange 이벤트 실행
+    if (!isFinished && !isBoxChecked) {
+      setIsBoxChecked(true); // 체크 상태를 true로 변경
+      onCheck(); // 부모 컴포넌트의 체크 상태 변경 함수 호출
     }
   };
 
-  // Handle checkbox clicks separately
-  const handleCheckboxChange = (event) => {
-    event.stopPropagation(); // Prevent the box click event from firing
-    onCheck(); // Call the onCheck function to update the checked state
-  };
   return (
     <div className={`${boxClassName} `}        onClick={handleBoxClick} style={{ backgroundColor, pointerEvents: isFinished ? 'none' : 'auto' }}>
       <div>
@@ -101,7 +99,7 @@ export default function MissionBox({
               isChecked ? "mission-checkbox-checked" : ""
             }`}
             checked={isChecked}
-            onChange={handleCheckboxChange}
+            onChange={handleBoxClick}
           />
         </div>
       )}
