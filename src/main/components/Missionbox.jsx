@@ -58,10 +58,10 @@ export default function MissionBox({
   };
   const isFinished = status === 'finished';
   const handleBoxClick = () => {
-    if (!isFinished) {
-      onCheck(); // 체크박스의 onChange 이벤트 실행
-    }
-    console.log(isChecked);
+    // if (!isFinished) {
+    //   onCheck(); // 체크박스의 onChange 이벤트 실행
+    // }
+    // console.log(isChecked);
   };
 
   return (
