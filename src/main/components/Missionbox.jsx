@@ -61,6 +61,7 @@ export default function MissionBox({
     if (!isFinished) {
       onCheck(); // 체크박스의 onChange 이벤트 실행
     }
+    console.log(isChecked);
   };
 
   return (
