@@ -23,7 +23,7 @@ export default function MissionBox({
     status === "now-clicked" ? "mission-now-clicked" : ""
   } ${status === "finished" ? "mission-finished" : ""} 
   ${
-    isChecked ? "mission-checked" : "mission-checked"
+    isChecked ? "mission-checked" : ""
   } 
   ${special === '스페셜퀘스트' ? 'special-background' : ''}`;
 
@@ -57,13 +57,17 @@ export default function MissionBox({
     }
   };
   const isFinished = status === 'finished';
-  const handleBoxClick = () => {
-    // if (!isFinished) {
-    //   onCheck(); // 체크박스의 onChange 이벤트 실행
-    // }
-    // console.log(isChecked);
+  const handleBoxClick = (event) => {
+    if (!isFinished) {
+      onCheck(); // 체크박스의 onChange 이벤트 실행
+    }
   };
 
+  // Handle checkbox clicks separately
+  const handleCheckboxChange = (event) => {
+    event.stopPropagation(); // Prevent the box click event from firing
+    onCheck(); // Call the onCheck function to update the checked state
+  };
   return (
     <div className={`${boxClassName} `}        onClick={handleBoxClick} style={{ backgroundColor, pointerEvents: isFinished ? 'none' : 'auto' }}>
       <div>
@@ -90,14 +94,14 @@ export default function MissionBox({
         </div>
       ) : 
       (
-        <div className="mainpage-mission-checkbox">
+        <div className="mainpage-mission-checkbox"   onClick={(e) => e.stopPropagation()}>
           <input
             type="checkbox"
             className={`mainpage-mission-check ${
               isChecked ? "mission-checkbox-checked" : ""
             }`}
             checked={isChecked}
-            onChange={onCheck}
+            onChange={handleCheckboxChange}
           />
         </div>
       )}
