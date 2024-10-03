@@ -18,7 +18,13 @@ export default function MissionBox({
       setImageSrc(imageUrl);
     }
   }, [imageUrl]); // Only run this effect when imageUrl changes
-
+  useEffect(() => {
+    // isChecked가 false가 될 때 mission-checked 클래스를 삭제
+    const boxElement = document.getElementById('mission-box');
+    if (!isChecked) {
+      boxElement.classList.remove('mission-checked');
+    }
+  }, [isChecked]);
   const boxClassName = `mainpage-mission-box ${
     status === "now-clicked" ? "mission-now-clicked" : ""
   } ${status === "finished" ? "mission-finished" : ""} 
