@@ -21,9 +21,11 @@ export default function MissionBox({
 
   const boxClassName = `mainpage-mission-box ${
     status === "now-clicked" ? "mission-now-clicked" : ""
-  } ${status === "finished" ? "mission-finished" : ""} ${
-    isChecked ? "mission-checked" : ""
-  } ${special === '스페셜퀘스트' ? 'special-background' : ''}`;
+  } ${status === "finished" ? "mission-finished" : ""} 
+  ${
+    isChecked ? "mission-checked" : "mission-checked"
+  } 
+  ${special === '스페셜퀘스트' ? 'special-background' : ''}`;
 
   const tagClassName = `mission-tag ${isChecked ? "mission-tag-checked" : ""}`;
 
