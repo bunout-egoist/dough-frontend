@@ -18,16 +18,20 @@ export default function MissionBox({
       setImageSrc(imageUrl);
     }
   }, [imageUrl]); // Only run this effect when imageUrl changes
-
+  const [isBoxChecked, setIsBoxChecked] = useState(isChecked); // 로컬 상태로 체크 여부 관리
+  useEffect(() => {
+    setIsBoxChecked(isChecked);
+  }, [isChecked]);
+  
   const boxClassName = `mainpage-mission-box ${
     status === "now-clicked" ? "mission-now-clicked" : ""
   } ${status === "finished" ? "mission-finished" : ""} 
   ${
-    isChecked ? "mission-checked" : ""
+    isBoxChecked ? "mission-checked" : ""
   } 
-  ${special === '스페셜퀘스트' ? 'special-background' : ''}`;;
+  ${special === '스페셜퀘스트' ? 'special-background' : ''}`;
 
-  const tagClassName = `mission-tag ${isChecked ? "mission-tag-checked" : ""}`;
+  const tagClassName = `mission-tag ${isBoxChecked ? "mission-tag-checked" : ""}`;
 
   // Function to open the gallery and select an image
   const handleOpenGallery = async () => {
@@ -57,8 +61,7 @@ export default function MissionBox({
     }
   };
   const isFinished = status === 'finished';
-  const [isBoxChecked, setIsBoxChecked] = useState(isChecked); // 로컬 상태로 체크 여부 관리
-
+  
   const handleBoxClick = (event) => {
     if (!isFinished && !isBoxChecked) {
       setIsBoxChecked(true); // 체크 상태를 true로 변경
@@ -80,13 +83,13 @@ export default function MissionBox({
         <div className="mission-subtitle">
           {missionSubText}
         </div>
-        <div className={`mission-title ${isChecked ? "mission-checked" : ""}`}>
+        <div className={`mission-title ${isBoxChecked ? "mission-checked" : ""}`}>
           {missionText}
         </div>
       </div>
 
       {/* Conditionally render checkbox or image based on isChecked */}
-      {isChecked || isFinished ?(
+      {isBoxChecked || isFinished ?(
         <div className="mission-img-box" onClick={handleOpenGallery}>
           <img className="img-width" src={imageSrc} alt="Mission completed" />
         </div>
