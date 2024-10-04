@@ -73,8 +73,25 @@ useEffect(() => {
                       ['#52ADD4', '#FF878D'],
                       ['#6DCED4', '#FF9960']
                     ];
-                   
-                    const colors = colorSet[Math.floor(Math.random() * colorSet.length)];
+                          
+                    // 오늘자 날짜확인
+                    const todayDate = new Date().toISOString().split("T")[0];
+
+                   // 날짜 임시로 저장
+                    const savedColorData = JSON.parse(localStorage.getItem("questColorSet"));
+                    let colors;
+
+                    if (savedColorData && savedColorData.date === todayDate) {
+                        // 오늘자인거면 유지  
+                      colors = savedColorData.colors;
+                    } else {
+                      colors = colorSet[Math.floor(Math.random() * colorSet.length)];
+                      // Save the new color set and today's date to localStorage
+                      localStorage.setItem(
+                        "questColorSet",
+                        JSON.stringify({ date: todayDate, colors })
+                      );
+            }
                     let isSpecial = 0;
                     let completeQuest = 0;
                     let specialQuest = 0;
@@ -315,7 +332,7 @@ useEffect(() => {
   });
   const [completedCount, setCompletedCount] = useState(0);
   const [totalMissionsCount, setTotalMissionsCount] = useState(0); // 전체 미션 개수 상태
-
+  const [allChecked, setAllChecked] = useState(true);
   useEffect(() => {
     // `missions`가 업데이트될 때마다 `finished` 상태인 미션 개수 업데이트
     const finecount = missions.filter(mission => mission.status === "finished").length;
@@ -324,6 +341,7 @@ useEffect(() => {
   }, [missions]);
   const handleRoundOut = ()=>{
     setIsRoundSlideVisible(false);
+    setAllChecked(false);
   }
   return (
     <div className={`mainpage page-area ${isRoundSlideVisible ? 'mainpage-padding' : ''}`}>
@@ -388,7 +406,7 @@ useEffect(() => {
             <MissionBox
               key={mission.id}
               backgroundColor={mission.backgroundColor}
-              isChecked={mission.isChecked}
+              isChecked={allChecked} 
               missionText={mission.missionText}
               missionSubText={mission.missionSubText}
               tag1={mission.placeKeyword}

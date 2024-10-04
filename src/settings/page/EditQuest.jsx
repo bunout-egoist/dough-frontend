@@ -41,7 +41,6 @@ export default function EditQuest() {
 
     const handleButtonClick = () => {
         // 퀘스트 선택
-        console.log(qindex,questNum,'응')
         fetch(`/api/v1/members/fixed`, {
             method: 'PUT',
             credentials: 'include',
@@ -57,6 +56,7 @@ export default function EditQuest() {
             // 성공적인 응답 처리: 204 No Content인 경우
             if (response.status === 204) {
                 console.log('성공적으로 수정되었습니다.');
+                navigate('/setting');
                 return;  // 더 이상 처리할 JSON이 없기 때문에 여기서 끝냄
             }
             
