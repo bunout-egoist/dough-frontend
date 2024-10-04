@@ -25,7 +25,7 @@ export default function MissionBox({
   }, [isChecked]);
   
   const boxClassName = `mainpage-mission-box ${
-    status === "now-clicked" ? "mission-now-clicked" : ""
+    isBoxChecked ? "mission-now-clicked" : ""
   } ${status === "finished" ? "mission-finished" : ""} 
   ${
     isBoxChecked ? "mission-checked" : ""
