@@ -332,7 +332,7 @@ useEffect(() => {
   });
   const [completedCount, setCompletedCount] = useState(0);
   const [totalMissionsCount, setTotalMissionsCount] = useState(0); // 전체 미션 개수 상태
-  const [allChecked, setAllChecked] = useState(true);
+  const [allChecked, setAllChecked] = useState(false);
   useEffect(() => {
     // `missions`가 업데이트될 때마다 `finished` 상태인 미션 개수 업데이트
     const finecount = missions.filter(mission => mission.status === "finished").length;
