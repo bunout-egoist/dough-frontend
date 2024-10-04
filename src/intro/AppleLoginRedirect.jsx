@@ -8,7 +8,7 @@ import { initializeApp } from 'firebase/app';
 export default function AppleLoginRedirect() {
     const location = useLocation();
     const appleData = location.state?.res;
-    console.log(appleData.authorization, appleData.authorization.code);
+    
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [isNewMember, setIsNewMember] = useState(null);
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ export default function AppleLoginRedirect() {
       const getAndSendToken = async () => {
         try {
           console.log('들어옴');
+          console.log(appleData.authorization, appleData.authorization.code,"있다");
           const permission = await Notification.requestPermission();
           let fcmToken = null;
 

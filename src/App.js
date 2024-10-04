@@ -24,7 +24,7 @@ import AppleLoginRedirect from "./intro/AppleLoginRedirect";
 function App() {
   const location = useLocation();
 
-  const hideNavbarRoutes = ["/", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial","/setting/edit-type","/nickname","/setting/edit-type/quest","/setting/edit-quest","/finish"];
+  const hideNavbarRoutes = ["/", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial","/setting/edit-type","/nickname","/setting/edit-type/quest","/setting/edit-quest","/finish","/redirect/apple"];
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
 
   return (
