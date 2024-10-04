@@ -257,10 +257,11 @@
 }
 
 .btn-notice-div{
-  width: 100%;
-
+  bottom: 4rem;
+  padding: 1rem 0;
   position: absolute;
-  bottom: 5rem;
+  width: 100%;
+  background: white;
 }
 .notice-img-div{
   width: 70%;
