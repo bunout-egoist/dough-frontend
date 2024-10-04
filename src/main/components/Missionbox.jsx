@@ -21,9 +21,9 @@ export default function MissionBox({
   const [isBoxChecked, setIsBoxChecked] = useState(false); // 로컬 상태로 체크 여부 관리
   useEffect(() => {
     setIsBoxChecked(isChecked);
-    console.log('음',isBoxChecked,isFinished);
+    console.log('음',isBoxChecked);
   }, [isChecked]);
-  console.log('음2',isBoxChecked,isFinished);
+  console.log('음2',isBoxChecked);
   const boxClassName = `mainpage-mission-box ${
     status === "now-clicked" ? "mission-now-clicked" : ""
   } ${status === "finished" ? "mission-finished" : ""} 
@@ -33,7 +33,7 @@ export default function MissionBox({
   ${special === '스페셜퀘스트' ? 'special-background' : ''}`;
 
   const tagClassName = `mission-tag ${isBoxChecked ? "mission-tag-checked" : ""}`;
-  console.log('음3',isBoxChecked,isFinished);
+  console.log('음3',isBoxChecked);
   // Function to open the gallery and select an image
   const handleOpenGallery = async () => {
     try {
