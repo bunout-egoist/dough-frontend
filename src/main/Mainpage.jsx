@@ -162,8 +162,7 @@ useEffect(() => {
                
             })
             .then(response => {
-              console.log(response.json(),'상태');
-              if (response.json().code == 400){
+              if (response.status === 401) {
                 navigate('/');
               }
             })
