@@ -341,6 +341,7 @@ useEffect(() => {
   const handleRoundOut = ()=>{
     setIsRoundSlideVisible(false);
     setAllChecked(false);
+    window.location.reload();
   }
   return (
     <div className={`mainpage page-area ${isRoundSlideVisible ? 'mainpage-padding' : ''}`}>
