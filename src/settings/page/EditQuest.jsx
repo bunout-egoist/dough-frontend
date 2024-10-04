@@ -129,7 +129,7 @@ export default function EditQuest() {
        <div className="edit-questpage">
             <div className="setting-typepage-header">
                 <Link to="/setting"><div className="header-back"><img src="/images/back.png" className="img-width"/></div></Link>
-                <div className="header-title">번아웃 유형 재설정</div>
+                <div className="header-title">고정퀘스트 재설정</div>
             </div>
             <div className="questpage">
                 {selectedMission && (
