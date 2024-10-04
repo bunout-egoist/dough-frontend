@@ -42,7 +42,7 @@ export default function AppleLoginRedirect() {
   };
 
   useEffect(() => {
-    if (logincode) {
+    if (appleData) {
       const getAndSendToken = async () => {
         try {
           console.log('들어옴');
@@ -114,7 +114,7 @@ export default function AppleLoginRedirect() {
 
       getAndSendToken();
     }
-  }, [logincode]);
+  }, [appleData]);
 
 
   useEffect(() => {
