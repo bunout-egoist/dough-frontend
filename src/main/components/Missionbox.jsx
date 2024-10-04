@@ -20,8 +20,9 @@ export default function MissionBox({
   }, [imageUrl]); // Only run this effect when imageUrl changes
   const [isBoxChecked, setIsBoxChecked] = useState(false); // 로컬 상태로 체크 여부 관리
   useEffect(() => {
-    setIsBoxChecked(isChecked);
-    console.log('음',isBoxChecked);
+    if (isChecked !== isBoxChecked) {
+      setIsBoxChecked(isChecked);
+    }
   }, [isChecked]);
   console.log('음2',isBoxChecked);
   const boxClassName = `mainpage-mission-box ${
