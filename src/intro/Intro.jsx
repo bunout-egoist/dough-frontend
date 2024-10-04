@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import FirstPage from "./FirstPage";
 import AppleLogin from "react-apple-login";
 import IntroPop from "../popup/IntroPop";
+import { useNavigate } from "react-router-dom";
 export default function Intro() {
     const [isIos, setIsIos] = useState(false); // State to determine if the device is iOS
     const [showNextPage, setShowNextPage] = useState(false); // State to toggle between FirstPage and NextPage
     const [nonAllow, setNonAllow] = useState(true);
-
+    const navigate = useNavigate();
     useEffect(() => {
         requestCameraPermission();
         requestNotificationPermission();
@@ -83,8 +84,8 @@ export default function Intro() {
           });
         }
       }
-    
-      
+       
+   
       const loginWithApple = async (e) => {
         e.preventDefault();
     
@@ -100,6 +101,7 @@ export default function Intro() {
         try {
           const res = await window.AppleID.auth.signIn();
           console.log(res);
+          navigate('/redirect/apple', { state: { res } })
         } catch (error) {
           console.log(error);
         }
