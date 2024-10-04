@@ -48,7 +48,6 @@ export default function AppleLoginRedirect() {
       const getAndSendToken = async () => {
         try {
           console.log('들어옴');
-          console.log(appleData.authorization, appleData.authorization.code,"있다");
           const permission = await Notification.requestPermission();
           let fcmToken = null;
 
@@ -75,7 +74,7 @@ export default function AppleLoginRedirect() {
           }
           console.log(fcmToken,'토큰존재');
           // 서버로 로그인 요청 전송 (fcmToken이 없으면 null로 전송)
-          fetch(`/api/v1/auth/login/apple?idToken='111'&&authorizationCode='11'`, {
+          fetch(`/api/v1/auth/login/apple?idToken=${appleData.authorization.id_token}?authorizationCode=${appleData.authorization.code}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
