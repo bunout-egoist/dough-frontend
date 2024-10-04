@@ -85,30 +85,25 @@ export default function Intro() {
       }
     
       
-     
-      
-    // const loginWithApple = async (e) => {
-    //     e.preventDefault();
+      const loginWithApple = async (e) => {
+        e.preventDefault();
     
-    //     console.log('sign in with apple');
+        console.log('sign in with apple');
     
-    //     // AppleID 초기화
-    //     window.AppleID.auth.init({
-    //       clientId: 'com.bunout.appServices', // Apple Developer에서 제공하는 clientId
-    //       scope: '', // 예: 'name email'
-    //       redirectURI: 'https://app.bunout.info/api/v1/auth/login/apple', // 리다이렉트될 URI
-    //       usePopup: false, // 팝업으로 인증할지 여부
-    //     });
-
-    //     try {
-    //       // Apple 로그인 요청
-    //       const res = await window.AppleID.auth.signIn();
-    //       console.log('Apple Login Response:', res);
-    //       // 로그인 성공 시 처리 로직 추가
-    //     } catch (error) {
-    //       console.error('Apple Login Error:', error);
-    //     }
-    // };
+        window.AppleID.auth.init({
+          clientId: 'com.bunout.appServices',
+          redirectURI: 'https://app.bunout.info/api/v1/auth/login/apple',
+          state: 'bunout',
+          usePopup: true,
+        });
+    
+        try {
+          const res = await window.AppleID.auth.signIn();
+          console.log(res);
+        } catch (error) {
+          console.log(error);
+        }
+      };
     const handlePopClose = () => {
         setNonAllow(false); // nonAllow를 false로 설정
     };
@@ -132,8 +127,8 @@ export default function Intro() {
                                 </div>
                             </div>
                             {isIos ? (
-                                <div className="intropage-sns intropage-apple" >
-                                    <AppleLogin
+                                <div className="intropage-sns intropage-apple" onClick={loginWithApple} >
+                                    {/* <AppleLogin
                                         clientId="com.bunout.appServices"
                                         redirectURI="https://app.bunout.info/api/v1/auth/login/apple" 
                                         responseType="code id_token" // OAuth 2.0에서 사용할 응답 형식
@@ -141,10 +136,10 @@ export default function Intro() {
                                         usePopup={false} // 팝업 방식이 아닌 리디렉션 방식 사용
                                         onSuccess={handleAppleResponse} // 성공 시 실행될 함수
                                         onError={(error) => console.error('Apple Login Error: ', error)} // 에러 처리
-                                        />
-                                    {/* <div className="intropage-kakao-img" >
+                                        /> */}
+                                    <div className="intropage-kakao-img" >
                                         <img src="/images/intro/apple.png" className="img-width" alt="Apple Login" />
-                                    </div> */}
+                                    </div>
                                 </div>
                             ) : null}
                             <Link to="/tutorial">

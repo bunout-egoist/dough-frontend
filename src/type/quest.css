@@ -23,6 +23,9 @@
 }
 .questpage .fixed-quest-area{
     margin-top: 1rem;
+    padding-bottom: 29%;
+    height: 70%;
+    overflow: scroll;
 }
 .questpage .fixed-quest-box{
     width: 100%;
