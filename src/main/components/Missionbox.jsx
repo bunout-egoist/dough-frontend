@@ -21,9 +21,9 @@ export default function MissionBox({
   const [isBoxChecked, setIsBoxChecked] = useState(false); // 로컬 상태로 체크 여부 관리
   useEffect(() => {
     setIsBoxChecked(isChecked);
-    console.log('음',isBoxChecked);
+    console.log('음',isBoxChecked,isFinished);
   }, [isChecked]);
-  
+  console.log('음2',isBoxChecked,isFinished);
   const boxClassName = `mainpage-mission-box ${
     status === "now-clicked" ? "mission-now-clicked" : ""
   } ${status === "finished" ? "mission-finished" : ""} 
@@ -33,7 +33,7 @@ export default function MissionBox({
   ${special === '스페셜퀘스트' ? 'special-background' : ''}`;
 
   const tagClassName = `mission-tag ${isBoxChecked ? "mission-tag-checked" : ""}`;
-
+  console.log('음3',isBoxChecked,isFinished);
   // Function to open the gallery and select an image
   const handleOpenGallery = async () => {
     try {
@@ -62,14 +62,15 @@ export default function MissionBox({
     }
   };
   const isFinished = status === 'finished';
-  
+  console.log('음4',isBoxChecked,isFinished);
   const handleBoxClick = (event) => {
+    event.stopPropagation();
     if (!isFinished && !isBoxChecked) {
       setIsBoxChecked(true); // 체크 상태를 true로 변경
       onCheck(); // 부모 컴포넌트의 체크 상태 변경 함수 호출
     }
   };
-
+  console.log('음5',isBoxChecked,isFinished);
   return (
     <div className={`${boxClassName} `}        onClick={handleBoxClick} style={{ backgroundColor, pointerEvents: isFinished ? 'none' : 'auto' }}>
       <div>
