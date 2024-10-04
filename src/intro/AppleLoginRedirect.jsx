@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sign from "../sign/Sign";
-
+import { useLocation } from "react-router-dom";
 import { getMessaging, getToken } from 'firebase/messaging';
 import { initializeApp } from 'firebase/app';
 export default function AppleLoginRedirect() {
+    const location = useLocation();
     const appleData = location.state?.res;
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [isNewMember, setIsNewMember] = useState(null);
