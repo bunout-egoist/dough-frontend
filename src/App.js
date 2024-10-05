@@ -22,10 +22,12 @@ import QuestType from "./settings/page/QuestType";
 import EditQuest from "./settings/page/EditQuest";
 import FinishSign from "./intro/FinishSign";
 import AppleLoginRedirect from "./intro/AppleLoginRedirect";
+import { Capacitor } from '@capacitor/core';
 import { PushNotifications } from '@capacitor/push-notifications';
 function App() {
   // 알람수신 받는곳
   useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
     // 푸시 알림 리스너 등록
     PushNotifications.addListener('pushNotificationReceived', (notification) => {
       console.log('푸시 알림 수신:', notification);
@@ -36,7 +38,7 @@ function App() {
       console.log('푸시 알림 클릭:', notification);
       // 알림 클릭 시 수행할 동작 설정
       alert(`알림 클릭: ${notification.notification.data}`);
-    });
+    });}
   }, []);
 
 
