@@ -1,43 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { PushNotifications } from '@capacitor/push-notifications'; // Capacitor Push Notifications import
 import Sign from "../sign/Sign";
 
-import { getMessaging, getToken } from 'firebase/messaging';
-import { initializeApp } from 'firebase/app';
 export default function Redirection() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [isNewMember, setIsNewMember] = useState(null);
   const logincode = new URL(window.location.href).searchParams.get('code');
   const navigate = useNavigate();
-  const firebaseConfig = {
-    apiKey: "AIzaSyAtJWz7IMbcsh65wvTJsr7xzsmpIMDD-Ao",
-    authDomain: "bunout-2ed63.firebaseapp.com",
-    projectId: "bunout-2ed63",
-    storageBucket: "bunout-2ed63.appspot.com",
-    messagingSenderId: "1064933370265",
-    appId: "1:1064933370265:web:3251f0d0af4f04fb170b08",
-    measurementId: "G-ZMM294BFWY"
-  };
-  
-  
-  // Firebase 앱 초기화
-  const app = initializeApp(firebaseConfig);
-  const messaging = getMessaging(app);
 
-  const showNotification = (title, message) => {
-    // 알림 권한을 요청
-    Notification.requestPermission().then(permission => {
-      if (permission === 'granted') {
-        // 알림 생성
-        new Notification(title, {
-          body: message,
+  // 알림 권한 요청 및 FCM 토큰 가져오기
+  const requestPushNotificationPermission = async () => {
+    try {
+      const permissionStatus = await PushNotifications.requestPermissions();
+      if (permissionStatus.receive === 'granted') {
+        console.log("알림 권한이 허용되었습니다.");
+
+        // Push 알림 등록
+        await PushNotifications.register();
+
+        // 토큰 수신
+        PushNotifications.addListener('registration', (token) => {
+          console.log('FCM 토큰:', token.value);
+          // 서버로 FCM 토큰 전달하기 위해 반환
+          return token.value;
         });
+
+        // 알림 수신 이벤트 핸들러 설정
+        PushNotifications.addListener('pushNotificationReceived', (notification) => {
+          console.log('푸시 알림 수신:', notification);
+        });
+
+        // 푸시 알림 클릭 핸들러 설정
+        PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+          console.log('푸시 알림 클릭:', notification);
+        });
+
       } else {
-        console.log('알림 권한이 허용되지 않았습니다.');
+        console.log("알림 권한이 허용되지 않았습니다.");
       }
-    }).catch(err => {
-      console.error('알림 권한 요청 중 오류 발생:', err);
-    });
+    } catch (error) {
+      console.error("알림 권한 요청 중 오류 발생:", error);
+    }
   };
 
   useEffect(() => {
@@ -45,31 +49,17 @@ export default function Redirection() {
       const getAndSendToken = async () => {
         try {
           console.log('들어옴');
-          const permission = await Notification.requestPermission();
-          let fcmToken = null;
-
-          if (permission === 'granted') {
-            try {
-              fcmToken = await getToken(messaging, {
-                vapidKey: 'BKSCCM1MOQZ5KfhXgstx-ZrMJR6P6XRlo3Slb1SI1ct0y4MkeeOZJsTaHkc1o4MUrpk_iHTq1hQtDv2UnUUlibw',
-              });
-            } catch (error) {
-              console.error('FCM 토큰을 가져오는 중 오류 발생:', error);
-            }
-          }
+          // 알림 권한 요청 및 FCM 토큰 수신
+          let fcmToken = await requestPushNotificationPermission();
 
           if (!fcmToken) {
-            showNotification('BUNOUT', '어플설정에 들어가 알림 설정을 허용해주세요!');
-            // if (window.ReactNativeWebView) {
-            //   // WebView에서 실행되는 경우
-            //   window.ReactNativeWebView.postMessage('알람을 허용해주세요!');
-            // } else {
-            //   // 브라우저에서 실행되는 경우
-            //   alert('알람을 허용해주세요!');
-            // }
-            
+            console.log("FCM 토큰이 없습니다.");
+            alert('알림을 허용하지 않았습니다. 어플 설정에서 알림 권한을 확인하세요.');
+            return;
           }
-          console.log(fcmToken,'토큰존재');
+
+          console.log(fcmToken, '토큰 존재');
+          
           // 서버로 로그인 요청 전송 (fcmToken이 없으면 null로 전송)
           fetch(`/api/v1/auth/login/kakao?code=${logincode}`, {
             method: 'POST',
@@ -115,7 +105,6 @@ export default function Redirection() {
     }
   }, [logincode]);
 
-
   useEffect(() => {
     if (loginSuccess && isNewMember !== null) { // 로그인 성공 여부와 isNewMember가 업데이트된 후에 네비게이션 처리
       console.log('Navigating based on login success and new member status');
@@ -126,9 +115,10 @@ export default function Redirection() {
       }
     }
   }, [loginSuccess, isNewMember, navigate]);
+
   return (
     <div>
-      {loginSuccess ? "로그인 성공": "로그인 중..."}
+      {loginSuccess ? "로그인 성공" : "로그인 중..."}
     </div>
   );
 }
