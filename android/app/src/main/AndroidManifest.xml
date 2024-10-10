@@ -59,7 +59,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@drawable/splash"></meta-data>
+                android:resource="@xml/file_paths"></meta-data>
         </provider>
     </application>
 
