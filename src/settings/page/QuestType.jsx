@@ -20,7 +20,7 @@ export default function QuestType() {
       console.error("Access token is not available");
     }
   }, []);
-
+  console.log(accessToken, "음???왜22222");
   const [qindex, setQIndex] = useState(null);
   const [questNum, setQuestNum] = useState(null);
   // Parse query parameters
