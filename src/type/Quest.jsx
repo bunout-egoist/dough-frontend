@@ -24,6 +24,7 @@ export default function Quest() {
   const navigate = useNavigate(); // Use useNavigate hook for navigation
   const infoData = location.state?.infoData;
   const [updatedInfoData, setUpdatedInfoData] = useState(null); // To store updated infoData
+
   useEffect(() => {
     if (infoData) {
       console.log("Received infoData:", infoData);
@@ -95,10 +96,8 @@ export default function Quest() {
       navigate("/finish");
     }
   };
-  console.log(accessToken, "음???왜1");
 
   useEffect(() => {
-    console.log(accessToken, "음???왜2");
     if (accessToken) {
       if (initialSelectedType === 0) {
         const randomType = Math.floor(Math.random() * 4) + 1;
@@ -106,7 +105,6 @@ export default function Quest() {
       } else {
         setSelectedType(initialSelectedType);
       }
-      console.log(accessToken, "음???왜");
       // Fetch data only once when component mounts
       fetch(`/api/v1/quests/fixed/${initialSelectedType}`, {
         method: "GET",
