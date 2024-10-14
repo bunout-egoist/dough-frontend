@@ -96,9 +96,10 @@ export default function Quest() {
     }
   };
   console.log(accessToken, "음???왜1");
-  if (accessToken) {
-    console.log(accessTokaen, "음???왜2");
-    useEffect(() => {
+
+  useEffect(() => {
+    console.log(accessToken, "음???왜2");
+    if (accessToken) {
       if (initialSelectedType === 0) {
         const randomType = Math.floor(Math.random() * 4) + 1;
         setSelectedType(randomType);
@@ -124,8 +125,9 @@ export default function Quest() {
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
-    }, [initialSelectedType]); // Only run when initialSelectedType changes
-  }
+    }
+  }, [accessToken, initialSelectedType]); // Only run when initialSelectedType changes
+
   const clickQuest = (qN, qI) => {
     setQuestNum(qN);
     setQIndex(qI);
