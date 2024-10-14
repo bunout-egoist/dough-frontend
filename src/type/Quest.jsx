@@ -16,7 +16,7 @@ export default function Quest() {
       console.error("Access token is not available");
     }
   }, []);
-
+  console.log(accessToken, "음???왜");
   const [questNum, setQuestNum] = useState(null);
   const [qindex, setQIndex] = useState(null);
   const [selectedType, setSelectedType] = useState(null); // State for selectedType
@@ -95,7 +95,9 @@ export default function Quest() {
       navigate("/finish");
     }
   };
+  console.log(accessToken, "음???왜1");
   if (accessToken) {
+    console.log(accessToken, "음???왜2");
     useEffect(() => {
       if (initialSelectedType === 0) {
         const randomType = Math.floor(Math.random() * 4) + 1;
