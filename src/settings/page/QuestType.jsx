@@ -27,7 +27,7 @@ export default function QuestType() {
   const searchParams = new URLSearchParams(location.search);
   const initialSelectedType = editType;
   const [selectedMission, setSelectedMission] = useState(null);
-
+  const [name, setName] = useState(null);
   const handleButtonClick = () => {
     // 퀘스트 선택
     fetch(`/api/v1/members/burnout`, {
@@ -97,6 +97,7 @@ export default function QuestType() {
           console.log(data);
           setSelectedType(data.burnoutName);
           setSelectedMission(data.fixedQuests);
+          setName(data.nickname);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -114,7 +115,7 @@ export default function QuestType() {
           <div className="type-name">{selectedType}</div>
           <div>
             <div className="questpage-title">
-              해당 유형에 추천하는 행동이에요.
+              {name}에게 추천하는 행동이에요.
             </div>
             <div>
               <img src="/images/type/quest-title.png" className="img-width" />

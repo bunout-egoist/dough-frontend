@@ -25,7 +25,7 @@ export default function EditQuest() {
   const searchParams = new URLSearchParams(location.search);
   const initialSelectedType = parseInt(searchParams.get("select"), 10); // Get the 'select' query parameter and parse it as an integer
   const [selectedMission, setSelectedMission] = useState(null);
-
+  const [name, setName] = useState(null);
   useEffect(() => {
     if (initialSelectedType === 0) {
       const randomType = Math.floor(Math.random() * 4) + 1;
@@ -112,6 +112,7 @@ export default function EditQuest() {
           console.log(data.fixedQuests);
           setSelectedType(data.burnoutName);
           setSelectedMission(data.fixedQuests);
+          setName(data.nickname);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -138,7 +139,7 @@ export default function EditQuest() {
             <div className="type-name">{selectedType}</div>
             <div>
               <div className="questpage-title">
-                이름 같은 분에게 추천하는 행동이에요.
+                {name}같은 분에게 추천하는 행동이에요.
               </div>
               <div>
                 <img
