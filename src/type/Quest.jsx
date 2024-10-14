@@ -95,34 +95,35 @@ export default function Quest() {
       navigate("/finish");
     }
   };
-  useEffect(() => {
-    if (initialSelectedType === 0) {
-      const randomType = Math.floor(Math.random() * 4) + 1;
-      setSelectedType(randomType);
-    } else {
-      setSelectedType(initialSelectedType);
-    }
-
-    // Fetch data only once when component mounts
-    fetch(`/api/v1/quests/fixed/${initialSelectedType}`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setSelectedType(data.burnoutName);
-        setSelectedMission(data.fixedQuests);
+  if (accessToken) {
+    useEffect(() => {
+      if (initialSelectedType === 0) {
+        const randomType = Math.floor(Math.random() * 4) + 1;
+        setSelectedType(randomType);
+      } else {
+        setSelectedType(initialSelectedType);
+      }
+      console.log(accessToken, "음???왜");
+      // Fetch data only once when component mounts
+      fetch(`/api/v1/quests/fixed/${initialSelectedType}`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [initialSelectedType]); // Only run when initialSelectedType changes
-
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setSelectedType(data.burnoutName);
+          setSelectedMission(data.fixedQuests);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }, [initialSelectedType]); // Only run when initialSelectedType changes
+  }
   const clickQuest = (qN, qI) => {
     setQuestNum(qN);
     setQIndex(qI);
