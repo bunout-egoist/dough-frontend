@@ -1,14 +1,14 @@
 {
   "short_name": "BUNOUT",
   "name": "BUNOUT",
-  "start_url": "/",
+  "start_url": "https://app.bunout.info/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "id": "bunout",
   "description": "bunout app",
   "dir": "ltr",
-  "scope": "/",
+  "scope": "https://app.bunout.info/",
   "lang": "ko",
   "orientation": "any",
   "categories": [
@@ -20,11 +20,11 @@
     "personalization",
     "social"
   ],
-  "display_override": ["standalone"],
+  "display_override": ["standalone", "window-controls-overlay"],
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "64x64 32x32 24x24 16x16,512x512",
       "type": "image/x-icon"
     }
   ]
