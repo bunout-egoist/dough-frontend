@@ -48,10 +48,9 @@ export default function Redirection() {
 
   useEffect(() => {
     if (logincode) {
+      let fcmToken = null;
       const getAndSendToken = async () => {
         try {
-          let fcmToken = null;
-
           if (isNativeApp) {
             // 네이티브 환경에서 PushNotifications 사용
             await PushNotifications.requestPermissions();
@@ -83,41 +82,36 @@ export default function Redirection() {
           }
 
           console.log(fcmToken, "토큰 존재");
-          // 서버로 로그인 요청 전송 (fcmToken이 없으면 null로 전송)
-          const response = await fetch(
-            `/api/v1/auth/login/kakao?code=${logincode}`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                fcmToken: fcmToken || null,
-              }),
-              credentials: "include",
-            }
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            console.log("Received data:", data, data.isNewMember);
-            const accessToken = data.accessToken;
-            const refreshToken = data.refreshToken;
-
-            // Store tokens in local storage
-            localStorage.setItem("accessToken", accessToken);
-            localStorage.setItem("refreshToken", refreshToken);
-            setLoginSuccess(true);
-            setIsNewMember(data.isNewMember);
-          } else {
-            console.error("Network response was not ok");
-          }
         } catch (error) {
           console.error("Error during login process:", error);
         }
       };
-
       getAndSendToken();
+      // 서버로 로그인 요청 전송 (fcmToken이 없으면 null로 전송)
+      const response = fetch(`/api/v1/auth/login/kakao?code=${logincode}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fcmToken: fcmToken || null,
+        }),
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const data = response.json();
+        console.log("Received data:", data, data.isNewMember);
+        const accessToken = data.accessToken;
+        const refreshToken = data.refreshToken;
+        setLoginSuccess(true);
+        setIsNewMember(data.isNewMember);
+        // Store tokens in local storage
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+      } else {
+        console.error("Network response was not ok");
+      }
     }
   }, [logincode, isNativeApp]);
 
