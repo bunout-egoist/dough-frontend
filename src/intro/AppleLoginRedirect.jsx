@@ -58,7 +58,7 @@ export default function AppleLoginRedirect() {
     return fcmToken;
   };
 
-  const loginWithApple = async (fcmToken) => {
+  const loginWithApple = async () => {
     try {
       const response = await fetch(
         `/api/v1/auth/login/apple?idToken=${appleData.authorization.id_token}&authorizationCode=${appleData.authorization.code}`,
@@ -67,7 +67,8 @@ export default function AppleLoginRedirect() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ fcmToken: fcmToken || null }),
+          //body: JSON.stringify({ fcmToken: fcmToken || null }),
+          body: JSON.stringify({ fcmToken: null }),
           credentials: "include",
         }
       );
@@ -93,8 +94,9 @@ export default function AppleLoginRedirect() {
   useEffect(() => {
     if (appleData) {
       const handleLogin = async () => {
-        const fcmToken = await getFcmToken();
-        await loginWithApple(fcmToken);
+        //const fcmToken = await getFcmToken();
+        await getFcmToken();
+        await loginWithApple();
       };
       handleLogin();
     }

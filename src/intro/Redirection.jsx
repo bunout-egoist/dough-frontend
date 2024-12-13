@@ -64,7 +64,7 @@ export default function Redirection() {
     return fcmToken;
   };
 
-  const sendLoginRequest = async (fcmToken) => {
+  const sendLoginRequest = async () => {
     try {
       const response = await fetch(
         `/api/v1/auth/login/kakao?code=${logincode}`,
@@ -74,7 +74,8 @@ export default function Redirection() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            fcmToken: fcmToken || null,
+            // fcmToken: fcmToken || null,
+            fcmToken: null,
           }),
           credentials: "include",
         }
@@ -102,8 +103,9 @@ export default function Redirection() {
   useEffect(() => {
     if (logincode) {
       const handleLogin = async () => {
-        const fcmToken = await getAndSendToken();
-        await sendLoginRequest(fcmToken);
+        //const fcmToken = await getAndSendToken();
+        await getAndSendToken();
+        await sendLoginRequest();
       };
 
       handleLogin();
