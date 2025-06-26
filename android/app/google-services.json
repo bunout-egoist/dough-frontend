@@ -2,14 +2,14 @@
   "project_info": {
     "project_number": "1064933370265",
     "project_id": "bunout-2ed63",
-    "storage_bucket": "bunout-2ed63.appspot.com"
+    "storage_bucket": "bunout-2ed63.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1064933370265:android:008cfbd250bf00c7170b08",
+        "mobilesdk_app_id": "1:1064933370265:android:e6c0e897a7a31ace170b08",
         "android_client_info": {
-          "package_name": "app.bunout.info"
+          "package_name": "info.bunout.app"
         }
       },
       "oauth_client": [],

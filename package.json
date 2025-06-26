@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "/",
   "dependencies": {
+    "@capacitor-community/fcm": "^6.0.0",
     "@capacitor/android": "^6.1.1",
     "@capacitor/camera": "^6.0.2",
     "@capacitor/cli": "^6.1.2",

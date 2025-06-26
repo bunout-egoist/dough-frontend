@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-<service
-    android:name=".MyFirebaseMessagingService"
-    android:exported="false">
-    <intent-filter>
-        <action android:name="com.google.firebase.MESSAGING_EVENT" />
-    </intent-filter>
-</service>
 
-<receiver
-    android:enabled="true"
-    android:exported="true"
-    android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
-    android:permission="com.google.android.c2dm.permission.SEND">
-    <intent-filter>
-        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-        <category android:name="app.bunout.info" />
-    </intent-filter>
-</receiver>
+
+
 
     <application
         android:allowBackup="true"
@@ -26,7 +11,23 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-   
+        <!--<service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>-->
+        <receiver
+            android:enabled="true"
+            android:exported="true"
+            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="info.bunout.app" />
+            </intent-filter>
+        </receiver>
     <meta-data
         android:name="com.google.firebase.messaging.default_notification_channel_id"
         android:value="default_channel_id"/>
@@ -42,15 +43,15 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-             <service
+        </activity>
+       <!-- <service
             android:name="com.getcapacitor.community.fcm.FcmMessagingService"
-            android:exported="true">
+            android:exported="false"
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
-        </service>
-
-        </activity>
+        </service>-->
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -59,12 +60,15 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths">
+
+            </meta-data>
         </provider>
     </application>
 
     <!-- Permissions -->
-    <uses-sdk android:minSdkVersion="22" android:targetSdkVersion="34"/> 
+    <uses-sdk android:minSdkVersion="22" android:targetSdkVersion="34"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
