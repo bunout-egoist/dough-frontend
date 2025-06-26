@@ -44,7 +44,8 @@ export default function Intro() {
   // const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
   const REDIRECT_URI = "https://app.bunout.info/oauth2/callback/kakao";
   //process.env.REACT_APP_KEY;
-  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KEY = "8a6e7b4b0b03c895fc6795146375d6ac";
+  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const loginHandler = () => {
     window.location.href = link;
   };
