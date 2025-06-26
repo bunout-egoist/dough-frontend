@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./intro.css"; // eslint-disable-next-line
-import { isPlatform } from "@ionic/react"; // Import Capacitor's isPlatform utility
+import { isPlatform } from "@ionic/react";
 import { Link } from "react-router-dom";
 import FirstPage from "./FirstPage";
 // import AppleLogin from "react-apple-login";
@@ -8,8 +8,8 @@ import IntroPop from "../popup/IntroPop";
 import { useNavigate } from "react-router-dom";
 
 export default function Intro() {
-  const [isIos, setIsIos] = useState(false); // State to determine if the device is iOS
-  const [showNextPage, setShowNextPage] = useState(false); // State to toggle between FirstPage and NextPage
+  const [isIos, setIsIos] = useState(false);
+  const [showNextPage, setShowNextPage] = useState(false);
   const [nonAllow, setNonAllow] = useState(true);
   const navigate = useNavigate();
 

@@ -1,9 +1,10 @@
-// public/service-worker.js
-
 const CACHE = "pwabuilder-offline";
+const offlineFallbackPage = "/index.html"; // 실제 오프라인 페이지로 변경
 
 // Workbox library import
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+importScripts(
+  "https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js"
+);
 
 // Listen for SKIP_WAITING event to update the service worker immediately
 self.addEventListener("message", (event) => {
@@ -14,50 +15,65 @@ self.addEventListener("message", (event) => {
 
 // Register a route to cache requests and use stale-while-revalidate strategy
 workbox.routing.registerRoute(
-  new RegExp('/*'),
+  new RegExp("/*"),
   new workbox.strategies.StaleWhileRevalidate({
-    cacheName: CACHE
+    cacheName: CACHE,
   })
 );
 
-// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = "ToDo-replace-this-name.html";
-
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
-});
-
-self.addEventListener('install', async (event) => {
+// Install event - cache the offline fallback page
+self.addEventListener("install", async (event) => {
+  console.log("Service Worker installing...");
   event.waitUntil(
-    caches.open(CACHE)
-      .then((cache) => cache.add(offlineFallbackPage))
+    caches
+      .open(CACHE)
+      .then((cache) => {
+        console.log("Caching offline page");
+        return cache.add(offlineFallbackPage);
+      })
+      .catch((error) => {
+        console.error("Failed to cache offline page:", error);
+      })
   );
 });
 
+// Activate event
+self.addEventListener("activate", (event) => {
+  console.log("Service Worker activating...");
+  event.waitUntil(self.clients.claim());
+});
+
+// Enable navigation preload if supported
 if (workbox.navigationPreload.isSupported()) {
   workbox.navigationPreload.enable();
 }
 
-self.addEventListener('fetch', (event) => {
-  if (event.request.mode === 'navigate') {
-    event.respondWith((async () => {
-      try {
-        const preloadResp = await event.preloadResponse;
+// Fetch event - handle offline navigation
+self.addEventListener("fetch", (event) => {
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      (async () => {
+        try {
+          // Try preload response first
+          const preloadResp = await event.preloadResponse;
+          if (preloadResp) {
+            return preloadResp;
+          }
 
-        if (preloadResp) {
-          return preloadResp;
+          // Try network request
+          const networkResp = await fetch(event.request);
+          return networkResp;
+        } catch (error) {
+          // Network failed, serve offline page
+          console.log("Network failed, serving offline page");
+          const cache = await caches.open(CACHE);
+          const cachedResp = await cache.match(offlineFallbackPage);
+          return (
+            cachedResp ||
+            new Response("Offline page not found", { status: 404 })
+          );
         }
-
-        const networkResp = await fetch(event.request);
-        return networkResp;
-      } catch (error) {
-
-        const cache = await caches.open(CACHE);
-        const cachedResp = await cache.match(offlineFallbackPage);
-        return cachedResp;
-      }
-    })());
+      })()
+    );
   }
 });
