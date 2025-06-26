@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from "./App"
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 // import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-
+import HashRouter from "react-router-dom/HashRouter";
 // serviceWorkerRegistration.register();
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <App/>
-  </BrowserRouter>
+  <HashRouter>
+    <App />
+  </HashRouter>
 );
 
 if ("serviceWorker" in navigator) {
@@ -24,14 +24,13 @@ if ("serviceWorker" in navigator) {
     });
 }
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-      .register('/firebase-messaging-sw.js')
-      .then((registration) => {
-        console.log('Service Worker registered with scope:', registration.scope);
-      })
-      .catch((err) => {
-        console.log('Service Worker registration failed:', err);
-      });
-  }
-
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/firebase-messaging-sw.js")
+    .then((registration) => {
+      console.log("Service Worker registered with scope:", registration.scope);
+    })
+    .catch((err) => {
+      console.log("Service Worker registration failed:", err);
+    });
+}
