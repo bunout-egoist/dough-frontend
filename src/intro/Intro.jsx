@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import IntroPop from "./IntroPop";
 import FirstPage from "./FirstPage";
+import styles from "./intro.css"; // eslint-disable-next-line
+import { useNavigate } from "react-router-dom";
 import "./intro.css";
 export default function Intro() {
   const [isIos, setIsIos] = useState(false);
@@ -14,7 +16,6 @@ export default function Intro() {
 
   useEffect(() => {
     requestCameraPermission();
-
     const checkPlatform = async () => {
       if (isPlatform("ios")) {
         setIsIos(true);
