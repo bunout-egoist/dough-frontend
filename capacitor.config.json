@@ -3,7 +3,7 @@
   "appName": "bunout",
   "webDir": "build",
   "server": {
-    "url": "https://bunout.info",
+    "androidScheme": "https",
     "cleartext": true
   },
   "android": {
