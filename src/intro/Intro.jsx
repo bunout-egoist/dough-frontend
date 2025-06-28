@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import styles from "./intro.css"; // eslint-disable-next-line
 import { isPlatform } from "@ionic/react";
-import { Link } from "react-router-dom";
-import FirstPage from "./FirstPage";
-import IntroPop from "../popup/IntroPop";
+import { Browser } from "@capacitor/browser";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import IntroPop from "./IntroPop";
+import FirstPage from "./FirstPage";
+import "./intro.css";
 export default function Intro() {
   const [isIos, setIsIos] = useState(false);
   const [showNextPage, setShowNextPage] = useState(false);
   const [nonAllow, setNonAllow] = useState(true);
-  const [showKakaoPopup, setShowKakaoPopup] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,36 +42,51 @@ export default function Intro() {
     };
   }, []);
 
-  // 카카오 로그인 처리 함수
-  const handleKakaoLogin = async (authCode) => {
+  // 카카오 콜백 처리 함수
+  const handleKakaoCallback = async (code) => {
     try {
       const response = await fetch("https://app.bunout.info/api/auth/kakao", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ code: authCode }),
+        body: JSON.stringify({ code }),
       });
 
       const data = await response.json();
 
       if (data.success) {
         localStorage.setItem("token", data.token);
-        setShowKakaoPopup(false);
-        navigate("/main");
-      } else {
-        throw new Error(data.message || "로그인 실패");
+        navigate("/main"); // 로그인 성공 후 메인 페이지로 이동
       }
     } catch (error) {
       console.error("Kakao login error:", error);
       alert("로그인에 실패했습니다. 다시 시도해주세요.");
-      setShowKakaoPopup(false);
     }
   };
 
-  // 수정된 loginHandler - 팝업으로 변경
-  const loginHandler = () => {
-    setShowKakaoPopup(true);
+  const loginHandler = async () => {
+    try {
+      const REDIRECT_URI = "https://app.bunout.info/oauth2/callback/kakao"; // 리디렉션 URL
+      const KEY = "8a6e7b4b0b03c895fc6795146375d6ac"; // 카카오 앱 JavaScript 키
+      const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+      // 모바일에서 인앱 브라우저로 로그인 페이지를 엽니다
+      if (isPlatform("mobile")) {
+        await Browser.open({
+          url: link,
+          windowName: "_self", // 기존 창에서 열도록 설정
+          toolbarColor: "#000000",
+          presentationStyle: "popover", // 팝업 형식
+        });
+      } else {
+        // 웹에서는 기존 방식 사용 (Redirection.jsx로 리디렉션)
+        window.location.href = link;
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("로그인에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   async function requestCameraPermission() {
@@ -84,7 +98,6 @@ export default function Intro() {
       console.error("Camera access denied", err);
       alert("카메라 접근이 필요합니다. 설정에서 카메라 권한을 허용해주세요.");
       setNonAllow(true);
-      console.log(nonAllow);
     }
   }
 
@@ -92,26 +105,15 @@ export default function Intro() {
     setNonAllow(false);
   };
 
-  const [gifSrc, setGifSrc] = useState("/images/intro/onboard.gif");
-
   return (
     <div className="intropage">
       {nonAllow ? <IntroPop onClose={handlePopClose} /> : <div></div>}
-
-      {/* 카카오 로그인 팝업 */}
-      {showKakaoPopup && (
-        <KakaoLoginPopup
-          onSuccess={handleKakaoLogin}
-          onClose={() => setShowKakaoPopup(false)}
-        />
-      )}
-
       {!showNextPage ? (
         <FirstPage />
       ) : (
         <div className="nextpage">
           <div className="profile-img">
-            <img src={`${gifSrc}?${new Date().getTime()}`} alt="gif" />
+            <img src="/images/intro/onboard.gif" alt="gif" />
           </div>
           <div className="into-bottom">
             <div className="intro-bottom-abs">
@@ -137,189 +139,3 @@ export default function Intro() {
     </div>
   );
 }
-
-// 카카오 로그인 팝업 컴포넌트
-const KakaoLoginPopup = ({ onSuccess, onClose }) => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    // 카카오 SDK 로드
-    const script = document.createElement("script");
-    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-    script.onload = () => {
-      if (window.Kakao && !window.Kakao.isInitialized()) {
-        window.Kakao.init("8a6e7b4b0b03c895fc6795146375d6ac");
-      }
-    };
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []);
-
-  const handleKakaoLogin = () => {
-    if (!window.Kakao) {
-      alert("카카오 SDK가 로드되지 않았습니다.");
-      return;
-    }
-
-    setIsLoading(true);
-
-    // 팝업 방식으로 로그인
-    window.Kakao.Auth.login({
-      success: function (response) {
-        console.log("카카오 로그인 성공:", response);
-
-        // 사용자 정보 가져오기
-        window.Kakao.API.request({
-          url: "/v2/user/me",
-          success: function (userResponse) {
-            console.log("사용자 정보:", userResponse);
-
-            // 서버에 토큰 전송 또는 직접 처리
-            // access_token을 서버로 보내거나
-            // 여기서 직접 처리할 수 있습니다
-            handleServerLogin(response.access_token, userResponse);
-          },
-          fail: function (error) {
-            console.error("사용자 정보 가져오기 실패:", error);
-            setIsLoading(false);
-            alert("사용자 정보를 가져오는데 실패했습니다.");
-          },
-        });
-      },
-      fail: function (error) {
-        console.error("카카오 로그인 실패:", error);
-        setIsLoading(false);
-        alert("로그인에 실패했습니다.");
-      },
-    });
-  };
-
-  // 서버에 로그인 정보 전송
-  const handleServerLogin = async (accessToken, userInfo) => {
-    try {
-      const response = await fetch(
-        "https://app.bunout.info/api/auth/kakao-token",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            access_token: accessToken,
-            user_info: userInfo,
-          }),
-        }
-      );
-
-      const data = await response.json();
-      setIsLoading(false);
-
-      if (data.success) {
-        onSuccess(data.token || accessToken);
-      } else {
-        throw new Error(data.message || "서버 로그인 실패");
-      }
-    } catch (error) {
-      console.error("서버 로그인 에러:", error);
-      setIsLoading(false);
-      alert("로그인 처리 중 오류가 발생했습니다.");
-    }
-  };
-
-  return (
-    <div style={popupStyles.overlay}>
-      <div style={popupStyles.popup}>
-        <div style={popupStyles.header}>
-          <h3>카카오 로그인</h3>
-          <button onClick={onClose} style={popupStyles.closeBtn}>
-            ×
-          </button>
-        </div>
-
-        <div style={popupStyles.content}>
-          <img
-            src="/images/intro/kakao.png"
-            alt="카카오"
-            style={popupStyles.kakaoLogo}
-          />
-          <p>카카오 계정으로 간편하게 로그인하세요</p>
-
-          <button
-            onClick={handleKakaoLogin}
-            disabled={isLoading}
-            style={{
-              ...popupStyles.loginBtn,
-              opacity: isLoading ? 0.7 : 1,
-            }}
-          >
-            {isLoading ? "로그인 중..." : "카카오 로그인"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// 팝업 스타일
-const popupStyles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 9999,
-  },
-  popup: {
-    backgroundColor: "white",
-    borderRadius: "12px",
-    width: "90%",
-    maxWidth: "400px",
-    maxHeight: "80%",
-    overflow: "hidden",
-    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "16px 20px",
-    borderBottom: "1px solid #eee",
-    backgroundColor: "#f8f9fa",
-  },
-  closeBtn: {
-    background: "none",
-    border: "none",
-    fontSize: "24px",
-    cursor: "pointer",
-    color: "#666",
-  },
-  content: {
-    padding: "24px 20px",
-    textAlign: "center",
-  },
-  kakaoLogo: {
-    width: "60px",
-    height: "60px",
-    marginBottom: "16px",
-  },
-  loginBtn: {
-    backgroundColor: "#FEE500",
-    color: "#000",
-    border: "none",
-    borderRadius: "8px",
-    padding: "12px 24px",
-    fontSize: "16px",
-    fontWeight: "bold",
-    cursor: "pointer",
-    width: "100%",
-    marginTop: "16px",
-  },
-};
