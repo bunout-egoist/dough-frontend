@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Camera, CameraSource, CameraResultType } from "@capacitor/camera";
-import { Filesystem } from '@capacitor/filesystem';
+import { Filesystem } from "@capacitor/filesystem";
 export default function MissionBox({
   isChecked,
   onCheck,
-  missionText,missionSubText,
+  missionText,
+  missionSubText,
   backgroundColor,
-  tag1, tag2,
-  status,special,
+  tag1,
+  tag2,
+  status,
+  special,
   onImageUpload,
-  imageUrl,id 
+  imageUrl,
+  id,
 }) {
   const [imageSrc, setImageSrc] = useState("/images/main/photo.png");
   useEffect(() => {
@@ -24,17 +28,15 @@ export default function MissionBox({
       setIsBoxChecked(false);
     }
   }, [isChecked]);
-  console.log('음2',isBoxChecked);
   const boxClassName = `mainpage-mission-box ${
     status === "now-clicked" ? "mission-now-clicked" : ""
   } ${status === "finished" ? "mission-finished" : ""} 
-  ${
-    isBoxChecked ? "mission-checked" : ""
-  } 
-  ${special === '스페셜퀘스트' ? 'special-background' : ''}`;
+  ${isBoxChecked ? "mission-checked" : ""} 
+  ${special === "스페셜퀘스트" ? "special-background" : ""}`;
 
-  const tagClassName = `mission-tag ${isBoxChecked ? "mission-tag-checked" : ""}`;
-  console.log('음3',isBoxChecked);
+  const tagClassName = `mission-tag ${
+    isBoxChecked ? "mission-tag-checked" : ""
+  }`;
   // Function to open the gallery and select an image
   const handleOpenGallery = async () => {
     try {
@@ -46,24 +48,23 @@ export default function MissionBox({
       });
 
       setImageSrc(image.webPath);
-    //   const fileData = await Filesystem.readFile({
-    //     path: image.path, // Capacitor가 제공하는 이미지 경로
-    //   });
-    //   const blob = new Blob([fileData.data], { type: image.format }); 
-    // const file = new File([blob], "image.jpg", { type: blob.type });
+      //   const fileData = await Filesystem.readFile({
+      //     path: image.path, // Capacitor가 제공하는 이미지 경로
+      //   });
+      //   const blob = new Blob([fileData.data], { type: image.format });
+      // const file = new File([blob], "image.jpg", { type: blob.type });
 
-       // Fetch the image using the webPath
-    const response = await fetch(image.webPath);
-    const blob = await response.blob(); // Convert the image URI to a blob
-    const file = new File([blob], "image.jpg", { type: blob.type });
+      // Fetch the image using the webPath
+      const response = await fetch(image.webPath);
+      const blob = await response.blob(); // Convert the image URI to a blob
+      const file = new File([blob], "image.jpg", { type: blob.type });
 
-      onImageUpload(id,file); // Pass the blob to Mainpage
+      onImageUpload(id, file); // Pass the blob to Mainpage
     } catch (err) {
       console.error("Error selecting image: ", err);
     }
   };
-  const isFinished = status === 'finished';
-  console.log('음4',isBoxChecked,isFinished);
+  const isFinished = status === "finished";
   const handleBoxClick = (event) => {
     event.stopPropagation();
     if (!isFinished && !isBoxChecked) {
@@ -71,9 +72,12 @@ export default function MissionBox({
       onCheck(); // 부모 컴포넌트의 체크 상태 변경 함수 호출
     }
   };
-  console.log('음5',isBoxChecked,isFinished);
   return (
-    <div className={`${boxClassName} `}        onClick={handleBoxClick} style={{ backgroundColor, pointerEvents: isFinished ? 'none' : 'auto' }}>
+    <div
+      className={`${boxClassName} `}
+      onClick={handleBoxClick}
+      style={{ backgroundColor, pointerEvents: isFinished ? "none" : "auto" }}
+    >
       <div>
         {/* <div className="mission-tag-flex">
           <div className={tagClassName} style={{ color: `${backgroundColor}` }}>
@@ -83,22 +87,24 @@ export default function MissionBox({
             {tag2}
           </div>
         </div> */}
-        <div className="mission-subtitle">
-          {missionSubText}
-        </div>
-        <div className={`mission-title ${isBoxChecked ? "mission-checked" : ""}`}>
+        <div className="mission-subtitle">{missionSubText}</div>
+        <div
+          className={`mission-title ${isBoxChecked ? "mission-checked" : ""}`}
+        >
           {missionText}
         </div>
       </div>
 
       {/* Conditionally render checkbox or image based on isChecked */}
-      {isBoxChecked || isFinished ?(
+      {isBoxChecked || isFinished ? (
         <div className="mission-img-box" onClick={handleOpenGallery}>
           <img className="img-width" src={imageSrc} alt="Mission completed" />
         </div>
-      ) : 
-      (
-        <div className="mainpage-mission-checkbox"   onClick={(e) => e.stopPropagation()}>
+      ) : (
+        <div
+          className="mainpage-mission-checkbox"
+          onClick={(e) => e.stopPropagation()}
+        >
           <input
             type="checkbox"
             className={`mainpage-mission-check ${
@@ -120,5 +126,5 @@ MissionBox.propTypes = {
   missionText: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   onImageUpload: PropTypes.func.isRequired,
-  id: PropTypes.string 
+  id: PropTypes.string,
 };

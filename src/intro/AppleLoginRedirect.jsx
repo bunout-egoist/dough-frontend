@@ -48,7 +48,6 @@ export default function AppleLoginRedirect() {
           vapidKey:
             "BKSCCM1MOQZ5KfhXgstx-ZrMJR6P6XRlo3Slb1SI1ct0y4MkeeOZJsTaHkc1o4MUrpk_iHTq1hQtDv2UnUUlibw",
         });
-        console.log("FCM 토큰:", fcmToken);
       } catch (error) {
         console.error("FCM 토큰을 가져오는 중 오류 발생:", error);
       }

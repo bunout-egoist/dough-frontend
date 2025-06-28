@@ -11,12 +11,10 @@ export default function Quest() {
     const token = localStorage.getItem("accessToken");
     if (token) {
       setAccessToken(token);
-      console.log("받음", token);
     } else {
       console.error("Access token is not available");
     }
   }, []);
-  console.log(accessToken, "음???왜0");
   const [questNum, setQuestNum] = useState(null);
   const [qindex, setQIndex] = useState(null);
   const [selectedType, setSelectedType] = useState(null); // State for selectedType
@@ -61,7 +59,6 @@ export default function Quest() {
   }, [questNum]); // removed updatedFinalInfoData from dependencies
 
   const handleButtonClick = () => {
-    console.log("끝", updatedFinalInfoData);
     // 퀘스트 선택
     fetch(`/api/v1/signup/complete`, {
       method: "PUT",

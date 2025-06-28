@@ -10,7 +10,6 @@ export default function EditQuest() {
     const token = localStorage.getItem("accessToken");
     if (token) {
       setAccessToken(token);
-      console.log("받음", token);
     } else {
       console.error("Access token is not available");
     }

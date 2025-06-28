@@ -25,7 +25,6 @@ export default function Redirection() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Received data:", data, data.isNewMember);
         const accessToken = data.accessToken;
         const refreshToken = data.refreshToken;
 
