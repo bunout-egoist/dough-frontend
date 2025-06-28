@@ -22,29 +22,41 @@ import QuestType from "./settings/page/QuestType";
 import EditQuest from "./settings/page/EditQuest";
 import FinishSign from "./intro/FinishSign";
 import AppleLoginRedirect from "./intro/AppleLoginRedirect";
-import { Capacitor } from '@capacitor/core';
-import { PushNotifications } from '@capacitor/push-notifications';
+import { Capacitor } from "@capacitor/core";
+import { PushNotifications } from "@capacitor/push-notifications";
 function App() {
-  // 알람수신 받는곳
-  useEffect(() => {
-    if (Capacitor.isNativePlatform()) {
-    // 푸시 알림 리스너 등록
-    PushNotifications.addListener('pushNotificationReceived', (notification) => {
-      console.log('푸시 알림 수신:', notification);
-      alert(`새로운 알림: ${notification.title} - ${notification.body}`);
-    });
+  // // 알람수신 받는곳
+  // useEffect(() => {
+  //   if (Capacitor.isNativePlatform()) {
+  //   // 푸시 알림 리스너 등록
+  //   PushNotifications.addListener('pushNotificationReceived', (notification) => {
+  //     console.log('푸시 알림 수신:', notification);
+  //     alert(`새로운 알림: ${notification.title} - ${notification.body}`);
+  //   });
 
-    PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
-      console.log('푸시 알림 클릭:', notification);
-      // 알림 클릭 시 수행할 동작 설정
-      alert(`알림 클릭: ${notification.notification.data}`);
-    });}
-  }, []);
-
+  //   PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+  //     console.log('푸시 알림 클릭:', notification);
+  //     // 알림 클릭 시 수행할 동작 설정
+  //     alert(`알림 클릭: ${notification.notification.data}`);
+  //   });}
+  // }, []);
 
   const location = useLocation();
 
-  const hideNavbarRoutes = ["/", "/sign","/sign/info", "/typepage","/typepage/quest","/tutorial","/setting/edit-type","/nickname","/setting/edit-type/quest","/setting/edit-quest","/finish","/redirect/apple"];
+  const hideNavbarRoutes = [
+    "/",
+    "/sign",
+    "/sign/info",
+    "/typepage",
+    "/typepage/quest",
+    "/tutorial",
+    "/setting/edit-type",
+    "/nickname",
+    "/setting/edit-type/quest",
+    "/setting/edit-quest",
+    "/finish",
+    "/redirect/apple",
+  ];
   const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname);
 
   return (
@@ -52,13 +64,13 @@ function App() {
       <div className="app-main">
         <div>
           <Routes>
-            <Route path="/oauth2/callback/kakao" element={<Redirection/>}/>
-            <Route path="/redirect/apple" element={<AppleLoginRedirect/>}/>
+            <Route path="/oauth2/callback/kakao" element={<Redirection />} />
+            <Route path="/redirect/apple" element={<AppleLoginRedirect />} />
             <Route path="/" element={<Intro />} />
             <Route path="/finish" element={<FinishSign />} />
-            <Route path="/setting/edit-type" element={<EditType/>}/>
-            <Route path="/setting/edit-type/quest" element={<QuestType/>}/>
-            <Route path="/setting/edit-quest" element={<EditQuest/>}/>
+            <Route path="/setting/edit-type" element={<EditType />} />
+            <Route path="/setting/edit-type/quest" element={<QuestType />} />
+            <Route path="/setting/edit-quest" element={<EditQuest />} />
             <Route path="/typepage/quest" element={<Quest />} />
             <Route path="/tutorial" element={<Tutorial />} />
             <Route path="/sign" element={<Sign />} />
