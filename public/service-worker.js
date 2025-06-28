@@ -16,11 +16,35 @@ self.addEventListener("message", (event) => {
   }
 });
 
-// Register a route to cache requests and use stale-while-revalidate strategy
 workbox.routing.registerRoute(
-  new RegExp("/*"),
+  ({ request }) => {
+    const url = new URL(request.url);
+    const excludedDomains = [
+      "kauth.kakao.com",
+      "accounts.google.com",
+      "appleid.apple.com",
+      "oauth.kakao.com",
+    ];
+
+    return !excludedDomains.some((domain) => url.hostname.includes(domain));
+  },
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: CACHE,
+  })
+);
+
+workbox.routing.registerRoute(
+  ({ request }) => {
+    return (
+      request.destination === "script" ||
+      request.destination === "style" ||
+      request.destination === "image" ||
+      request.destination === "font" ||
+      request.destination === "manifest"
+    );
+  },
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: CACHE + "-static",
   })
 );
 
@@ -46,7 +70,21 @@ if (workbox.navigationPreload.isSupported()) {
 }
 
 self.addEventListener("fetch", (event) => {
+  // 네비게이션 요청 처리 (페이지 로드)
   if (event.request.mode === "navigate") {
+    const url = new URL(event.request.url);
+    const authDomains = [
+      "kauth.kakao.com",
+      "accounts.google.com",
+      "appleid.apple.com",
+      "oauth.kakao.com",
+    ];
+
+    // 외부 인증 서비스면 그대로 통과
+    if (authDomains.some((domain) => url.hostname.includes(domain))) {
+      return;
+    }
+
     event.respondWith(
       (async () => {
         try {
