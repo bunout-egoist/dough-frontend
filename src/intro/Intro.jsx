@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import IntroPop from "./IntroPop";
 import FirstPage from "./FirstPage";
 import styles from "./intro.css"; // eslint-disable-next-line
-import { useNavigate } from "react-router-dom";
 import "./intro.css";
 export default function Intro() {
   const [isIos, setIsIos] = useState(false);
@@ -68,20 +67,18 @@ export default function Intro() {
 
   const loginHandler = async () => {
     try {
-      const REDIRECT_URI = "https://app.bunout.info/oauth2/callback/kakao"; // 리디렉션 URL
-      const KEY = "8a6e7b4b0b03c895fc6795146375d6ac"; // 카카오 앱 JavaScript 키
+      const REDIRECT_URI = "https://app.bunout.info/oauth2/callback/kakao";
+      const KEY = "8a6e7b4b0b03c895fc6795146375d6ac";
       const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-      // 모바일에서 인앱 브라우저로 로그인 페이지를 엽니다
       if (isPlatform("mobile")) {
         await Browser.open({
           url: link,
-          windowName: "_self", // 기존 창에서 열도록 설정
+          windowName: "_self",
           toolbarColor: "#000000",
-          presentationStyle: "popover", // 팝업 형식
+          presentationStyle: "popover",
         });
       } else {
-        // 웹에서는 기존 방식 사용 (Redirection.jsx로 리디렉션)
         window.location.href = link;
       }
     } catch (error) {
