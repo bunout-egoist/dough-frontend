@@ -3,9 +3,9 @@ import styles from "./intro.css"; // eslint-disable-next-line
 import { isPlatform } from "@ionic/react";
 import { Link } from "react-router-dom";
 import FirstPage from "./FirstPage";
-// import AppleLogin from "react-apple-login";
 import IntroPop from "../popup/IntroPop";
 import { useNavigate } from "react-router-dom";
+import { Browser } from "@capacitor/browser";
 
 export default function Intro() {
   const [isIos, setIsIos] = useState(false);
@@ -36,26 +36,76 @@ export default function Intro() {
     checkPlatform();
     const timer = setTimeout(() => {
       setShowNextPage(true);
-    }, 3000); // 3000ms = 3 seconds
+    }, 3000);
 
-    return () => clearTimeout(timer);
+    // 브라우저에서 메시지 수신 리스너
+    const handleBrowserMessage = (event) => {
+      if (event.data && event.data.type === "KAKAO_LOGIN_SUCCESS") {
+        console.log("Kakao auth code:", event.data.code);
+        handleKakaoCallback(event.data.code);
+        Browser.close();
+      }
+    };
+
+    // postMessage 리스너 등록
+    window.addEventListener("message", handleBrowserMessage);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("message", handleBrowserMessage);
+    };
   }, []);
 
-  // const REDIRECT_URI = 'http://localhost:3000/oauth2/callback/kakao';
-  const REDIRECT_URI = "https://app.bunout.info/oauth2/callback/kakao";
-  //process.env.REACT_APP_KEY;
-  const KEY = "8a6e7b4b0b03c895fc6795146375d6ac";
-  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  const loginHandler = () => {
-    window.location.href = link;
+  // 카카오 콜백 처리 함수
+  const handleKakaoCallback = async (code) => {
+    try {
+      // 여기서 서버 API를 호출하여 토큰 교환
+      const response = await fetch("https://app.bunout.info/api/auth/kakao", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // 로그인 성공 처리
+        localStorage.setItem("token", data.token);
+        navigate("/main"); // 메인 페이지로 이동
+      }
+    } catch (error) {
+      console.error("Kakao login error:", error);
+      alert("로그인에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
-  // const handleAppleResponse = (response) => {
-  //   console.log("Apple Login Response: ", response);
-  //   // response.detail.authorization.id_token을 통해 idToken 확인 가능
-  //   const idToken = response?.authorization?.id_token;
-  //   console.log("ID Token: ", idToken);
-  // };
+  // 수정된 loginHandler
+  const loginHandler = async () => {
+    try {
+      // 기존 웹 Redirect URI 사용 (카카오에서 커스텀 스키마 불허용)
+      const REDIRECT_URI = "https://app.bunout.info/oauth2/callback/kakao";
+      const KEY = "8a6e7b4b0b03c895fc6795146375d6ac";
+      const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+      if (isPlatform("mobile")) {
+        // 모바일에서는 인앱 브라우저로 열기
+        await Browser.open({
+          url: link,
+          windowName: "_self",
+          toolbarColor: "#000000",
+          presentationStyle: "popover",
+        });
+      } else {
+        // 웹에서는 기존 방식 사용
+        window.location.href = link;
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("로그인에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
 
   async function requestCameraPermission() {
     try {
@@ -69,27 +119,6 @@ export default function Intro() {
       console.log(nonAllow);
     }
   }
-
-  // const loginWithApple = async (e) => {
-  //   e.preventDefault();
-
-  //   console.log("sign in with apple");
-
-  //   window.AppleID.auth.init({
-  //     clientId: "com.bunout.appServices",
-  //     redirectURI: "https://app.bunout.info/api/v1/auth/login/apple",
-  //     state: "bunout",
-  //     usePopup: true,
-  //   });
-
-  //   try {
-  //     const res = await window.AppleID.auth.signIn();
-  //     console.log(res);
-  //     navigate("/redirect/apple", { state: { res } });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const handlePopClose = () => {
     setNonAllow(false);
@@ -121,20 +150,6 @@ export default function Intro() {
                   />
                 </div>
               </div>
-              {/* {isIos ? (
-                <div
-                  className="intropage-sns intropage-apple"
-                  onClick={loginWithApple}
-                >
-                  <div className="intropage-kakao-img">
-                    <img
-                      src="/images/intro/apple.png"
-                      className="img-width"
-                      alt="Apple Login"
-                    />
-                  </div>
-                </div>
-              ) : null} */}
               <Link to="/tutorial">
                 <div className="landing-tuto">서비스 둘러보기</div>
               </Link>
