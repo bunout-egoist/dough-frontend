@@ -43,12 +43,21 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!-- 카카오 로그인 deep link 추가 -->
+            <!-- 카카오 로그인을 위한 정확한 스키마 -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="yourapp" />
+                <data android:scheme="kakao{YOUR_KAKAO_APP_KEY}" />
+            </intent-filter>
+            
+            <!-- 추가: 일반 웹 URL도 앱 내에서 처리 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" 
+                    android:host="kauth.kakao.com" />
             </intent-filter>
         </activity>
        <!-- <service
