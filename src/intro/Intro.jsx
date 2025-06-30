@@ -6,6 +6,7 @@ import FirstPage from "./FirstPage";
 import IntroPop from "../popup/IntroPop";
 import { useNavigate } from "react-router-dom";
 import { Browser } from "@capacitor/browser";
+import { App } from "@capacitor/app";
 
 export default function Intro() {
   const [isIos, setIsIos] = useState(false);
@@ -38,7 +39,25 @@ export default function Intro() {
       setShowNextPage(true);
     }, 3000);
 
-    // 브라우저에서 메시지 수신 리스너
+    // App URL 핸들러 (딥링크 처리)
+    const handleAppUrlOpen = async (event) => {
+      const { url } = event;
+      console.log("App URL opened:", url);
+
+      if (url.includes("code=")) {
+        const urlParams = new URLSearchParams(url.split("?")[1]);
+        const code = urlParams.get("code");
+        if (code) {
+          console.log("Kakao auth code from deep link:", code);
+          handleKakaoCallback(code);
+        }
+      }
+    };
+
+    // App URL 리스너 등록
+    App.addListener("appUrlOpen", handleAppUrlOpen);
+
+    // 브라우저에서 메시지 수신 리스너 (웹용)
     const handleBrowserMessage = (event) => {
       if (event.data && event.data.type === "KAKAO_LOGIN_SUCCESS") {
         console.log("Kakao auth code:", event.data.code);
@@ -53,6 +72,7 @@ export default function Intro() {
     return () => {
       clearTimeout(timer);
       window.removeEventListener("message", handleBrowserMessage);
+      App.removeAllListeners();
     };
   }, []);
 
@@ -60,20 +80,31 @@ export default function Intro() {
   const handleKakaoCallback = async (code) => {
     try {
       // 여기서 서버 API를 호출하여 토큰 교환
-      const response = await fetch("https://app.bunout.info/api/auth/kakao", {
+      const response = await fetch("/api/v1/auth/login/kakao", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ code }),
+        body: JSON.stringify({
+          code: code,
+          fcmToken: null,
+        }),
+        credentials: "include",
       });
 
       const data = await response.json();
 
-      if (data.success) {
+      if (data && data.accessToken) {
         // 로그인 성공 처리
-        localStorage.setItem("token", data.token);
-        navigate("/main"); // 메인 페이지로 이동
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
+
+        // 신규/기존 회원 분기
+        if (data.isNewMember === true) {
+          navigate("/sign");
+        } else {
+          navigate("/main");
+        }
       }
     } catch (error) {
       console.error("Kakao login error:", error);
@@ -84,13 +115,13 @@ export default function Intro() {
   // 수정된 loginHandler
   const loginHandler = async () => {
     try {
-      // 기존 웹 Redirect URI 사용 (카카오에서 커스텀 스키마 불허용)
-      const REDIRECT_URI = "https://app.bunout.info/oauth2/callback/kakao";
       const KEY = "8a6e7b4b0b03c895fc6795146375d6ac";
-      const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-      if (isPlatform("mobile")) {
-        // 모바일에서는 인앱 브라우저로 열기
+      if (isPlatform("mobile") || isPlatform("hybrid")) {
+        // 모바일 앱에서는 커스텀 스키마를 사용
+        const REDIRECT_URI = "bunoutapp://kakao/callback"; // 또는 앱에서 설정한 커스텀 스키마
+        const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
         await Browser.open({
           url: link,
           windowName: "_self",
@@ -99,6 +130,8 @@ export default function Intro() {
         });
       } else {
         // 웹에서는 기존 방식 사용
+        const REDIRECT_URI = "https://app.bunout.info/oauth2/callback/kakao";
+        const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
         window.location.href = link;
       }
     } catch (error) {

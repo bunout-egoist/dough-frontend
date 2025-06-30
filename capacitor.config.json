@@ -8,15 +8,21 @@
     "allowNavigation": ["https://kauth.kakao.com", "https://kapi.kakao.com"]
   },
   "android": {
-    "allowMixedContent": true
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
   },
   "bundledWebRuntime": false,
   "plugins": {
-    "App": {
-      "launchUrl": null
-    },
     "Browser": {
-      "windowName": "_self"
+      "presentationStyle": "popover"
+    },
+    "App": {
+      "deepLinkingEnabled": true
     }
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "scrollEnabled": true
   }
 }
