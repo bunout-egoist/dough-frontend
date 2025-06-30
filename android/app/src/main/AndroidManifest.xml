@@ -48,7 +48,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="kakao{YOUR_KAKAO_APP_KEY}" />
+                <data android:scheme="kakao8a6e7b4b0b03c895fc6795146375d6ac" />
             </intent-filter>
             
             <!-- 추가: 일반 웹 URL도 앱 내에서 처리 -->
@@ -58,6 +58,13 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" 
                     android:host="kauth.kakao.com" />
+            </intent-filter>
+             <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="app.bunout.info" />
             </intent-filter>
         </activity>
        <!-- <service
