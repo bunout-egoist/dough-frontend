@@ -356,7 +356,9 @@ export default function Setting() {
             </div>
           </div>
           <div className="setting-alarm">
-            <div className="setting-subtitle">알림 설정</div>
+            <div className="setting-subtitle">
+              알림 설정 ( 버전 2.0에서 반영 예정입니다🤗 )
+            </div>
             <div>
               <div className="setting-alarm-box-1 flex-row">
                 <div>알림 허용</div>

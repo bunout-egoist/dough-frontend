@@ -437,7 +437,9 @@ export default function Mainpage() {
         {mainContents && mainContents.burnoutId !== undefined && (
           <div className="mainpage-img">
             <img
-              src={`/images/main/type/${mainContents.burnoutId}/${completedCount}.png`}
+              src={`/images/main/type/${mainContents.burnoutId}/${
+                completedCount - 1
+              }.png`}
               className="img-width"
               alt="Main icon"
             />
