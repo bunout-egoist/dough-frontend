@@ -92,8 +92,8 @@ export default function Intro() {
           windowName: "_self", // _blank -> _self로 변경
           toolbarColor: "#ffffff",
           showTitle: true,
-          enableUrlBarHiding: false,
-          hideUrlBar: false,
+          enableUrlBarHiding: false, // 주소 바 숨기기
+          hideUrlBar: true, // 주소 바 숨기기
           hideToolbarNavigationButtons: false,
           presentationStyle: "fullscreen", // 전체화면으로 표시
         });
