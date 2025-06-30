@@ -110,6 +110,7 @@ export default function Intro() {
               console.log("Auth code received:", code);
               await browser.close(); // 해당 browser 인스턴스를 통해 브라우저를 종료합니다.
               handleKakaoCallback(code);
+              Browser.removeListener("browserPageLoaded"); // 특정 리스너만 제거
             }
           }
         });

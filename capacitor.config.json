@@ -3,6 +3,7 @@
   "appName": "bunout",
   "webDir": "build",
   "server": {
+    "url": "https://app.bunout.info",
     "androidScheme": "https",
     "cleartext": true,
     "allowNavigation": ["https://kauth.kakao.com", "https://kapi.kakao.com"]
