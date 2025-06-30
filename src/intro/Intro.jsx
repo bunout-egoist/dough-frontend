@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import FirstPage from "./FirstPage";
 import IntroPop from "../popup/IntroPop";
 import { useNavigate } from "react-router-dom";
-import { Browser } from "@capacitor/browser";
+// import { Browser } from "@capacitor/browser";
+import { WebView } from "@capacitor/webview";
 
 export default function Intro() {
   const [isIos, setIsIos] = useState(false);
@@ -86,40 +87,41 @@ export default function Intro() {
       const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
       if (isPlatform("mobile") || isPlatform("hybrid")) {
-        // 모바일에서는 InAppBrowser 사용
-        const browser = await Browser.open({
-          url: link,
-          windowName: "_self", // _blank -> _self로 변경
-          toolbarColor: "#ffffff",
-          showTitle: true,
-          enableUrlBarHiding: true, // 주소 바 숨기기
-          hideUrlBar: true, // 주소 바 숨기기
-          hideToolbarNavigationButtons: true,
-          presentationStyle: "fullscreen", // 전체화면으로 표시
-        });
+        WebView.openUrl(link);
+        // // 모바일에서는 InAppBrowser 사용
+        // const browser = await Browser.open({
+        //   url: link,
+        //   windowName: "_self", // _blank -> _self로 변경
+        //   toolbarColor: "#ffffff",
+        //   showTitle: true,
+        //   enableUrlBarHiding: true, // 주소 바 숨기기
+        //   hideUrlBar: true, // 주소 바 숨기기
+        //   hideToolbarNavigationButtons: true,
+        //   presentationStyle: "fullscreen", // 전체화면으로 표시
+        // });
 
-        // URL 변경 감지
-        Browser.addListener("browserPageLoaded", async (info) => {
-          console.log("Browser page loaded:", info.url);
+        // // URL 변경 감지
+        // Browser.addListener("browserPageLoaded", async (info) => {
+        //   console.log("Browser page loaded:", info.url);
 
-          if (info.url.includes("app.bunout.info/oauth2/callback/kakao")) {
-            const url = new URL(info.url);
-            const code = url.searchParams.get("code");
+        //   if (info.url.includes("app.bunout.info/oauth2/callback/kakao")) {
+        //     const url = new URL(info.url);
+        //     const code = url.searchParams.get("code");
 
-            if (code) {
-              console.log("Auth code received:", code);
-              await browser.close(); // 해당 browser 인스턴스를 통해 브라우저를 종료합니다.
-              handleKakaoCallback(code);
-              Browser.removeListener("browserPageLoaded"); // 특정 리스너만 제거
-            }
-          }
-        });
+        //     if (code) {
+        //       console.log("Auth code received:", code);
+        //       await browser.close(); // 해당 browser 인스턴스를 통해 브라우저를 종료합니다.
+        //       handleKakaoCallback(code);
+        //       Browser.removeListener("browserPageLoaded"); // 특정 리스너만 제거
+        //     }
+        //   }
+        // });
 
-        // 브라우저 닫힘 감지
-        Browser.addListener("browserFinished", () => {
-          console.log("Browser closed");
-          Browser.removeAllListeners();
-        });
+        // // 브라우저 닫힘 감지
+        // Browser.addListener("browserFinished", () => {
+        //   console.log("Browser closed");
+        //   Browser.removeAllListeners();
+        // });
       } else {
         // 웹에서는 기존 방식
         window.location.href = link;

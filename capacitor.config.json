@@ -6,7 +6,11 @@
     "url": "https://app.bunout.info",
     "androidScheme": "https",
     "cleartext": true,
-    "allowNavigation": ["https://kauth.kakao.com", "https://kapi.kakao.com"]
+    "allowNavigation": [
+      "https://app.bunout.info",
+      "https://kauth.kakao.com",
+      "https://kapi.kakao.com"
+    ]
   },
   "android": {
     "allowMixedContent": true,
