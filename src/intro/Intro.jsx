@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import FirstPage from "./FirstPage";
 import IntroPop from "../popup/IntroPop";
 import { useNavigate } from "react-router-dom";
+import { Browser } from "@capacitor/browser";
 
 export default function Intro() {
   const [isIos, setIsIos] = useState(false);
@@ -42,7 +43,77 @@ export default function Intro() {
     };
   }, []);
 
-  // 카카오 로그인 핸들러 - 모든 플랫폼에서 동일한 웹 리다이렉트 사용
+  // 카카오 콜백 처리 함수
+  const handleKakaoCallback = async (code) => {
+    try {
+      const response = await fetch("/api/v1/auth/login/kakao", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: code,
+          fcmToken: null,
+        }),
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (data && data.accessToken) {
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
+
+        if (data.isNewMember === true) {
+          navigate("/sign");
+        } else {
+          navigate("/main");
+        }
+      }
+    } catch (error) {
+      console.error("Kakao login error:", error);
+      alert("로그인에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  // URL 모니터링을 위한 함수
+  const monitorInAppBrowser = (browserRef) => {
+    const checkUrl = setInterval(async () => {
+      try {
+        const currentUrl = await browserRef.executeScript({
+          code: "window.location.href",
+        });
+
+        console.log("Current URL:", currentUrl);
+
+        // 리다이렉트 URL 확인
+        if (
+          currentUrl &&
+          currentUrl.includes("app.bunout.info/oauth2/callback/kakao")
+        ) {
+          const url = new URL(currentUrl);
+          const code = url.searchParams.get("code");
+
+          if (code) {
+            console.log("Auth code received:", code);
+            clearInterval(checkUrl);
+            await Browser.close();
+            handleKakaoCallback(code);
+          }
+        }
+      } catch (error) {
+        // URL 접근 불가능한 경우 (외부 도메인)
+        console.log("Cannot access URL, continuing...");
+      }
+    }, 1000);
+
+    // 15초 후 타임아웃
+    setTimeout(() => {
+      clearInterval(checkUrl);
+    }, 15000);
+  };
+
+  // 완전 인앱 카카오 로그인
   const loginHandler = async () => {
     try {
       const REDIRECT_URI = encodeURIComponent(
@@ -51,8 +122,44 @@ export default function Intro() {
       const KEY = "8a6e7b4b0b03c895fc6795146375d6ac";
       const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-      // 모든 플랫폼(웹, 앱)에서 현재 웹뷰 내에서 직접 이동
-      window.location.href = link;
+      if (isPlatform("mobile") || isPlatform("hybrid")) {
+        // 모바일에서는 InAppBrowser 사용
+        const browser = await Browser.open({
+          url: link,
+          windowName: "_blank",
+          toolbarColor: "#ffffff",
+          showTitle: true,
+          enableUrlBarHiding: false,
+          hideUrlBar: false,
+          hideToolbarNavigationButtons: false,
+          presentationStyle: "fullscreen", // 전체화면으로 표시
+        });
+
+        // URL 변경 감지
+        Browser.addListener("browserPageLoaded", async (info) => {
+          console.log("Browser page loaded:", info.url);
+
+          if (info.url.includes("app.bunout.info/oauth2/callback/kakao")) {
+            const url = new URL(info.url);
+            const code = url.searchParams.get("code");
+
+            if (code) {
+              console.log("Auth code received:", code);
+              await Browser.close();
+              handleKakaoCallback(code);
+            }
+          }
+        });
+
+        // 브라우저 닫힘 감지
+        Browser.addListener("browserFinished", () => {
+          console.log("Browser closed");
+          Browser.removeAllListeners();
+        });
+      } else {
+        // 웹에서는 기존 방식
+        window.location.href = link;
+      }
     } catch (error) {
       console.error("Login error:", error);
       alert("로그인에 실패했습니다. 다시 시도해주세요.");

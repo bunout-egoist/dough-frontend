@@ -15,10 +15,14 @@
   "bundledWebRuntime": false,
   "plugins": {
     "Browser": {
-      "presentationStyle": "popover"
+      "presentationStyle": "popover",
+      "windowName": "_self"
     },
     "App": {
       "deepLinkingEnabled": true
+    },
+    "CapacitorHttp": {
+      "enabled": true
     }
   },
   "ios": {
