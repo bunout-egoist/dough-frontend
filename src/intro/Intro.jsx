@@ -94,7 +94,7 @@ export default function Intro() {
           showTitle: true,
           enableUrlBarHiding: true, // 주소 바 숨기기
           hideUrlBar: true, // 주소 바 숨기기
-          hideToolbarNavigationButtons: false,
+          hideToolbarNavigationButtons: true,
           presentationStyle: "fullscreen", // 전체화면으로 표시
         });
 
