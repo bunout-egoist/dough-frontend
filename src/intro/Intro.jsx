@@ -6,6 +6,7 @@ import FirstPage from "./FirstPage";
 import IntroPop from "../popup/IntroPop";
 import { useNavigate } from "react-router-dom";
 import { Browser } from "@capacitor/browser";
+import { App } from "@capacitor/app";
 
 export default function Intro() {
   const [isIos, setIsIos] = useState(false);
@@ -76,7 +77,7 @@ export default function Intro() {
     }
   };
 
-  // 완전 인앱 카카오 로그인
+  // 안드로이드 완전 인앱 카카오 로그인
   const loginHandler = async () => {
     try {
       const REDIRECT_URI = encodeURIComponent(
@@ -85,41 +86,96 @@ export default function Intro() {
       const KEY = "8a6e7b4b0b03c895fc6795146375d6ac";
       const link = `https://kauth.kakao.com/oauth/authorize?client_id=${KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-      if (isPlatform("mobile") || isPlatform("hybrid")) {
-        // 모바일에서는 InAppBrowser 사용
+      if (
+        isPlatform("android") ||
+        isPlatform("mobile") ||
+        isPlatform("hybrid")
+      ) {
+        // 안드로이드 전용 완전 인앱 브라우저 설정
         const browser = await Browser.open({
           url: link,
-          windowName: "_self", // _blank -> _self로 변경
+          windowName: "_blank",
           toolbarColor: "#ffffff",
-          showTitle: true,
-          enableUrlBarHiding: true, // 주소 바 숨기기
-          hideUrlBar: true, // 주소 바 숨기기
-          hideToolbarNavigationButtons: true,
-          presentationStyle: "fullscreen", // 전체화면으로 표시
+          showTitle: false, // 제목 표시 안함
+          enableUrlBarHiding: true, // URL 바 숨기기 활성화
+          hideUrlBar: true, // URL 바 완전 숨김
+          hideToolbarNavigationButtons: false, // 뒤로가기 버튼은 유지
+          presentationStyle: "fullscreen", // 전체화면
+          // 안드로이드 전용 옵션들
+          showToolbar: false, // 툴바 완전 숨김
+          clearCache: false,
+          clearSessionCache: false,
+          hardwareBack: true, // 하드웨어 뒤로가기 버튼 활성화
+          mediaPlaybackRequiresUserAction: false,
+          shouldPauseOnSuspend: false,
+          closeButtomText: "닫기",
+          // 추가 안드로이드 설정
+          androidShowTitle: false,
+          androidShowLocation: false, // 주소창 완전 숨김
+          androidCloseButtonText: "닫기",
         });
 
-        // URL 변경 감지
-        Browser.addListener("browserPageLoaded", async (info) => {
-          console.log("Browser page loaded:", info.url);
+        // 모든 기존 리스너 제거
+        Browser.removeAllListeners();
 
-          if (info.url.includes("app.bunout.info/oauth2/callback/kakao")) {
-            const url = new URL(info.url);
-            const code = url.searchParams.get("code");
+        // URL 변경 감지 리스너
+        const urlChangeListener = Browser.addListener(
+          "browserPageLoaded",
+          async (info) => {
+            console.log("Browser page loaded:", info.url);
 
-            if (code) {
-              console.log("Auth code received:", code);
-              await browser.close(); // 해당 browser 인스턴스를 통해 브라우저를 종료합니다.
-              handleKakaoCallback(code);
-              Browser.removeListener("browserPageLoaded"); // 특정 리스너만 제거
+            // 콜백 URL 감지
+            if (
+              info.url &&
+              info.url.includes("app.bunout.info/oauth2/callback/kakao")
+            ) {
+              try {
+                const url = new URL(info.url);
+                const code = url.searchParams.get("code");
+
+                if (code) {
+                  console.log("Auth code received:", code);
+                  // 브라우저 닫기
+                  await Browser.close();
+                  // 리스너 제거
+                  urlChangeListener.remove();
+                  // 콜백 처리
+                  await handleKakaoCallback(code);
+                }
+              } catch (error) {
+                console.error("URL parsing error:", error);
+                await Browser.close();
+                urlChangeListener.remove();
+              }
             }
           }
+        );
+
+        // 브라우저 종료 감지
+        const finishListener = Browser.addListener("browserFinished", () => {
+          console.log("Browser closed by user");
+          urlChangeListener.remove();
+          finishListener.remove();
         });
 
-        // 브라우저 닫힘 감지
-        Browser.addListener("browserFinished", () => {
-          console.log("Browser closed");
-          Browser.removeAllListeners();
-        });
+        // 앱이 포그라운드로 돌아올 때 감지 (추가 안전장치)
+        const appStateListener = App.addListener(
+          "appStateChange",
+          ({ isActive }) => {
+            if (isActive) {
+              console.log("App became active");
+              // 필요시 여기서 추가 처리
+            }
+          }
+        );
+
+        // 에러 발생시 리스너 정리
+        setTimeout(() => {
+          // 30초 후 자동 정리 (타임아웃)
+          urlChangeListener.remove();
+          finishListener.remove();
+          if (appStateListener) appStateListener.remove();
+        }, 30000);
       } else {
         // 웹에서는 기존 방식
         window.location.href = link;
@@ -127,6 +183,8 @@ export default function Intro() {
     } catch (error) {
       console.error("Login error:", error);
       alert("로그인에 실패했습니다. 다시 시도해주세요.");
+      // 에러 발생시 모든 리스너 정리
+      Browser.removeAllListeners();
     }
   };
 
@@ -135,6 +193,8 @@ export default function Intro() {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       console.log("Camera access granted");
       setNonAllow(false);
+      // 스트림 정리
+      stream.getTracks().forEach((track) => track.stop());
     } catch (err) {
       console.error("Camera access denied", err);
       alert("카메라 접근이 필요합니다. 설정에서 카메라 권한을 허용해주세요.");
