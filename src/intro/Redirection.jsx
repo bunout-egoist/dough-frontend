@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Browser } from "@capacitor/browser"; // Import Browser from Capacitor
 export default function Redirection() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [isNewMember, setIsNewMember] = useState(null);
@@ -50,8 +50,24 @@ export default function Redirection() {
   useEffect(() => {
     if (loginSuccess && isNewMember !== null) {
       if (isNewMember === true) {
+        Browser.open({
+          url: "/sign",
+          windowName: "_self",
+          enableUrlBarHiding: true, // URL 바 숨기기
+          hideUrlBar: true, // URL 바 숨기기
+          presentationStyle: "fullscreen", // 전체화면 모드
+        });
+
         navigate("/sign");
       } else {
+        Browser.open({
+          url: "/main",
+          windowName: "_self",
+          enableUrlBarHiding: true, // URL 바 숨기기
+          hideUrlBar: true, // URL 바 숨기기
+          presentationStyle: "fullscreen", // 전체화면 모드
+        });
+
         navigate("/main");
       }
     }
