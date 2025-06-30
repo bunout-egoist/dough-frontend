@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import FirstPage from "./FirstPage";
 import IntroPop from "../popup/IntroPop";
 import { useNavigate } from "react-router-dom";
-// import { Browser } from "@capacitor/browser";
-import { InAppBrowser } from "@capacitor/in-app-browser";
+import { Browser } from "@capacitor/browser";
 
 export default function Intro() {
   const [isIos, setIsIos] = useState(false);
@@ -88,7 +87,7 @@ export default function Intro() {
 
       if (isPlatform("mobile") || isPlatform("hybrid")) {
         // 모바일에서는 InAppBrowser 사용
-        const browser = await InAppBrowser.open({
+        const browser = await Browser.open({
           url: link,
           windowName: "_self", // _blank -> _self로 변경
           toolbarColor: "#ffffff",
@@ -100,7 +99,7 @@ export default function Intro() {
         });
 
         // URL 변경 감지
-        browser.addListener("browserPageLoaded", async (info) => {
+        Browser.addListener("browserPageLoaded", async (info) => {
           console.log("Browser page loaded:", info.url);
 
           if (info.url.includes("app.bunout.info/oauth2/callback/kakao")) {
@@ -111,15 +110,15 @@ export default function Intro() {
               console.log("Auth code received:", code);
               await browser.close(); // 해당 browser 인스턴스를 통해 브라우저를 종료합니다.
               handleKakaoCallback(code);
-              browser.removeListener("browserPageLoaded"); // 특정 리스너만 제거
+              Browser.removeListener("browserPageLoaded"); // 특정 리스너만 제거
             }
           }
         });
 
         // 브라우저 닫힘 감지
-        browser.addListener("browserFinished", () => {
+        Browser.addListener("browserFinished", () => {
           console.log("Browser closed");
-          browser.removeAllListeners();
+          Browser.removeAllListeners();
         });
       } else {
         // 웹에서는 기존 방식
