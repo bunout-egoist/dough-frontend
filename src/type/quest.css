@@ -1,82 +1,85 @@
-.questpage{
-    width: 100%;
-    padding: 1.7rem;
-    display: flex;
-    flex-direction: column;
-    height: 100dvh;
+.questpage {
+  width: 100%;
+  padding: 1.7rem;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
 }
-.questpage .type-name{
-    font-family: 'Pretendard-Bold';
-    font-size: 1.2rem;
-    color: #2A2A2A;
-    margin-bottom: 1.3rem;
-    padding: 0.7rem 0.3rem;
-    text-align: center;
-    background-color: #BED6FF;
-    border-radius: 38px;
-    width: 4.9rem;
+.questpage .type-name {
+  font-family: "Pretendard-Bold";
+  font-size: 1.2rem;
+  color: #2a2a2a;
+  margin-bottom: 1.3rem;
+  padding: 0.7rem 0.3rem;
+  text-align: center;
+  background-color: #bed6ff;
+  border-radius: 38px;
+  width: 4.9rem;
 }
-.questpage .questpage-title{
-    font-family: 'Pretendard-Bold';
-    font-size: 1.7rem;
-    margin-bottom: 0.8rem;
+.questpage .questpage-title {
+  font-family: "Pretendard-Bold";
+  font-size: 1.7rem;
+  margin-bottom: 0.8rem;
 }
-.questpage .fixed-quest-area{
-    margin-top: 1rem;
-    padding-bottom: 29%;
-    height: 70%;
-    overflow: scroll;
+.questpage .fixed-quest-area {
+  margin-top: 1rem;
+  padding-bottom: 29%;
+  height: 70%;
+  overflow: scroll;
 }
-.questpage .fixed-quest-box{
-    width: 100%;
-    border-radius: 5px;
-    padding: 1.3rem 1.95rem;
-    border: solid #C3C7CD 1px;
-    margin-bottom: 0.7rem;
+.questpage .fixed-quest-box {
+  width: 100%;
+  border-radius: 5px;
+  padding: 1.3rem 1.95rem;
+  border: solid #c3c7cd 1px;
+  margin-bottom: 0.7rem;
 }
-.questpage .fixed-quest-box-1,.questpage .fixed-quest-box-2,.questpage .fixed-quest-box-3,.questpage .fixed-quest-box-4{
-    background-color: #FFE9D4;
-    border: #FF7A2F solid 2px;
+.questpage .fixed-quest-box-1,
+.questpage .fixed-quest-box-2,
+.questpage .fixed-quest-box-3,
+.questpage .fixed-quest-box-4 {
+  background-color: #ffe9d4;
+  border: #ff7a2f solid 2px;
 }
-.questpage .quest-sub-txt{
-    font-family: 'Pretendard-Medium';
-    font-size: 1rem;
-    color: #17181E;
-    text-align: left;
-    margin-bottom: 0.39rem;
+.questpage .quest-sub-txt {
+  font-family: "Pretendard-Medium";
+  font-size: 1rem;
+  color: #17181e;
+  text-align: left;
+  margin-bottom: 0.39rem;
 }
-.questpage .quest-txt{
-    font-family: 'Pretendard-Bold';
-    font-size: 1.3rem;
-    color: #17181E;
-    text-align: left;
+.questpage .quest-txt {
+  font-family: "Pretendard-Bold";
+  font-size: 1.3rem;
+  color: #17181e;
+  text-align: left;
 }
-.questpage-btn-area{
-    width: 100%;
-    margin-bottom: 2.7rem;
-    position: relative;
-    flex:1;
+.questpage-btn-area {
+  width: 100%;
+  margin-bottom: 2.7rem;
+  position: relative;
+  flex: 1;
 }
-.questpage .questpage-btn{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: #EDEEF1;
-    border-radius: 10px;
-    color: #C5C5C5;
-    padding: 1.5rem 1.8rem;
-    text-align: center;
-    font-size: 1.3rem;
-    font-family: 'Pretendard-Bold';
+.questpage .questpage-btn {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #edeef1;
+  border-radius: 10px;
+  color: #c5c5c5;
+  padding: 1.5rem 1.8rem;
+  text-align: center;
+  font-size: 1.3rem;
+  font-family: "Pretendard-Bold";
 }
-.questpage .questpage-btn-active{
-    background-color: #FF7A2F;
-    color: white;
+.questpage .questpage-btn-active {
+  background-color: #ff7a2f;
+  color: white;
 }
 .edit-questpage .questpage {
-    padding: 0 1.7rem !important;
-    height: 93vh !important;
-    position: fixed !important;
-    width: 100vw;
-    max-width: 500px;
+  padding: 0 1.7rem !important;
+  height: 90dvh !important;
+  position: fixed !important;
+  width: 100vw;
+  max-width: 500px;
 }
