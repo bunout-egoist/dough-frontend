@@ -76,43 +76,6 @@ export default function Intro() {
     }
   };
 
-  // URL 모니터링을 위한 함수
-  const monitorInAppBrowser = (browserRef) => {
-    const checkUrl = setInterval(async () => {
-      try {
-        const currentUrl = await browserRef.executeScript({
-          code: "window.location.href",
-        });
-
-        console.log("Current URL:", currentUrl);
-
-        // 리다이렉트 URL 확인
-        if (
-          currentUrl &&
-          currentUrl.includes("app.bunout.info/oauth2/callback/kakao")
-        ) {
-          const url = new URL(currentUrl);
-          const code = url.searchParams.get("code");
-
-          if (code) {
-            console.log("Auth code received:", code);
-            clearInterval(checkUrl);
-            await Browser.close();
-            handleKakaoCallback(code);
-          }
-        }
-      } catch (error) {
-        // URL 접근 불가능한 경우 (외부 도메인)
-        console.log("Cannot access URL, continuing...");
-      }
-    }, 1000);
-
-    // 15초 후 타임아웃
-    setTimeout(() => {
-      clearInterval(checkUrl);
-    }, 15000);
-  };
-
   // 완전 인앱 카카오 로그인
   const loginHandler = async () => {
     try {
@@ -126,7 +89,7 @@ export default function Intro() {
         // 모바일에서는 InAppBrowser 사용
         const browser = await Browser.open({
           url: link,
-          windowName: "_blank",
+          windowName: "_self", // _blank -> _self로 변경
           toolbarColor: "#ffffff",
           showTitle: true,
           enableUrlBarHiding: false,
@@ -145,7 +108,7 @@ export default function Intro() {
 
             if (code) {
               console.log("Auth code received:", code);
-              await Browser.close();
+              await browser.close(); // 해당 browser 인스턴스를 통해 브라우저를 종료합니다.
               handleKakaoCallback(code);
             }
           }
